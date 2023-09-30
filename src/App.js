@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Navbar from './components/navbar/Navbar';
 import Main from './pages/main/Main';
 import Footer from './components/footer/Footer';
-import Consultation from './pages/consultation/Consultation'
+//import Consultation from './pages/consultation/Consultation'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 //import FloaterPage from './pages/floater/FloaterPage';
@@ -27,7 +27,7 @@ const App = () => {
                     {/*/<Background />*/}
                     <Routes>
                          <Route exact path="/" element={<Main />} />
-                         <Route exact path="/consultation" element={<Consultation />} />
+                         {/*<Route exact path="/consultation" element={<Consultation />} />*/}
                     </Routes>
                     <Footer />
                </BrowserRouter>

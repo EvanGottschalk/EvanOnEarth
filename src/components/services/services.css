@@ -44,8 +44,11 @@
   color: black;
 }
 
-.servicesLink {
-  width: 37%;
+.paypalContainer {
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  padding: 0% 0% 0% 0%;
 }
 
 .servicesLink:hover {
@@ -93,5 +96,12 @@
 
   .servicesLink {
     width: 100%;
+  }
+
+  .paypalContainer {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 0% 0% 0% 25%;
   }
 }
