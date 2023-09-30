@@ -1,5 +1,6 @@
 import React from 'react'
-//import About from '../../components/about/About'
+import About from '../../components/about/About'
+import Services from '../../components/services/Services'
 import Animation from '../../components/animation/Animation'
 //import Roadmap from '../../components/roadmap/Roadmap'
 //import Team from '../../components/team/Team'
@@ -17,9 +18,8 @@ const Main = () => {
   return (
     <div className='main'>
       <Banner />
-      <PageDescription />
-      <GetStarted />
-      <EvolutionDescription />
+      <About />
+      <Services />
       <Animation />
     </div>
   )

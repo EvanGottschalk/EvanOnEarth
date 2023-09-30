@@ -4,11 +4,11 @@ a:hover { text-decoration: none; }
 a:active { text-decoration: none; }
 
 .navbar {
-  background-color: #000000;
+  background-color: #ffffff;
   display: flex;
   justify-content: center;
-  padding: 1.5% 0px 1.5% 0px;
-  margin: 0px 0px 0% 0px;
+  padding: 0% 0% 0% 0%;
+  margin: 0% 0% 0% 0%;
   border-radius: 0px;
   flex-direction: column;
   align-items: center;
@@ -25,126 +25,57 @@ a:active { text-decoration: none; }
 }
 
 .navbarLeft {
-  flex: 25%;
+  width: 100%;
   display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-.navbarCenter {
-  margin: 0px 0px 0px 0px;
-  flex: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: horizontal;
-  gap: 35px;
+  flex-direction: row;
 }
 
 
 
 .navbarRight {
-  flex: 25%;
   display: flex;
-  align-items: center;
-  justify-content: flex-end;
+  align-items: right;
+  justify-content: right;
+  float: right;
+  margin: 0% 0% .5% 0%;
 }
 
 .navbarLogoImage {
-  width: 60%;
-  padding: 0% 0px 0px 0px;
-  margin: -9% 0% -11% 0%;
+  width: 20%;
+  margin: 10px 0px 0px 10px;
 }
 
-.navbarWalletButton {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0% 0px 0px 0px;
-  margin: 0px 0px 0px 0px;
-  border-radius: 12px;
-  color: var(--color-black);
-  font-weight: 400;
-  font-size: 13px;
-  line-height: 20%;
-  font-family: 'Sequel100Black-65';
+
+
+
+
+.navbarIcon {
+  width: 4%;
+  padding: 0% 2% 0% 0%;
   cursor: pointer;
-  z-index: 99999;
-}
-
-.navbarWalletButtonImage {
-  width: 55%;
-  padding: 0% 0px 0px 0px;
-  margin: 0% 0% 0% 20%;
-}
-
-.navbarWalletButtonText {
-  padding: 0% 0px 0px 0px;
-  margin: 0% 0% 0% -48%;
-  color: #ffffff;
-}
-
-
-.navbarButton {
-  color: #ffffff;
-  font-weight: 400;
-  font-size: 16px;
-  margin: 0px 35px 0px 0px;
-  white-space: nowrap;
-  line-height: 24px;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-
-
-.navbarButton1 {
-  padding: 15% 15% 15% 15%;
-  color: #ffffff;
-  text-decoration: none;
-}
-
-.navbarButton2 {
-  padding: 15% 15% 15% 15%;
-  color: #ffffff;
-  text-decoration: none;
-}
-
-.navbarButton3 {
-  padding: 15% 15% 15% 15%;
-  color: #ffffff;
-  text-decoration: none;
-}
-
-.navbarButton4 {
-  padding: 15% 15% 15% 15%;
-  color: #ffffff;
-  text-decoration: none;
-}
-
-.navbarButton5 {
-  padding: 15% 15% 15% 15%;
-  color: #ffffff;
-  text-decoration: none;
+  align-items: right;
+  justify-content: right;
+  float: right;
 }
 
 .navbarLogoImage:hover,
 .navbarButton:hover,
-.navbarWalletButton:hover {
-  -webkit-transform: scale(1.05);
-  -moz-transform: scale(1.05);
-  -o-transform: scale(1.05);
-  transform: scale(1.05);
+.navbarWalletButton:hover,
+.navbarIcon:hover {
+  -webkit-transform: scale(1.10);
+  -moz-transform: scale(1.10);
+  -o-transform: scale(1.10);
+  transform: scale(1.10);
 }
 
 .navbarLogoImage:active,
 .navbarButton:active,
-.navbarWalletButton:active {
-  -webkit-transform: scale(1.08);
-  -moz-transform: scale(1.08);
-  -o-transform: scale(1.08);
-  transform: scale(1.08);
+.navbarWalletButton:active,
+.navbarIcon:active {
+  -webkit-transform: scale(1.15);
+  -moz-transform: scale(1.15);
+  -o-transform: scale(1.15);
+  transform: scale(1.15);
 }
 
 
@@ -156,6 +87,11 @@ a:active { text-decoration: none; }
 }
 .navbarMobile {
   display: none;
+}
+
+.twitterIcon {
+  padding: 0% 1% 0% 0%;
+  margin: -1% 0% 0% 0%;
 }
 
 .navbarMobileContainer {
@@ -194,6 +130,27 @@ a:active { text-decoration: none; }
     padding: 0 20px;
     margin: 20px 20px;
   }
+
+  .navbarIcon {
+    width: 8%;
+    
+  }
+
+  .navbarSocialsContainer {
+    margin: 4% -4% 0% 0%;
+  }
+
+  .navbarLogoImage {
+    width: 100%;
+    padding: 0% 0% 0% 0%;
+    margin: 0% 0% 0% 0%;
+  }
+
+  .twitterIcon {
+    transform: scale(2.1);
+    margin: 1.25% 3.8% 0% 0%;
+    padding: 0% 0% 0% 0%;
+  }
 }
 
 @media only screen and (max-width: 870px) {
@@ -205,5 +162,26 @@ a:active { text-decoration: none; }
   }*/
   .navbarBoxTitle {
     font-size: 28px;
+  }
+
+  .navbarIcon {
+    width: 8%;
+    
+  }
+
+  .navbarSocialsContainer {
+    margin: 4% -4% 0% 0%;
+  }
+
+  .navbarLogoImage {
+    width: 100%;
+    padding: 0% 0% 0% 0%;
+    margin: 0% 0% 0% 0%;
+  }
+
+  .twitterIcon {
+    transform: scale(2.1);
+    margin: 1.25% 3.8% 0% 0%;
+    padding: 0% 0% 0% 0%;
   }
 }

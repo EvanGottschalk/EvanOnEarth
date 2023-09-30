@@ -1,6 +1,6 @@
 :root {
   /*COLOR*/
-  --color-background:#F7F5ED;
+  --color-background:#ffffff;
   --color-navbar: #ebebeb;
 
   --color-main: #f2ff61;
@@ -47,7 +47,7 @@ body {
   font-family: 'Sequel100Black-45', serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: var(--color-offwhite);
+  background-color: var(--color-white);
 }
 
 .main {

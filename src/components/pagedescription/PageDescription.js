@@ -36,7 +36,12 @@ const PageDescription = () => {
         <div className='descriptionTextContainer'>
           <div className='descriptionTitle textHighlight'></div>
           <div className='descriptionText descriptionAnchor'>
-          The No Fun Zone is your launch pad for learning the essential elements of blockchain technology, Decentralized Autonomous Organizations (DAOs), NonFungible Tokens, and DeFi. The No Fun Zone will equip you with the fundamentals to empower you to co-create the future with people worldwide
+            <p>Blockchain Architect</p>
+            <p>Smart Contract Engineer</p>
+            <p>AI & Machine Learning Engineer</p>
+            <p>NFT Project Consultant</p>
+            <p>Crypto & Defi Consultant</p>
+            <p>Musician</p>
           </div>
         </div>
       </div>

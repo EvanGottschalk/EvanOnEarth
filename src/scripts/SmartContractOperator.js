@@ -8,6 +8,11 @@
 // 2. Detailed settings for individual pages such as website.com/avatar are modified at website.com/admin/avatar
 //    Then, gate all /admin pages behind admin login
 
+// Web3 Oracles
+// 1. Supra
+// 2. Gelato
+// 3. ChainLink
+
 
 
 
@@ -1842,19 +1847,21 @@ const json_ABI_list = {'mainnet': `[]`,
 
 // *Update metadata URIs with your IPFS files' information
 const folder_URIs = {
-  Filecoin: '',
+  NFT_Storage: 'bafybeiglxxim4fc4jxl53kxoxjsnrf7efcabx4jikrgrz2ralmgqlj6yai',
   Pinata: 'QmcvaEQrzwiNjDZzJX1jBq5zDtvF9yc2Le6nyjquABEGmh',
   Pinata_old: 'QmPF4nrDbTnGk2UWduZDw2FCHZcF6HJicYDdsDAkEqJgH7'};
 
-const image_URIs = {
-  Filecoin: {0:'bafybeid2oy2tbsig674eh7n4kp4gqribvpr6ajodxokfhyzftl3il7troy/LMNTLfire1.png',
-             1:'bafybeihrxhmnywfxxv6jfe2adfbe22m4r56dfkpgksdn2fdbkdardxcjhu/LMNTLwater1.png',
-             2:'bafybeifxei46fbqxdcriqls6bb4bkvehqhs7ibbsx62mena3fisf73tk3a/LMNTLair1.png',
-             3:'bafybeibh7cukho5d2i7gjtuophcw455wnzk5rvy5cp7dwva74izhwst46a/LMNTLearth1.png',
-             4:'bafybeiaejbgk6zlz43r4fgubbxv5m3nveb23wt2mtywwqhaoj627vpf7xi/LMNTLfire2.png',
-             5:'bafybeidmkzry7ycmrii5iaibbycocptpbm5x6xo7m5y3yvln3qzdw53xwi/LMNTLwater2.png',
-             6:'bafybeihp5xj3ynypjsl2si2ve47bs4uydm6tvyxvljnbllyrobxom67hxa/LMNTLair2.png',
-             7:'bafybeicnog62bhxyinwq6f43pkalkr26ahcj3fjpl3nizg5deaaz7cruxm/LMNTLearth2.png'},
+const JSON_URIs = {
+  NFT_Storage: {0:'/LMNTLfire1.json',
+                1:'/LMNTLwater1.json',
+                2:'/LMNTLair1.json',
+                3:'/LMNTLearth1.json',
+                4:'/LMNTLfire2.json',
+                5:'/LMNTLwater2.json',
+                6:'/LMNTLair2.json',
+                7:'/LMNTLearth2.json',
+                background_list: "bafybeicc2gguyju7625a3c6ie2gyukggwhgcle64a73bo4yxrtrr6zf2fi/background_list.json",
+                pac_list: "bafybeigmgu2k25bxwjmwxwrr2kwiwzzjpuy3mzew2yochngedqof5zgmu4/pac_list.json"},
   Pinata: {0:'/LMNTLfire1.json',
            1:'/LMNTLwater1.json',
            2:'/LMNTLair1.json',
@@ -1873,14 +1880,14 @@ const image_URIs = {
            7:'/LMNTLearth2.png'}};
 
 const network_IPFS_dict = {'mainnet': 'Pinata',
-                           'goerli': 'Pinata',
-                           'hyperspace': 'Filecoin'};
+                           'goerli': 'NFT_Storage',
+                           'hyperspace': 'NFT_Storage'};
 
 const IPFS_prefixes = {
   Pinata: 'https://gateway.pinata.cloud/ipfs/',
   Pinata_old: 'https://gateway.pinata.cloud/ipfs/',
   Infura: '',
-  Filecoin: 'https://ipfs.io/ipfs/'
+  NFT_Storage: 'https://nftstorage.link/ipfs/'
 };
 
 const network_dict = {'goerli': {},
@@ -2030,7 +2037,7 @@ async function setUserMetadata(address_input) {
   user_metadata_URI = await contract.getUserMetadata(address_input);
   if (user_metadata_URI.includes('.json')) {
     const response = await fetch(user_metadata_URI);
-    user_metadata = response.json();
+    user_metadata = await response.json();
     user_metadata['URI'] = user_metadata_URI;
     console.log('User Metadata: ', user_metadata);
     return user_metadata;
@@ -2057,14 +2064,21 @@ export async function setUserAvatarURI(metadata_input) {
 };
 
 
-export async function getImageURL(image_number) {
+export async function getMetadataURL(metadata_info) {
   if (!network_name) {
     network_name = getNetwork();
   }
+  var metadata_URL;
   const IPFS_name = network_IPFS_dict[network_name];
-  const image_URL = IPFS_prefixes[IPFS_name] + folder_URIs[IPFS_name] + image_URIs[IPFS_name][image_number];
-  return image_URL;
-}
+
+  // Pre-set Image URI
+  if (JSON_URIs[IPFS_name][metadata_info]) {
+    metadata_URL = IPFS_prefixes[IPFS_name] + folder_URIs[IPFS_name] + JSON_URIs[IPFS_name][metadata_info];
+  } else {
+    metadata_URL = IPFS_prefixes[IPFS_name] + metadata_info;
+  };
+  return metadata_URL;
+};
 
 export async function getOpenSeaLink(token_ID_input) {
   if (!token_ID_input) {
@@ -2088,6 +2102,25 @@ export async function getNetwork() {
   };
   console.log('Network Name: ', network_name);
   return network_name;
+}
+
+export async function getJSONfromIPFS(IPFS_name, URI) {
+  if (!IPFS_name) {
+    provider = await setProvider();
+    if ('_network' in provider) {
+      network_name = provider['_network']['name'];
+      IPFS_name = network_IPFS_dict[network_name];
+    };
+  };
+  if (IPFS_prefixes[IPFS_name]) {
+    const response = await fetch(IPFS_prefixes[IPFS_name] + URI);
+    const JSON_contents = await response.json();
+    console.log('JSON Contents: ', JSON_contents);
+    return JSON_contents;
+  } else {
+    console.log("ERROR! IPFS name is not recognized!")
+    return(false);
+  }
 }
 
 
@@ -2338,7 +2371,7 @@ export async function levelUp(level_up_button) {
 
   const response = await fetch(new_metadata_URI);
   user_metadata_URI = new_metadata_URI;
-  user_metadata = response.json();
+  user_metadata = await response.json();
   user_avatar_URI = await setUserAvatarURI(user_metadata);
   return({'metadata': user_metadata,
           'avatar_URI': user_avatar_URI}); 

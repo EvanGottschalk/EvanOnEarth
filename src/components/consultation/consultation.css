@@ -1,35 +1,36 @@
-.about {
+.consultation {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: black;
-  padding: 10% 0% 10% 0%;
+  background-color: white;
+  padding: 0% 0% 0% 0%;
   margin: 0% 0% 0% 0%;
 }
 
-.aboutLeftContainer {
+.consultationLeftContainer {
   flex: 50%;
   display: flex;
-  justify-content: flex-end;
-  padding: 0% 10% 0% 10%;
+  align-items: right;
+  justify-content: right;
+  float: right;
+  padding: 0% 0% 0% 0%;
 }
 
-.aboutRightContainer {
+.consultationRightContainer {
   flex: 50%;
   display: flex;
-  align-items: flex-start;
-  justify-content: center;
   flex-direction: column;
 }
 
-.aboutImage {
-  border-radius: 50px;
-  width: 62.5%;
+.consultationImage {
+  width: 75%;
+  align-items: right;
+  justify-content: right;
+  float: right;
 }
 
 
-.aboutTextContainer {
-  width: 100%;
+.consultationTextContainer {
   padding: 0px 0px 0px 0px;
   margin: 0px 0px 0px 0px;
   display: flex;
@@ -38,23 +39,19 @@
   flex-direction: column;
 }
 
-.aboutText {
+.consultationText {
   text-align: left;
-  color: white;
+  color: black;
 }
 
-.aboutLink {
-  width: 45%;
-}
-
-.aboutLink:hover {
+.consultationLink:hover {
   -webkit-transform: scale(1.10);
   -moz-transform: scale(1.10);
   -o-transform: scale(1.10);
   transform: scale(1.10);
 }
 
-.aboutLink:active {
+.consultationLink:active {
   -webkit-transform: scale(1.15);
   -moz-transform: scale(1.15);
   -o-transform: scale(1.15);
@@ -62,39 +59,39 @@
 }
 
 @media only screen and (max-width: 1400px) {
-  .aboutBoxIMG {
+  .consultationBoxIMG {
     width: 100%;
   }
-  .about {
+  .consultation {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 40px;
     flex-direction: column;
   }
-  .aboutBox {
+  .consultationBox {
     border-radius: 12px;
     width: 100%;
     max-width: 630px;
   }
-  .aboutRight {
+  .consultationRight {
     align-items: center;
     justify-content: center;
   }
-  .aboutRightBottom {
+  .consultationRightBottom {
     max-width: 630px;
     height: fit-content;
   }
-  .aboutTextContainer {
-    margin-top: 50px;
+  .consultationTextContainer {
+    padding: 0% 5% 0% 5%;
+    margin: 0% 0% 0% 0%;
   }
 
-  .aboutImage {
-    width: 90%;
-    padding: 0% 0% 0% 5%;
-  }
-
-  .aboutLink {
+  .paypalContainer {
     width: 100%;
+    align-items: center;
+    justify-content: center;
+    padding: 0% 0% 0% 25%;
   }
+
 }

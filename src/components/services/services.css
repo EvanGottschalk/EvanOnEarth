@@ -1,35 +1,36 @@
-.about {
+.services {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: black;
-  padding: 10% 0% 10% 0%;
+  background-color: white;
+  padding: 0% 0% 0% 0%;
   margin: 0% 0% 0% 0%;
 }
 
-.aboutLeftContainer {
+.servicesLeftContainer {
   flex: 50%;
   display: flex;
-  justify-content: flex-end;
-  padding: 0% 10% 0% 10%;
+  align-items: right;
+  justify-content: right;
+  float: right;
+  padding: 0% 0% 0% 0%;
 }
 
-.aboutRightContainer {
+.servicesRightContainer {
   flex: 50%;
   display: flex;
-  align-items: flex-start;
-  justify-content: center;
   flex-direction: column;
 }
 
-.aboutImage {
-  border-radius: 50px;
-  width: 62.5%;
+.servicesImage {
+  width: 75%;
+  align-items: right;
+  justify-content: right;
+  float: right;
 }
 
 
-.aboutTextContainer {
-  width: 100%;
+.servicesTextContainer {
   padding: 0px 0px 0px 0px;
   margin: 0px 0px 0px 0px;
   display: flex;
@@ -38,23 +39,23 @@
   flex-direction: column;
 }
 
-.aboutText {
+.servicesText {
   text-align: left;
-  color: white;
+  color: black;
 }
 
-.aboutLink {
-  width: 45%;
+.servicesLink {
+  width: 37%;
 }
 
-.aboutLink:hover {
+.servicesLink:hover {
   -webkit-transform: scale(1.10);
   -moz-transform: scale(1.10);
   -o-transform: scale(1.10);
   transform: scale(1.10);
 }
 
-.aboutLink:active {
+.servicesLink:active {
   -webkit-transform: scale(1.15);
   -moz-transform: scale(1.15);
   -o-transform: scale(1.15);
@@ -62,39 +63,35 @@
 }
 
 @media only screen and (max-width: 1400px) {
-  .aboutBoxIMG {
+  .servicesBoxIMG {
     width: 100%;
   }
-  .about {
+  .services {
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 40px;
     flex-direction: column;
   }
-  .aboutBox {
+  .servicesBox {
     border-radius: 12px;
     width: 100%;
     max-width: 630px;
   }
-  .aboutRight {
+  .servicesRight {
     align-items: center;
     justify-content: center;
   }
-  .aboutRightBottom {
+  .servicesRightBottom {
     max-width: 630px;
     height: fit-content;
   }
-  .aboutTextContainer {
-    margin-top: 50px;
+  .servicesTextContainer {
+    padding: 0% 5% 0% 5%;
+    margin: 0% 0% 0% 0%;
   }
 
-  .aboutImage {
-    width: 90%;
-    padding: 0% 0% 0% 5%;
-  }
-
-  .aboutLink {
+  .servicesLink {
     width: 100%;
   }
 }

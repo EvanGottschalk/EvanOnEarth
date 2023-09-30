@@ -1,6 +1,7 @@
 import React from 'react'
 
-import starterElementals from '../../image/starter-elementals-1.png'
+//import starterElementals from '../../image/starter-elementals-1.png'
+import evan_serious_image from '../../image/Evan Serious - Cropped.jpg'
 
 import getStartedButton from '../../image/get-started-button.png'
 
@@ -31,7 +32,7 @@ const GetStarted = () => {
           <div className='getStartedRight'>
             <div className='getStartedBox'>
               <div className='getStartedBoxIMG'>
-                <img src={starterElementals} alt='' className='starterElementals' />
+                <img src={evan_serious_image} alt='' className='evan_serious_image' />
               </div>
             </div>
           </div>

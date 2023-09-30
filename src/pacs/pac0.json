@@ -5,9 +5,24 @@
     },
     "scenes": {
         "0": {
-            "sname": "play_now",
-            "background": "banner-home.png",
-            "background_opacity": 1
+            "name": "Space",
+            "background": "space_1",
+            "background_opacity": 1,
+            "characters": {},
+            "objects": {},
+            "rules": {
+                "go_back": "true"
+            }
+        },
+        "1": {
+            "name": "Planet Under Attack",
+            "background": "planet_under_attack_1",
+            "background_opacity": 1,
+            "characters": {},
+            "objects": {},
+            "rules": {
+                "go_back": "true"
+            }
         }
     }
 }

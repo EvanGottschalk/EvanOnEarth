@@ -1,7 +1,7 @@
 {
-  "name": "nofunzone",
-  "homepage": "https://learntap.org",
-  "version": "0.2.0",
+  "name": "evanonearth",
+  "homepage": "https://evanonearth.xyz",
+  "version": "4.20.69",
   "dependencies": {
     "@chakra-ui/react": "^2.6.1",
     "@emotion/react": "^11.11.0",

@@ -4,22 +4,18 @@
 import React, { useContext } from 'react';
 import SmartContractContext from '../../scripts/SmartContractContext';
 
+//import walletButton from '../../image/button_4x1.png'
+//import connectWallet from '../../scripts/SmartContractOperator';
+
 import logo from '../../image/logo.png'
 
-import walletButton from '../../image/button_4x1.png'
+import twitter_icon from '../../image/icons/twitter.png'
+import linkedin_icon from '../../image/icons/linkedin.png'
+import instagram_icon from '../../image/icons/instagram.png'
 
 import './navbar.css'
 
-import connectWallet from '../../scripts/SmartContractOperator';
 
-import fire_1_icon from '../../image/LMNTLfire1.png';
-import fire_2_icon from '../../image/LMNTLfire2-icon.png';
-import water_1_icon from '../../image/LMNTLwater1.png';
-import water_2_icon from '../../image/LMNTLwater2-icon.png';
-import air_1_icon from '../../image/LMNTLair1.png';
-import air_2_icon from '../../image/LMNTLair2-icon.png';
-import earth_1_icon from '../../image/LMNTLearth1.png';
-import earth_2_icon from '../../image/LMNTLearth2-icon.png';
 
 
 
@@ -39,15 +35,6 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
   console.log("Mobile device detected");
   mobile = true;
 };
-
-const icon_dict = {'fire1.png': fire_1_icon, 
-                    'fire2.png': fire_2_icon,
-                    'water1.png': water_1_icon,
-                    'water2.png': water_2_icon,
-                    'air1.png': air_1_icon,
-                    'air2.png': air_2_icon,
-                    'earth1.png': earth_1_icon,
-                    'earth2.png': earth_2_icon};
 
 
 
@@ -71,62 +58,6 @@ let { user_avatar_URI, setAvatarURI_Context } = useContext(SmartContractContext)
 //--------------------------------------------------------------------------------------------------
 //# Functions
 
-if (connect_on_load && !user_address) {
-  handleConnectClick();
-};
-
-
-function capitalize(string) {
-  return string.charAt(0).toUpperCase() + string.slice(1);
-};
-
-
-function pause(time) {
-  const seconds = time/1000;
-  console.log('PAUSE Start: ' + seconds.toString() + ' seconds');
-  return new Promise(resolve => setTimeout(resolve, time));
-};
-
-
-async function handleConnectClick() {
-  if (!user_address) {
-    const user_wallet_info = await connectWallet('goerli');
-    user_address = user_wallet_info['address'];
-    await setAddress_Context(user_address);
-    user_token_ID = user_wallet_info['token_ID'];
-    await setTokenID_Context(user_token_ID);
-    user_balance = user_wallet_info['balance'];
-    await setBalance_Context(user_balance);
-    user_metadata = user_wallet_info['metadata'];
-    await setMetadata_Context(user_metadata);
-    user_avatar_URI = user_wallet_info['avatar_URI'];
-    await setAvatarURI_Context(user_avatar_URI);
-    
-  };
-};
-
-
-const handleMint = () => {}
-
-const handleAbout = () => {}
-
-const handleRoadmap = () => {
-  var scroll = document.getElementsByClassName('roadmapBC')
-  window.scroll({ behavior: 'smooth', top: scroll[0].offsetTop - 40 })
-}
-
-const handleTeam = () => {
-  var scroll = document.getElementsByClassName('teamAnchor')
-  window.scroll({ behavior: 'smooth', top: scroll[0].offsetTop - 40 })
-}
-
-const handleFaq = () => {
-  var scroll = document.getElementsByClassName('faqScroll')
-  window.scroll({ behavior: 'smooth', top: scroll[0].offsetTop + 20 })
-}
-
-
-
 
 
 
@@ -135,9 +66,6 @@ const handleFaq = () => {
 //--------------------------------------------------------------------------------------------------
 //# HTML
 
-if (connect_on_load && !user_address) {
-  handleConnectClick();
-};
 return (
   <div className='navbar'>
     {/* <div className='navbarMobile'>
@@ -172,52 +100,20 @@ return (
           </a>
         </div>
       </div>
-      <div className='navbarCenter'>
-        {/*<div className='navbarLogo'>
-          <img src={logo} alt='' className='navbarBoxImage' />
-        </div>*/}
-        <div className='navbarButton' onClick={handleMint}>
-          <a href={window.location['origin'] + '/module0'}>
-            <div className='navbarButton1'>
-              Lessons
-            </div>
-          </a>
-        </div>
-        <div className='navbarButton' onClick={handleAbout}>
-          <a href={window.location['origin'] + '/avatar'}>
-            <div className='navbarButton2'>
-              Your NFTs
-            </div>
-          </a>
-        </div>
-        <div className='navbarButton' onClick={handleRoadmap}>
-          <div className='navbarButton3'>
-            About Us
-          </div>
-        </div>
-        <div className='navbarButton' onClick={handleTeam}>
-          <div className='navbarButton4'>
-            Blog
-          </div>
-        </div>
-        <div className='navbarButton' onClick={handleFaq}>
-          <div className='navbarButton5'>
-            Contact Us
-          </div>
-        </div>
-      </div>
       <div className='navbarRight'>
-        <div id="navbarWalletButton" className='navbarWalletButton' onClick={handleConnectClick}>
-          <img id="navbarWalletButtonImage" className='navbarWalletButtonImage'
-               src={(user_avatar_URI) ? icon_dict[user_avatar_URI.split('LMNTL')[1]] : walletButton} alt='Wallet Connect'
-               style={(user_avatar_URI) ? {
-                width: "12.5%",
-                color: "var(--color-nfzorange)",
-                border: "solid",
-                borderWidth: "5px 5px 5px 5px",
-                borderRadius: "10px"} :
-                {}} />
-          <div id="navbarWalletButtonText" className='navbarWalletButtonText'>{(user_avatar_URI) ? '' : (user_address) ? 'Wallet Connected' : 'Connect Wallet'}</div>
+        <div className='navbarSocialsContainer'>
+          <div className='navbarIconContainer'>
+            <a href='https://www.instagram.com/evanonearth_eth/' target="_blank">
+              <img src={instagram_icon} className='navbarIcon instagramIcon'/>
+            </a>
+            <a href='https://www.linkedin.com/in/evan-gottschalk/' target="_blank">
+              <img src={linkedin_icon} className='navbarIcon linkedinIcon'/>
+            </a>
+            <a href='https://twitter.com/EvanOnEarth_eth' target="_blank">
+              <img src={twitter_icon} className='navbarIcon twitterIcon' style={{
+              width: '6%'}}/>
+            </a>
+          </div>
         </div>
       </div>
     </div>
