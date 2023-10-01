@@ -72,13 +72,13 @@ const Services = () => {
           <div className='servicesFooterIconContainer'>
             <div className='servicesFooterSocialsContainer'>
               <a href='https://twitter.com/EvanOnEarth_eth' target="_blank">
-                <img data-aos="fade-right" data-aos-delay="1000" src={twitter_icon} id='servicesTwitterIcon' onMouseOver={mouseover} onMouseLeave={mouseleave} className='servicesFooterIcon twitterServicesFooterIcon'/>
+                <img data-aos="fade-right" src={twitter_icon} id='servicesTwitterIcon' onMouseOver={mouseover} onMouseLeave={mouseleave} className='servicesFooterIcon twitterServicesFooterIcon'/>
               </a>
               <a href='https://www.linkedin.com/in/evan-gottschalk/' target="_blank">
-                <img data-aos="fade-up" data-aos-delay="1000" src={linkedin_icon} id='servicesLinkedinIcon' onMouseOver={mouseover} onMouseLeave={mouseleave} className='servicesFooterIcon linkedinServicesFooterIcon'/>
+                <img data-aos="fade-up" src={linkedin_icon} id='servicesLinkedinIcon' onMouseOver={mouseover} onMouseLeave={mouseleave} className='servicesFooterIcon linkedinServicesFooterIcon'/>
               </a>
               <a href='https://www.instagram.com/evanonearth_eth/' target="_blank">
-                <img data-aos="fade-left" data-aos-delay="1000" src={instagram_icon} id='servicesInstagramIcon' onMouseOver={mouseover} onMouseLeave={mouseleave} className='servicesFooterIcon instagramServicesFooterIcon'/>
+                <img data-aos="fade-left" src={instagram_icon} id='servicesInstagramIcon' onMouseOver={mouseover} onMouseLeave={mouseleave} className='servicesFooterIcon instagramServicesFooterIcon'/>
               </a>
             </div>
           </div>
