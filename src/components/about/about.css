@@ -44,6 +44,12 @@
 .aboutText {
   text-align: left;
   color: white;
+  font-size: 16px;
+}
+
+.aboutTitle {
+  font-size: 23px;
+  text-decoration: underline;
 }
 
 .aboutLink {
@@ -72,36 +78,44 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 40px;
     flex-direction: column;
+    max-width: 100vw;
+    margin: 0% 0% 0% 0%;
+    padding: 15% 0% 20% 0%;
   }
-  .aboutBox {
-    border-radius: 12px;
-    width: 100%;
-    max-width: 630px;
-  }
+
   .aboutRight {
     align-items: center;
     justify-content: center;
   }
-  .aboutRightBottom {
-    max-width: 630px;
-    height: fit-content;
+
+
+  .aboutLeftContainer {
+    padding: 0% 5% 0% 5%;
+    margin: 0% 0% 0% 0%;
   }
+
   .aboutTextContainer {
-    margin-top: 50px;
+    padding: 0% 0% 0% 0%;
+    margin: 0% 0% 0% 0%;
+  }
+
+  .aboutTitle {
+    font-size: 21px;
+  }
+
+  .aboutTagline {
+    font-size: 14px;
   }
 
   .aboutImage {
     width: 90%;
     padding: 0% 0% 0% 5%;
+    margin: 0% 0% 0% 0%;
   }
 
   .aboutLink {
     width: 100%;
   }
 
-  .aboutLeftContainer {
-    padding: 0% 10% 0% 10%;
-  }
 }

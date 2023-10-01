@@ -62,7 +62,15 @@ useEffect(() => {
 //--------------------------------------------------------------------------------------------------
 //# Functions
 
+function mouseover(event) {
+  let element = document.getElementById(event.target.id);
+  element.style.transform = 'scale(1.40)';
+}
 
+function mouseleave(event) {
+  let element = document.getElementById(event.target.id);
+  element.style.transform = 'scale(1.0)';
+}
 
 
 
@@ -100,7 +108,7 @@ return (
       <div className='navbarLeft'>
         <div id="navbarLogo" className='navbarLogo'>
           <a href={window.location['origin']}>
-            <img data-aos="fade-down-right" className="navbarLogoImage" id="navbarLogoImage" src={logo} alt='Home' />
+            <img data-aos="fade-down-right" className="navbarLogoImage" id="navbarLogoImage" src={logo} alt='Home' onMouseOver={mouseover} onMouseLeave={mouseleave}/>
           </a>
         </div>
       </div>
@@ -108,14 +116,13 @@ return (
         <div className='navbarSocialsContainer'>
           <div className='navbarIconContainer'>
             <a href='https://www.instagram.com/evanonearth_eth/' target="_blank">
-              <img data-aos="fade-down-left" src={instagram_icon} className='navbarIcon instagramIcon'/>
+              <img data-aos="fade-down-left" src={instagram_icon} onMouseOver={mouseover} onMouseLeave={mouseleave} id='instagramIcon' className='navbarIcon instagramIcon'/>
             </a>
             <a href='https://www.linkedin.com/in/evan-gottschalk/' target="_blank">
-              <img data-aos="fade-down" src={linkedin_icon} className='navbarIcon linkedinIcon'/>
+              <img data-aos="fade-down" src={linkedin_icon} onMouseOver={mouseover} onMouseLeave={mouseleave} id='linkedinIcon' className='navbarIcon linkedinIcon'/>
             </a>
             <a href='https://twitter.com/EvanOnEarth_eth' target="_blank">
-              <img data-aos="fade-down-right" src={twitter_icon} className='navbarIcon twitterIcon' style={{
-              width: '6%'}}/>
+              <img data-aos="fade-down-right" src={twitter_icon} onMouseOver={mouseover} onMouseLeave={mouseleave} id='twitterIcon' className='navbarIcon twitterIcon'/>
             </a>
           </div>
         </div>

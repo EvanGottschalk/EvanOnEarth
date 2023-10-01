@@ -8,9 +8,9 @@ import Animation from '../../components/animation/Animation'
 
 
 import Banner from '../../components/banner/Banner'
-import PageDescription from '../../components/pagedescription/PageDescription'
-import GetStarted from '../../components/getstarted/GetStarted'
-import EvolutionDescription from '../../components/evolutiondescription/EvolutionDescription'
+//import PageDescription from '../../components/pagedescription/PageDescription'
+//import GetStarted from '../../components/getstarted/GetStarted'
+//import EvolutionDescription from '../../components/evolutiondescription/EvolutionDescription'
 
 import './main.css'
 
