@@ -9,6 +9,7 @@
   padding: 0% 0% 0% 0%;
   max-width: 1080px;
   min-height: 100vh;
+  overflow: hidden;
 }
 
 .banner {
@@ -19,6 +20,7 @@
   flex-direction: column;
   display: flex;
   border-radius: 25px;
+  overflow: hidden;
 }
 
 

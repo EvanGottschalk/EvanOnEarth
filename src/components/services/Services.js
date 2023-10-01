@@ -49,7 +49,20 @@ const Services = () => {
           <div data-aos="fade-left" data-aos-delay="800" className='paypalContainer'>
             <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
               <input type="hidden" name="cmd" value="_s-xclick" />
-              <input type="hidden" name="hosted_button_id" value="YCXANRFU4RWSW" />
+              <input type="hidden" name="hosted_button_id" value="ALDLNQ6GM5HWY" />
+              <table>
+                <tr>
+                  <td>
+                    <input type="hidden" name="on0" value="Please enter your email:"/>
+                    Please enter your email:
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <input type="text" name="os0" maxLength="200" />
+                  </td>
+                </tr>
+              </table>
               <input type="hidden" name="currency_code" value="USD" />
               <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Buy Now" />
             </form>
@@ -59,13 +72,13 @@ const Services = () => {
           <div className='servicesFooterIconContainer'>
             <div className='servicesFooterSocialsContainer'>
               <a href='https://twitter.com/EvanOnEarth_eth' target="_blank">
-                <img data-aos="fade-right" src={twitter_icon} id='servicesTwitterIcon' onMouseOver={mouseover} onMouseLeave={mouseleave} className='servicesFooterIcon twitterServicesFooterIcon'/>
+                <img data-aos="fade-right" data-aos-delay="500" src={twitter_icon} id='servicesTwitterIcon' onMouseOver={mouseover} onMouseLeave={mouseleave} className='servicesFooterIcon twitterServicesFooterIcon'/>
               </a>
               <a href='https://www.linkedin.com/in/evan-gottschalk/' target="_blank">
-                <img data-aos="fade-up" src={linkedin_icon} id='servicesLinkedinIcon' onMouseOver={mouseover} onMouseLeave={mouseleave} className='servicesFooterIcon linkedinServicesFooterIcon'/>
+                <img data-aos="fade-up" data-aos-delay="500" src={linkedin_icon} id='servicesLinkedinIcon' onMouseOver={mouseover} onMouseLeave={mouseleave} className='servicesFooterIcon linkedinServicesFooterIcon'/>
               </a>
               <a href='https://www.instagram.com/evanonearth_eth/' target="_blank">
-                <img data-aos="fade-left" src={instagram_icon} id='servicesInstagramIcon' onMouseOver={mouseover} onMouseLeave={mouseleave} className='servicesFooterIcon instagramServicesFooterIcon'/>
+                <img data-aos="fade-left" data-aos-delay="500" src={instagram_icon} id='servicesInstagramIcon' onMouseOver={mouseover} onMouseLeave={mouseleave} className='servicesFooterIcon instagramServicesFooterIcon'/>
               </a>
             </div>
           </div>

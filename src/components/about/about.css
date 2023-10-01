@@ -5,6 +5,7 @@
   background-color: black;
   padding: 10% 0% 10% 0%;
   margin: 0% 0% 0% 0%;
+  overflow: hidden;
 }
 
 .aboutLeftContainer {
@@ -101,7 +102,7 @@
   }
 
   .aboutTitle {
-    font-size: 21px;
+    font-size: 20.5px;
   }
 
   .aboutTagline {
@@ -111,7 +112,7 @@
   .aboutImage {
     width: 90%;
     padding: 0% 0% 0% 5%;
-    margin: 0% 0% 0% 0%;
+    margin: 10% 0% 0% 0%;
   }
 
   .aboutLink {
