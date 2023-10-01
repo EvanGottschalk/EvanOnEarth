@@ -8,7 +8,7 @@
   margin-right: auto;
   padding: 0% 0% 0% 0%;
   max-width: 1080px;
-
+  min-height: 100vh;
 }
 
 .banner {
@@ -25,5 +25,9 @@
 @media only screen and (max-width: 1400px) {
   .banner {
     width: 100%;
+  }
+
+  .bannerContainer {
+    min-height: 30vh;
   }
 }

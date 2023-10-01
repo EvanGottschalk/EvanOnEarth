@@ -1,8 +1,10 @@
 //--------------------------------------------------------------------------------------------------
 //# Imports
 
-import React, { useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import SmartContractContext from '../../scripts/SmartContractContext';
+import Aos from "aos";
+import "aos/dist/aos.css";
 
 //import walletButton from '../../image/button_4x1.png'
 //import connectWallet from '../../scripts/SmartContractOperator';
@@ -47,7 +49,9 @@ let { user_balance, setBalance_Context } = useContext(SmartContractContext);
 let { user_metadata, setMetadata_Context } = useContext(SmartContractContext);
 let { user_avatar_URI, setAvatarURI_Context } = useContext(SmartContractContext);
 
-
+useEffect(() => {
+  Aos.init({ duration: 2000 });
+}, []);
 
 
 
@@ -96,7 +100,7 @@ return (
       <div className='navbarLeft'>
         <div id="navbarLogo" className='navbarLogo'>
           <a href={window.location['origin']}>
-            <img className="navbarLogoImage" id="navbarLogoImage" src={logo} alt='Home' />
+            <img data-aos="fade-down-right" className="navbarLogoImage" id="navbarLogoImage" src={logo} alt='Home' />
           </a>
         </div>
       </div>
@@ -104,13 +108,13 @@ return (
         <div className='navbarSocialsContainer'>
           <div className='navbarIconContainer'>
             <a href='https://www.instagram.com/evanonearth_eth/' target="_blank">
-              <img src={instagram_icon} className='navbarIcon instagramIcon'/>
+              <img data-aos="fade-down-left" src={instagram_icon} className='navbarIcon instagramIcon'/>
             </a>
             <a href='https://www.linkedin.com/in/evan-gottschalk/' target="_blank">
-              <img src={linkedin_icon} className='navbarIcon linkedinIcon'/>
+              <img data-aos="fade-down" src={linkedin_icon} className='navbarIcon linkedinIcon'/>
             </a>
             <a href='https://twitter.com/EvanOnEarth_eth' target="_blank">
-              <img src={twitter_icon} className='navbarIcon twitterIcon' style={{
+              <img data-aos="fade-down-right" src={twitter_icon} className='navbarIcon twitterIcon' style={{
               width: '6%'}}/>
             </a>
           </div>
