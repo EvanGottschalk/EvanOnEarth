@@ -64,7 +64,7 @@ useEffect(() => {
 
 function mouseover(event) {
   let element = document.getElementById(event.target.id);
-  element.style.transform = 'scale(1.40)';
+  element.style.transform = 'scale(1.20)';
 }
 
 function mouseleave(event) {
