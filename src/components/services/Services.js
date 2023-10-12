@@ -68,6 +68,13 @@ const Services = () => {
             </form>
           </div>
         </div>
+        <div className='tokenMetricsCTA'>
+          <div data-aos="fade-left" data-aos-delay="1000">Pro tip!</div>
+          <div data-aos="fade-left" data-aos-delay="1200">
+            <span>You can easily </span>
+            <a href='https://tokenmetrics.sjv.io/g1LqQr' className='linkToTokenMetrics' target="_blank">reduce risk in your crypto portfolio with AI -></a>
+          </div>
+        </div>
         <div className='servicesFooter'>
           <div className='servicesFooterIconContainer'>
             <div className='servicesFooterSocialsContainer'>

@@ -65,7 +65,7 @@
 
 .servicesFooterIconContainer {
   position: absolute;
-  margin-top: 8%;
+  margin-top: 5.5%;
   right: 10%;
   max-width: 45%;
 }
@@ -99,7 +99,14 @@
   padding: 0% 0% 1.5% 0%;
 }
 
+.linkToTokenMetrics {
+  color: #0000ff;
+  text-decoration: underline !important;
+}
 
+.tokenMetricsCTA {
+  padding: 5% 0% 0% 0%;
+}
 
 .servicesLink:hover,
 .servicesFooterIcon:hover {
