@@ -5,12 +5,13 @@ import './footer.css'
 
 const Footer = () => {
   
+  console.log('FOOTER WARNING: Set to display: none in Footer.js')
 
   return (
     <div className='footer'>
       <div className='footerContainer'>
-        <div className='footerTextContainer'>
-          <marquee>Pop quiz, hot shot! What's the first blockchain ever created? (hint: it's not bitcoin) . . . . . . . . . . . . . . . . . . . . Did you know? Over 99% of NFT data is not stored on a blockchain! . . . . . . . . . . . . . . . . . . . .  Pop quiz, hot shot! What's the first country to recognize $BTC as a national currency? (hint: it's not El Salvador) . . . . . . . . . . . . . . . . . . . . Did you know? Ordinals allow for the Bitcoin blockchain to run ANY code, including AI models like ChatGPT, OS's like Windows 11, iOS, PS5 and beyond . . . . . . . . . . . . . . . . . . . . Pop quiz, hot shot! What's the first blockchain ever created? (hint: it's not bitcoin) . . . . . . . . . . . . . . . . . . . . Did you know? Over 99% of NFT data is not stored on a blockchain! . . . . . . . . . . . . . . . . . . . .  Pop quiz, hot shot! What's the first country to recognize $BTC as a national currency? (hint: it's not El Salvador) . . . . . . . . . . . . . . . . . . . . Did you know? Ordinals allow for the Bitcoin blockchain to run ANY code, including AI models like ChatGPT, OS's like Windows 11, iOS, PS5 and beyond . . . . . . . . . . . . . . . . . . . .</marquee>
+        <div style={{display: 'none'}} className='footerTextContainer'>
+          <marquee>Solve the puzzle to enter Meliora . . . . . . . . . . . . . . . . . . . . The LMNTL Guardians need your help . . . . . . . . . . . . . . . . . . . . Still puzzled? Keep mousing around! . . . . . . . . . . . . . . . . . . . . The call of adventure draws heroes into Meliora  . . . . . . . . . . . . . . . . . . . . Solve the puzzle to enter Meliora . . . . . . . . . . . . . . . . . . . . The LMNTL Guardians need your help . . . . . . . . . . . . . . . . . . . . Still puzzled? Keep mousing around! . . . . . . . . . . . . . . . . . . . . The call of adventure draws heroes into Meliora  . . . . . . . . . . . . . . . . . . . . </marquee>
         </div>
       </div>
     </div>
