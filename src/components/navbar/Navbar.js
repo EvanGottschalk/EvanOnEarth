@@ -15,30 +15,8 @@ import twitter_icon from '../../image/icons/twitter.png'
 import linkedin_icon from '../../image/icons/linkedin.png'
 import instagram_icon from '../../image/icons/instagram.png'
 
-import learn_icon from '../../image/icons/learn.png'
-import earn_icon from '../../image/icons/earn.png'
-import feed_icon from '../../image/icons/feed.png'
-import market_icon from '../../image/icons/market.png'
-import vote_icon from '../../image/icons/vote.png'
-import learn_selected_icon from '../../image/icons/learn-selected.png'
-import earn_selected_icon from '../../image/icons/earn-selected.png'
-import feed_selected_icon from '../../image/icons/feed-selected.png'
-import market_selected_icon from '../../image/icons/market-selected.png'
-import vote_selected_icon from '../../image/icons/vote-selected.png'
-
 import './navbar.css'
 
-
-const cursor_dict = {'learn': {'selected': learn_selected_icon,
-                              'unselected': learn_icon},
-                     'earn': {'selected': earn_selected_icon,
-                              'unselected': earn_icon},
-                     'feed': {'selected': feed_selected_icon,
-                              'unselected': feed_icon},
-                     'market': {'selected': market_selected_icon,
-                              'unselected': market_icon},
-                     'vote': {'selected': vote_selected_icon,
-                              'unselected': vote_icon}};
 
 
 
@@ -76,10 +54,8 @@ useEffect(() => {
 }, []);
 
 
-// On Load
-document.addEventListener('DOMContentLoaded', function() {
-  onLoad();
-});
+
+
 
 
 
@@ -88,31 +64,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function mouseover(event) {
   let element = document.getElementById(event.target.id);
-  console.log(event.target.id);
-  if (event.target.id === 'navbarLogoImage') {
-    element.style.transform = 'scale(1.2)';
-  } else {
-    element.src = cursor_dict[event.target.id]['selected'];
-  };
-};
+  element.style.transform = 'scale(1.20)';
+}
 
 function mouseleave(event) {
   let element = document.getElementById(event.target.id);
-  if (event.target.id === 'navbarLogoImage') {
-    element.style.transform = 'scale(1.0)';
-  } else {
-    element.src = cursor_dict[event.target.id]['unselected'];
-  };
-};
-
-function onLoad() {
-  if (window.location['pathname'].includes('/games')) {
-    var thing = 0;
-  } else {
-    document.getElementById('navbarSocialsContainer').style.display = 'none';
-  };
-};
-
+  element.style.transform = 'scale(1.0)';
+}
 
 
 
@@ -155,22 +113,16 @@ return (
         </div>
       </div>
       <div className='navbarRight'>
-        <div className='navbarSocialsContainer' id='navbarSocialsContainer'>
-          <div className='navbarIconContainer' id='navbarIconContainer'>
-            <a href='https://twitter.com/EvanOnEarth_eth'>
-              <img data-aos="flip-down" data-aos-delay="1000" src={vote_icon} onMouseOver={mouseover} onMouseLeave={mouseleave} id='vote' className='navbarIcon appIcon'/>
+        <div className='navbarSocialsContainer'>
+          <div className='navbarIconContainer'>
+            <a href='https://www.instagram.com/evanonearth_eth/' target="_blank">
+              <img data-aos="fade-down-left" src={instagram_icon} onMouseOver={mouseover} onMouseLeave={mouseleave} id='instagramIcon' className='navbarIcon instagramIcon'/>
             </a>
-            <a href='https://twitter.com/EvanOnEarth_eth'>
-              <img data-aos="flip-down" data-aos-delay="750" src={market_icon} onMouseOver={mouseover} onMouseLeave={mouseleave} id='market' className='navbarIcon appIcon'/>
+            <a href='https://www.linkedin.com/in/evan-gottschalk/' target="_blank">
+              <img data-aos="fade-down" src={linkedin_icon} onMouseOver={mouseover} onMouseLeave={mouseleave} id='linkedinIcon' className='navbarIcon linkedinIcon'/>
             </a>
-            <a href='https://twitter.com/EvanOnEarth_eth'>
-              <img data-aos="flip-down" data-aos-delay="500" src={feed_icon} onMouseOver={mouseover} onMouseLeave={mouseleave} id='feed' className='navbarIcon appIcon'/>
-            </a>
-            <a href='https://www.linkedin.com/in/evan-gottschalk/'>
-              <img data-aos="flip-down" data-aos-delay="250" src={earn_icon} onMouseOver={mouseover} onMouseLeave={mouseleave} id='earn' className='navbarIcon appIcon'/>
-            </a>
-            <a href='https://www.instagram.com/evanonearth_eth/'>
-              <img data-aos="flip-down" data-aos-delay="0" src={learn_icon} onMouseOver={mouseover} onMouseLeave={mouseleave} id='learn' className='navbarIcon appIcon'/>
+            <a href='https://twitter.com/EvanOnEarth_eth' target="_blank">
+              <img data-aos="fade-down-right" src={twitter_icon} onMouseOver={mouseover} onMouseLeave={mouseleave} id='twitterIcon' className='navbarIcon twitterIcon'/>
             </a>
           </div>
         </div>

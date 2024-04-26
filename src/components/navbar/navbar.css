@@ -4,7 +4,7 @@ a:hover { text-decoration: none; }
 a:active { text-decoration: none; }
 
 .navbar {
-  background-color: #000000;
+  background-color: #ffffff;
   display: flex;
   justify-content: center;
   padding: 0% 0% 0% 0%;
@@ -42,12 +42,16 @@ a:active { text-decoration: none; }
 }
 
 .navbarLogoImage {
-  width: 6%;
+  width: 20%;
   padding: 8px 0px 3px 8px;
 }
 
+
+
+
+
 .navbarIcon {
-  width: 14%;
+  width: 4%;
   padding: 0% 2% 0% 0%;
   cursor: pointer;
   align-items: right;
@@ -55,22 +59,10 @@ a:active { text-decoration: none; }
   float: right;
 }
 
-.navbarCounterContainer {
-  padding: 0% 15% 7% 0%;
-  margin: 0% 0% 0% 0%;
-  display: none;
-}
-
-.navbarCounter {
-  color: #ffffff;
-  font-family: 'lato';
-  font-size: 42px;
-}
-
-
 .navbarLogoImage:hover,
 .navbarButton:hover,
-.navbarWalletButton:hover {
+.navbarWalletButton:hover,
+.navbarIcon:hover {
   -webkit-transform: scale(1.10);
   -moz-transform: scale(1.10);
   -o-transform: scale(1.10);
@@ -79,7 +71,8 @@ a:active { text-decoration: none; }
 
 .navbarLogoImage:active,
 .navbarButton:active,
-.navbarWalletButton:active {
+.navbarWalletButton:active,
+.navbarIcon:active {
   -webkit-transform: scale(1.15);
   -moz-transform: scale(1.15);
   -o-transform: scale(1.15);

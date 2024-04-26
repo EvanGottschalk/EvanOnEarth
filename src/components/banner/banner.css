@@ -1,61 +1,28 @@
-.banner {
-  background-color: #1b1b1b;
-}
-
 .bannerContainer {
-  max-width: 1080px;
+  object-fit: cover;
   align-items: center;
   justify-content: center;
-  flex-direction: row;
+  flex-direction: column;
   display: block;
   margin-left: auto;
   margin-right: auto;
   padding: 0% 0% 0% 0%;
+  max-width: 1080px;
+  min-height: 100vh;
   overflow: hidden;
 }
 
-.bannerSegmentContainer {
+.banner {
+  width: 100%;
   object-fit: cover;
   align-items: center;
   justify-content: center;
-  display: block;
-  margin-left: auto;
-}
-
-.bannerSegmentImage {
-  width: 8.33%;
-  justify-content: center;
+  flex-direction: column;
+  display: flex;
+  border-radius: 25px;
   overflow: hidden;
-  
 }
 
-.bannerButtonContainer {
-  position: absolute;
-  top: 43.2%;
-  align-items: center;
-  justify-content: center;
-  display: block;
-  margin-left: auto;
-  z-index: 10; 
-}
-
-.bannerButton {
-  max-width: 1080px;
-  align-items: center;
-  justify-content: center;
-  margin-left: auto;
-  display: none;
-  animation: fadeIn 5s;
-}
-
-.bannerButton:hover {
-  cursor: pointer;
-}
-
-@keyframes fadeIn {
-  0% { opacity: 0; }
-  100% { opacity: 1; }
-}
 
 @media only screen and (max-width: 560px) {
   .banner {
