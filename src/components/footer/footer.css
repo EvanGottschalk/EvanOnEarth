@@ -15,6 +15,23 @@
   color: white;
 }
 
+.creatorAttributionContainer {
+  text-align: right;
+  display: none;
+  align-items: right;
+}
+
+.creatorAttributionText {
+  text-align: right;
+  align-items: right;
+}
+
+.creatorAttributionLink {
+  text-align: right;
+  align-items: right;
+}
+
+
 
 @media only screen and (max-width: 560px) {
   .footer {
