@@ -205,4 +205,9 @@
   .instagramServicesFooterIcon {
     padding: 0% 0% 3% 0%;
   }
+
+  .tokenMetricsCTA {
+    background-color: #ffffff;
+    text-align: center;
+  }
 }
