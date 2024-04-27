@@ -40,21 +40,21 @@ const About = () => {
             color: '#00F8BE'}}>- Decentralized Bot Marketplace -</div>
           <div className='aboutText' data-aos="fade-right" data-aos-delay="300" style={{
             textDecoration: 'none',
-            color: '#bbbbbb'}}>Start onboarding your next 1,000,000 users now:</div>
-          <a data-aos="flip-down" data-aos-delay="0" href='https://evanon.earth/nofunlabs' target="_blank" 
-          className='aboutText aboutLink' id='nofunlabsLink' onMouseOver={mouseover} onMouseLeave={mouseleave} style={{
+            color: '#bbbbbb'}}>Exponentiate your efficiency with bots that work for you:</div>
+          <a data-aos="flip-down" data-aos-delay="0" href='https://evanon.earth/aphid' target="_blank" 
+          className='aboutText aboutLink' id='aphidLink' onMouseOver={mouseover} onMouseLeave={mouseleave} style={{
             textDecoration: 'none',
             color: '#7CE2F9'}}>Learn More -></a>
           <br></br>
           <div className='aboutText aboutTitle' data-aos="fade-right" data-aos-delay="100">Blockchain Architect at EcoVerse</div>
           <div className='aboutText aboutTagline' data-aos="fade-right" data-aos-delay="200" style={{
             textDecoration: 'none',
-            color: '#ea49ff'}}>- Blockchain Onboarding Solutions -</div>
+            color: '#ea49ff'}}>- NFT Ticketing & Events Platform -</div>
           <div className='aboutText' data-aos="fade-right" data-aos-delay="300" style={{
             textDecoration: 'none',
-            color: '#bbbbbb'}}>Start onboarding your next 1,000,000 users now:</div>
-          <a data-aos="flip-down" data-aos-delay="0" href='https://evanon.earth/nofunlabs' target="_blank" 
-          className='aboutText aboutLink' id='nofunlabsLink' onMouseOver={mouseover} onMouseLeave={mouseleave} style={{
+            color: '#bbbbbb'}}>Engage attendees with free event photos, minted as NFTs:</div>
+          <a data-aos="flip-down" data-aos-delay="0" href='https://evanon.earth/ecoverse' target="_blank" 
+          className='aboutText aboutLink' id='ecoverseLink' onMouseOver={mouseover} onMouseLeave={mouseleave} style={{
             textDecoration: 'none',
             color: '#7CE2F9'}}>Learn More -></a>
           <br></br>
