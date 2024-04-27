@@ -2,12 +2,12 @@
   width: 100%;
   overflow: hidden;
   background-color: black;
-  padding: 3% 0% 0% 0%;
+  padding: 2.5% 0% 0% 0%;
 }
 
 .footerContainer {
   margin: 0% 0% 0% 0%;
-  padding: 0% 0% 0% 0%;
+  padding: 2% 0% 0% 0%;
   
 }
 
@@ -17,18 +17,23 @@
 
 .creatorAttributionContainer {
   text-align: right;
-  display: none;
   align-items: right;
+  display: inline;
+  font-size: 11px;
 }
+
 
 .creatorAttributionText {
   text-align: right;
+  display: inline;
   align-items: right;
+  color: #656565;
 }
 
 .creatorAttributionLink {
   text-align: right;
   align-items: right;
+  margin-right: 1%;
 }
 
 
