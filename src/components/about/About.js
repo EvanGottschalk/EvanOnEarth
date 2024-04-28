@@ -8,12 +8,12 @@ import './about.css'
 
 const About = () => {
 
-  function mouseover(event) {
+  function mouseOver(event) {
     let element = document.getElementById(event.target.id);
     element.style.transform = 'scale(1.20)';
   }
   
-  function mouseleave(event) {
+  function mouseLeave(event) {
     let element = document.getElementById(event.target.id);
     element.style.transform = 'scale(1.0)';
   }
@@ -30,7 +30,7 @@ const About = () => {
             textDecoration: 'none',
             color: '#bbbbbb'}}>Start onboarding your next 1,000,000 users now:</div>
           <a data-aos="flip-down" data-aos-delay="0" href='https://evanon.earth/nofunlabs' target="_blank" 
-          className='aboutText aboutLink' id='nofunlabsLink' onMouseOver={mouseover} onMouseLeave={mouseleave} style={{
+          className='aboutText aboutLink' id='nofunlabsLink' onMouseOver={mouseOver} onMouseLeave={mouseLeave} style={{
             textDecoration: 'none',
             color: '#7CE2F9'}}>Learn More -></a>
           <br></br>
@@ -42,7 +42,7 @@ const About = () => {
             textDecoration: 'none',
             color: '#bbbbbb'}}>Exponentiate your efficiency with bots that work for you:</div>
           <a data-aos="flip-down" data-aos-delay="0" href='https://evanon.earth/aphid' target="_blank" 
-          className='aboutText aboutLink' id='aphidLink' onMouseOver={mouseover} onMouseLeave={mouseleave} style={{
+          className='aboutText aboutLink' id='aphidLink' onMouseOver={mouseOver} onMouseLeave={mouseLeave} style={{
             textDecoration: 'none',
             color: '#7CE2F9'}}>Learn More -></a>
           <br></br>
@@ -54,7 +54,7 @@ const About = () => {
             textDecoration: 'none',
             color: '#bbbbbb'}}>Engage attendees with free event photos, minted as NFTs:</div>
           <a data-aos="flip-down" data-aos-delay="0" href='https://evanon.earth/ecoverse' target="_blank" 
-          className='aboutText aboutLink' id='ecoverseLink' onMouseOver={mouseover} onMouseLeave={mouseleave} style={{
+          className='aboutText aboutLink' id='ecoverseLink' onMouseOver={mouseOver} onMouseLeave={mouseLeave} style={{
             textDecoration: 'none',
             color: '#7CE2F9'}}>Learn More -></a>
           <br></br>
@@ -66,7 +66,7 @@ const About = () => {
             textDecoration: 'none',
             color: '#bbbbbb'}}>Your identity, your privacy, all in your custody. No "orb" required:</div>
           <a data-aos="flip-down" data-aos-delay="0" href='https://evanon.earth/brightid' target="_blank"
-          className='aboutText aboutLink' id='brightidLink' onMouseOver={mouseover} onMouseLeave={mouseleave} style={{
+          className='aboutText aboutLink' id='brightidLink' onMouseOver={mouseOver} onMouseLeave={mouseLeave} style={{
             textDecoration: 'none',
             color: '#7CE2F9'}}>Learn More -></a>
           <br></br>
@@ -78,7 +78,7 @@ const About = () => {
             textDecoration: 'none',
             color: '#bbbbbb'}}>Grow your dapp's userbase with free gas and token raffles:</div>
           <a data-aos="flip-down" data-aos-delay="00" href='https://evanon.earth/unitap' target="_blank"
-          className='aboutText aboutLink' id='unitapLink' onMouseOver={mouseover} onMouseLeave={mouseleave} style={{
+          className='aboutText aboutLink' id='unitapLink' onMouseOver={mouseOver} onMouseLeave={mouseLeave} style={{
             textDecoration: 'none',
             color: '#7CE2F9'}}>Learn More -></a>
         </div>

@@ -4,13 +4,24 @@ import React from 'react';
 import './footer.css'
 
 const Footer = () => {
+
+
+  function mouseOver(event) {
+    let element = document.getElementById(event.target.id);
+    element.style.color = '#ea49ff';
+  }
+  
+  function mouseLeave(event) {
+    let element = document.getElementById(event.target.id);
+    element.style.color = '#929292';
+  }
   
 
   return (
     <div className='footer'>
       <div className='creatorAttributionContainer'>
         <div className='creatorAttributionTextContainer footerTextContainer'>
-          <div className='creatorAttributionText'>Site created by </div><a className='creatorAttributionLink' href="https://twitter.com/EvanOnEarth_eth">@EvanOnEarth_eth</a>
+          <div className='creatorAttributionText'>Site created by </div><a id='creatorAttributionLink' className='creatorAttributionLink' href="https://twitter.com/EvanOnEarth_eth" onMouseOver={mouseOver} onMouseLeave={mouseLeave}>@EvanOnEarth_eth</a>
         </div>
       </div>
       <div className='footerContainer'>
