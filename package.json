@@ -2,6 +2,9 @@
   "name": "evanonearth",
   "homepage": "https://evanonearth.xyz",
   "version": "4.20.69",
+  "engines": { 
+    "node": "16.13.1" 
+  }, 
   "dependencies": {
     "@livepeer/ai": "^0.4.1",
     "aos": "^2.3.4",
