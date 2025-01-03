@@ -11,7 +11,8 @@ import "aos/dist/aos.css";
 
 import logo from '../../image/logo.png'
 
-import twitter_icon from '../../image/icons/twitter.png'
+import twitter_icon_black from '../../image/icons/twitter_black.png'
+import twitter_icon_white from '../../image/icons/twitter_white.png'
 import linkedin_icon from '../../image/icons/linkedin.png'
 import instagram_icon from '../../image/icons/instagram.png'
 
@@ -36,6 +37,13 @@ var mobile = false;
 if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
   console.log("Mobile device detected");
   mobile = true;
+};
+
+var tools_page
+if (window.location.href.includes("tools")) {
+  tools_page = true;
+} else {
+  tools_page = false;
 };
 
 
@@ -79,7 +87,7 @@ function mouseleave(event) {
 //# HTML
 
 return (
-  <div className='navbar'>
+  <div className='navbar' style={tools_page ? {backgroundColor: "#000000"} : {backgroundColor: "#ffffff"}}>
     {/* <div className='navbarMobile'>
       <div className='navbarCenterIcon'>
         <div className='navbarMobileTopRight '>MobileLeftTitle</div>
@@ -122,7 +130,7 @@ return (
               <img data-aos="fade-down" src={linkedin_icon} onMouseOver={mouseover} onMouseLeave={mouseleave} id='linkedinIcon' className='navbarIcon linkedinIcon'/>
             </a>
             <a href='https://twitter.com/EvanOnEarth_eth' target="_blank">
-              <img data-aos="fade-down-right" src={twitter_icon} onMouseOver={mouseover} onMouseLeave={mouseleave} id='twitterIcon' className='navbarIcon twitterIcon'/>
+              <img data-aos="fade-down-right" src={tools_page ? twitter_icon_white : twitter_icon_black} onMouseOver={mouseover} onMouseLeave={mouseleave} id='twitterIcon' className='navbarIcon twitterIcon'/>
             </a>
           </div>
         </div>

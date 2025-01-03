@@ -65,15 +65,15 @@
 
 .servicesFooterIconContainer {
   position: absolute;
-  margin-top: 5.5%;
+  margin-top: 2%;
   right: 10%;
   max-width: 45%;
 }
 
 .servicesFooterSocialsContainer {
-
-  max-width: 1920px;
-
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
 
@@ -108,21 +108,7 @@
   padding: 5% 0% 0% 0%;
 }
 
-.servicesLink:hover,
-.servicesFooterIcon:hover {
-  -webkit-transform: scale(1.10);
-  -moz-transform: scale(1.10);
-  -o-transform: scale(1.10);
-  transform: scale(1.10);
-}
 
-.servicesLink:active,
-.servicesFooterIcon:active {
-  -webkit-transform: scale(1.15);
-  -moz-transform: scale(1.15);
-  -o-transform: scale(1.15);
-  transform: scale(1.15);
-}
 
 @media only screen and (max-width: 560px) {
   .servicesBoxIMG {
@@ -146,9 +132,10 @@
     background-color: black;
   }
   .servicesTextContainer {
-    padding: 7% 0% 0% 4%;
+    padding: 7% 4% 0% 4%;
     margin: 0% 0% 0% 0%;
     color: white;
+    
   }
   
   .servicesText {
@@ -159,6 +146,7 @@
 
   .servicesDescription {
     color: #cccccc;
+    margin: 0% 3% 0% 3%;
   }
 
   .servicesLink {
@@ -182,7 +170,12 @@
   }
   
 
-  
+  .servicesBookNowText {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 21px !important;
+  }
   
   .servicesFooterIcon {
     width: 15%;
@@ -203,7 +196,7 @@
   }
   
   .instagramServicesFooterIcon {
-    padding: 0% 0% 3% 0%;
+    padding: 0% 0% 3% 1.5%;
   }
 
   .tokenMetricsCTA {

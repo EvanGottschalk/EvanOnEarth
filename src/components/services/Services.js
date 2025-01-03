@@ -44,8 +44,23 @@ const Services = () => {
           <br></br>
           <div data-aos="fade-left" data-aos-delay="600" className='servicesText servicesDescription' style={{
             textDecoration: 'none',
-            fontSize: '14.5px'}}>Book a 30-minute consultation for $99:</div>
+            fontSize: '18px'}}>Book a consultation for yourself or your team:</div>
+          <div data-aos="fade-left" data-aos-delay="600" className='servicesText servicesDescription' style={{
+            textDecoration: 'none',
+            fontSize: '14.5px'}}>• Master bitcoin and cryptocurrency asset management</div>
+          <div data-aos="fade-left" data-aos-delay="600" className='servicesText servicesDescription' style={{
+            textDecoration: 'none',
+            fontSize: '14.5px'}}>• Learn the answers to all your blockchain & AI questions</div>
+          <div data-aos="fade-left" data-aos-delay="600" className='servicesText servicesDescription' style={{
+            textDecoration: 'none',
+            fontSize: '14.5px'}}>• Get help with your cryptocurrency, NFT and AI project(s)</div>
+          <div data-aos="fade-left" data-aos-delay="600" className='servicesText servicesDescription' style={{
+            textDecoration: 'none',
+            fontSize: '14.5px'}}>• Fall in love with my flowing locks</div>
           <br></br>
+          <div data-aos="fade-left" data-aos-delay="600" className='servicesText servicesBookNowText' style={{
+            textDecoration: 'none',
+            fontSize: '18px', fontWeight: '30px'}}>- Book now for $99 -</div>
           <div data-aos="fade-left" data-aos-delay="800" className='paypalContainer'>
             <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
               <input type="hidden" name="cmd" value="_s-xclick" />
