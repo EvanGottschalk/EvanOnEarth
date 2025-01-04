@@ -1,3 +1,6 @@
+//--------------------------------------------------------------------------------------------------
+//# Imports
+
 import React, { useContext } from 'react';
 import SmartContractContext from '../../scripts/SmartContractContext';
 
@@ -6,11 +9,37 @@ import twitter_icon from '../../image/icons/twitter.png'
 import linkedin_icon from '../../image/icons/linkedin.png'
 import instagram_icon from '../../image/icons/instagram.png'
 
-
-
 import './services.css'
 
+
+
+
+
+
+
+
+
+
+
+
+//--------------------------------------------------------------------------------------------------
+//# Variables
+
+const delay_gap = 200;
+
+
+
+
+
+
+
+
+
+//AppStart
 const Services = () => {
+
+//--------------------------------------------------------------------------------------------------
+//# Functions
 
   function mouseover(event) {
     console.log(event.target.id);
@@ -24,44 +53,53 @@ const Services = () => {
   }
 
 
+
+
+
+
+
+
+//--------------------------------------------------------------------------------------------------
+//# HTML
+
   return (
     <div className='services'>
       <div className='servicesLeftContainer'>
         <div className='servicesRightTop'>
           <div className='servicesImageContainer'>
-            <img data-aos="fade-right" data-aos-delay="2000" src={services_image} alt='' className='servicesImage' />
+            <img data-aos="fade-right" data-aos-delay={delay_gap * 14} src={services_image} alt='' className='servicesImage' />
           </div>
         </div>
       </div>
       <div className='servicesRightContainer'>
         <div className='servicesTextContainer'>
-          <div data-aos="fade-left" data-aos-delay="200" className='servicesText' style={{
+          <div data-aos="fade-left" data-aos-delay={delay_gap * 1} className='servicesText' style={{
             textDecoration: 'underline',
             fontSize: '35px'}}>The Bull Market is Coming.</div>
-          <div data-aos="fade-left" data-aos-delay="400" className='servicesText' style={{
+          <div data-aos="fade-left" data-aos-delay={delay_gap * 2} className='servicesText' style={{
             textDecoration: 'none',
             fontSize: '25px'}}>Can you afford to wait?</div>
           <br></br>
-          <div data-aos="fade-left" data-aos-delay="600" className='servicesText servicesDescription' style={{
+          <div data-aos="fade-left" data-aos-delay={delay_gap * 3} className='servicesText servicesDescription' style={{
             textDecoration: 'none',
             fontSize: '18px'}}>Book a consultation for yourself or your team:</div>
-          <div data-aos="fade-left" data-aos-delay="600" className='servicesText servicesDescription' style={{
+          <div data-aos="fade-left" data-aos-delay={delay_gap * 4} className='servicesText servicesDescription' style={{
             textDecoration: 'none',
             fontSize: '14.5px'}}>• Master bitcoin and cryptocurrency asset management</div>
-          <div data-aos="fade-left" data-aos-delay="600" className='servicesText servicesDescription' style={{
+          <div data-aos="fade-left" data-aos-delay={delay_gap * 5} className='servicesText servicesDescription' style={{
             textDecoration: 'none',
             fontSize: '14.5px'}}>• Learn the answers to all your blockchain & AI questions</div>
-          <div data-aos="fade-left" data-aos-delay="600" className='servicesText servicesDescription' style={{
+          <div data-aos="fade-left" data-aos-delay={delay_gap * 6} className='servicesText servicesDescription' style={{
             textDecoration: 'none',
             fontSize: '14.5px'}}>• Get help with your cryptocurrency, NFT and AI project(s)</div>
-          <div data-aos="fade-left" data-aos-delay="600" className='servicesText servicesDescription' style={{
+          <div data-aos="fade-left" data-aos-delay={delay_gap * 7} className='servicesText servicesDescription' style={{
             textDecoration: 'none',
             fontSize: '14.5px'}}>• Fall in love with my flowing locks</div>
           <br></br>
-          <div data-aos="fade-left" data-aos-delay="600" className='servicesText servicesBookNowText' style={{
+          <div data-aos="fade-left" data-aos-delay={delay_gap * 8} className='servicesText servicesBookNowText' style={{
             textDecoration: 'none',
             fontSize: '18px', fontWeight: '30px'}}>- Book now for $99 -</div>
-          <div data-aos="fade-left" data-aos-delay="800" className='paypalContainer'>
+          <div data-aos="fade-left" data-aos-delay={delay_gap * 9} className='paypalContainer'>
             <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
               <input type="hidden" name="cmd" value="_s-xclick" />
               <input type="hidden" name="hosted_button_id" value="ALDLNQ6GM5HWY" />
@@ -84,8 +122,8 @@ const Services = () => {
           </div>
         </div>
         <div className='tokenMetricsCTA'>
-          <div data-aos="fade-left" data-aos-delay="1000">Pro tip!</div>
-          <div data-aos="fade-left" data-aos-delay="1200">
+          <div data-aos="fade-left" data-aos-delay={delay_gap * 10}>Pro tip!</div>
+          <div data-aos="fade-left" data-aos-delay={delay_gap * 11}>
             <span>You can easily </span>
             <a href='https://tokenmetrics.sjv.io/g1LqQr' className='linkToTokenMetrics' target="_blank">reduce risk in your crypto portfolio with AI -></a>
           </div>

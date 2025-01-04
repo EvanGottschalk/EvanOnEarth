@@ -18,9 +18,9 @@ a:active { text-decoration: none; }
 .navbarContainer {
   display: flex;
   width: 100%;
-  max-width: 1920px;
-  
-  align-items: flex-end;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   margin: 0px 0px 0px 0px;
   overflow: hidden;
 }
@@ -29,8 +29,30 @@ a:active { text-decoration: none; }
   width: 100%;
   display: flex;
   flex-direction: row;
+  align-items: left;
+  justify-content: left;
+  text-align: left;
+  z-index: 1;
 }
 
+.navbarCenter {
+  display: flex;
+  flex-direction: row;
+  width: 60%;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 0% 0% .5% 0%;
+  padding: 0% 0% 0% 0%;
+  position: absolute;
+  z-index: 10;
+  gap: 5%;
+}
+
+.navbarCenterButton {
+  font-size: 15px;
+  cursor: pointer;
+}
 
 
 .navbarRight {
@@ -39,83 +61,34 @@ a:active { text-decoration: none; }
   justify-content: right;
   float: right;
   margin: 0% 0% .5% 0%;
+  z-index: 1;
 }
+
 
 .navbarLogoImage {
   width: 20%;
   padding: 8px 0px 3px 8px;
+  cursor: pointer;
 }
-
-
-
 
 
 .navbarIcon {
   width: 4%;
-  padding: 0% 2% 0% 0%;
+  padding: 0% 0% 0% 0%;
+  margin: 1% 2% 0% 0%;
   cursor: pointer;
   align-items: right;
   justify-content: right;
   float: right;
 }
 
-.navbarLogoImage:hover,
-.navbarButton:hover,
-.navbarWalletButton:hover,
-.navbarIcon:hover {
-  -webkit-transform: scale(1.10);
-  -moz-transform: scale(1.10);
-  -o-transform: scale(1.10);
-  transform: scale(1.10);
-}
-
-.navbarLogoImage:active,
-.navbarButton:active,
-.navbarWalletButton:active,
-.navbarIcon:active {
-  -webkit-transform: scale(1.15);
-  -moz-transform: scale(1.15);
-  -o-transform: scale(1.15);
-  transform: scale(1.15);
-}
-
-
-.navbarMobileButton {
-  display: none;
-}
-.MobileDN {
-  display: none;
-}
-.navbarMobile {
-  display: none;
-}
-
 .twitterIcon {
-  padding: 0% 1% 0% 0%;
-  margin: -1% 0% 0% 0%;
+  padding: 0% 0% 0% 0%;
+  margin: 0% 1% 0% 0%;
   width: 6%;
 }
 
-.navbarMobileContainer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 150px;
-  width: 100%;
-  z-index: -1;
-  overflow: hidden;
-  transition: z-index 1s linear;
-}
 
-.navbarMobileContainerActive {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  z-index: 999;
-  overflow: hidden;
-}
 
 @media only screen and (max-width: 560px) {
   .navbar {
@@ -124,6 +97,9 @@ a:active { text-decoration: none; }
     padding: 0% 0% 0% 0%;
   }
   
+  .navbarCenter {
+    display: none;
+  }
 
   .navbarIcon {
     width: 8%;
@@ -142,8 +118,8 @@ a:active { text-decoration: none; }
   }
 
   .twitterIcon {
-    width: 12%;
-    margin: 0% 0% 0% 0%;
+    width: 13%;
+    margin: .5% 0% 0% 0%;
     padding: 0% 0% 0% 0%;
   }
 

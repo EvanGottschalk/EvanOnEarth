@@ -72,6 +72,7 @@ useEffect(() => {
 
 function mouseover(event) {
   let element = document.getElementById(event.target.id);
+  console.log('mouseover');
   element.style.transform = 'scale(1.20)';
 }
 
@@ -112,7 +113,7 @@ return (
         </div>
       </div>
     </div>*/}
-    <div className='navbarContainer SlideRightAnimation'>
+    <div className='navbarContainer'>
       <div className='navbarLeft'>
         <div id="navbarLogo" className='navbarLogo'>
           <a href={window.location['origin']}>
@@ -120,17 +121,28 @@ return (
           </a>
         </div>
       </div>
+      <div className='navbarCenter'>
+        <a className='navbarCenterButtonContainer' data-aos="fade-down-right" href={window.location['origin']} id="navbarCenterButton1" onMouseOver={mouseover} onMouseLeave={mouseleave}>
+          <span className='navbarCenterButton' data-aos="fade-down" style={tools_page ? {color: "#ffffff"} : {color: "#000000"}} id="navbarCenterButton1" onMouseOver={mouseover} onMouseLeave={mouseleave} >Home</span>
+        </a>
+        <a className='navbarCenterButtonContainer' data-aos="fade-down" href={window.location['origin'] + "/consultation"} id="navbarCenterButton2" onMouseOver={mouseover} onMouseLeave={mouseleave}>
+          <span className='navbarCenterButton' data-aos="fade-down" style={tools_page ? {color: "#ffffff"} : {color: "#000000"}} id="navbarCenterButton2" onMouseOver={mouseover} onMouseLeave={mouseleave} >Consultation</span>
+        </a>
+        <a className='navbarCenterButtonContainer' data-aos="fade-down-left" href={window.location['origin'] + '/tools/imagegenerator'} id="navbarCenterButton3" onMouseOver={mouseover} onMouseLeave={mouseleave}>
+          <span className='navbarCenterButton' data-aos="fade-down" style={tools_page ? {color: "#ffffff"} : {color: "#000000"}} id="navbarCenterButton3" onMouseOver={mouseover} onMouseLeave={mouseleave} >AI Image Generator</span>
+        </a>
+      </div>
       <div className='navbarRight'>
         <div className='navbarSocialsContainer'>
           <div className='navbarIconContainer'>
-            <a href='https://www.instagram.com/evanonearth_eth/' target="_blank">
-              <img data-aos="fade-down-left" src={instagram_icon} onMouseOver={mouseover} onMouseLeave={mouseleave} id='instagramIcon' className='navbarIcon instagramIcon'/>
+            <a href='https://www.instagram.com/evanonearth_eth/' target="_blank" rel="noreferrer">
+              <img data-aos="fade-down-left" src={instagram_icon} onMouseOver={mouseover} onMouseLeave={mouseleave} id='instagramIcon' className='navbarIcon instagramIcon' alt="Instagram"/>
             </a>
-            <a href='https://www.linkedin.com/in/evan-gottschalk/' target="_blank">
-              <img data-aos="fade-down" src={linkedin_icon} onMouseOver={mouseover} onMouseLeave={mouseleave} id='linkedinIcon' className='navbarIcon linkedinIcon'/>
+            <a href='https://www.linkedin.com/in/evan-gottschalk/' target="_blank" rel="noreferrer">
+              <img data-aos="fade-down" src={linkedin_icon} onMouseOver={mouseover} onMouseLeave={mouseleave} id='linkedinIcon' className='navbarIcon linkedinIcon' alt="LinkedIn"/>
             </a>
-            <a href='https://twitter.com/EvanOnEarth_eth' target="_blank">
-              <img data-aos="fade-down-right" src={tools_page ? twitter_icon_white : twitter_icon_black} onMouseOver={mouseover} onMouseLeave={mouseleave} id='twitterIcon' className='navbarIcon twitterIcon'/>
+            <a href='https://twitter.com/EvanOnEarth_eth' target="_blank" rel="noreferrer">
+              <img data-aos="fade-down-right" src={tools_page ? twitter_icon_white : twitter_icon_black} onMouseOver={mouseover} onMouseLeave={mouseleave} id='twitterIcon' className='navbarIcon twitterIcon' alt="Twitter"/>
             </a>
           </div>
         </div>

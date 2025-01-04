@@ -434,7 +434,7 @@ const ImageGeneratorGUI = () => {
       console.log('image_generator_response.len', image_generator_response.length);
       console.log('image_generator_response', image_generator_response);
       image_generator_promise = image_generator_response.then((result) => {
-        console.log(result);
+        console.log("result", result);
         // if (Array.isArray(result)) {
         //   loop = false;
         //   image_generator_result = result;
@@ -720,10 +720,6 @@ const ImageGeneratorGUI = () => {
           </div>
         </div>
       </div>
-      {/* <a data-aos="flip-down" data-aos-delay="0" href='https://evanon.earth/nofunlabs' target="_blank" 
-      className='imageGeneratorGUIText imageGeneratorGUILink' id='nofunlabsLink' onMouseOver={mouseOver} onMouseLeave={mouseLeave} style={{
-        textDecoration: 'none',
-        color: '#7CE2F9'}}>Learn More -></a> */}
     </div>
   )
 }

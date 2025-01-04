@@ -1,4 +1,9 @@
+//--------------------------------------------------------------------------------------------------
+//# Imports
+
 import React from 'react'
+import Aos from "aos";
+import "aos/dist/aos.css";
 
 import consultation_image from '../../image/services-image.png'
 
@@ -6,7 +11,34 @@ import consultation_image from '../../image/services-image.png'
 
 import './consultation.css'
 
+
+
+
+
+//--------------------------------------------------------------------------------------------------
+//# Variables
+
+const delay_gap = 200;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//AppStart
 const Consultation = () => {
+
+//--------------------------------------------------------------------------------------------------
+//# HTML
+
   return (
     <div className='consultation'>
       <div className='consultationLeftContainer'>
