@@ -35,7 +35,6 @@ const livepeerAI = new Livepeer({
 //--------------------------------------------------------------------------------------------------
 //# Functions
 
-
 export async function generateImage(prompt, negative_prompt, width, height, guidance_scale, num_inference_steps, model, provider="Livepeer") {
   console.log('\nimage_generator.js >>> RUNNING generateImage()');
   console.log('prompt:', prompt);
