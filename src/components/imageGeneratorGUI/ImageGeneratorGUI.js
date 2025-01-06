@@ -14,6 +14,7 @@ import generating_placeholder_0 from '../../image/generating/generating_0.webp';
 import generating_placeholder_1 from '../../image/generating/generating_1.webp';
 import generating_placeholder_2 from '../../image/generating/generating_2.webp';
 import generating_placeholder_3 from '../../image/generating/generating_3.webp';
+import loading_placeholder from '../../image/generating/image_loading_preview.webp';
 import { all } from 'redux-saga/effects';
 
 
@@ -403,6 +404,12 @@ const ImageGeneratorGUI = () => {
   
   // }
 
+  async function displayImage(image_element, new_image) {
+    image_element.src = new_image;
+    console.log('Image Displayed!', new_image);
+    console.log('New Image src:', image_element.src);
+  };
+
 
 
   async function handleImageGeneration(prompt, negative_prompt, guidance_scale, num_inference_steps, model_currently_generating, provider_currently_generating, output_ID) {
@@ -448,12 +455,16 @@ const ImageGeneratorGUI = () => {
         //   image_generator_result = result;
         // };
         if (typeof result === 'string') {
+          image_element.src = loading_placeholder;
+          
           loop = false;
           image_generator_result = result;
         };
       });
       console.log('promise', image_generator_promise);
     };
+
+    await pause(100); // brief pause to assign new image URL, which comes right after displaying the loading placeholder
   
     console.log('image_generator_response', image_generator_response);
     console.log('image_generator_response[image_URL]', image_generator_response['image_URL']);
@@ -466,7 +477,8 @@ const ImageGeneratorGUI = () => {
 
     image_URL = image_generator_result;
     image_title_element.innerHTML = image_short_name;
-    image_element.src = image_URL;
+    // image_element.src = image_URL;
+    await displayImage(image_element, image_URL);
   
     return(image_URL);
   }
