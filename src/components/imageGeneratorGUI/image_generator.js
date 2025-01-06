@@ -97,10 +97,11 @@ async function generateImage_DALLE(prompt, width=1024, height=1024, model="black
 
 
     console.log("DALL-E Response `data`", data);
-    console.log("DALL-E Response `data.imageUrl`", data.imageUrl);
+    // console.log("DALL-E Response `data.imageUrl`", data.imageUrl);
+    console.log("DALL-E Response `data.imageURL`", data.image_URL);
     // console.log("DALL-E Response `data.data.imageUrl`", data.data.imageUrl);
     // console.log("DALL-E Response `data.data[0].imageUrl`", data.data[0].imageUrl);
-    return(data.imageUrl);
+    return(data.image_URL);
   } catch (error) {
       console.error('Error generating image:', error)
   } finally {
