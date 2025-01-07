@@ -59,6 +59,13 @@
   width: 41px;
 }
 
+.imageGeneratorNumberDisplay {
+  height: 16px;
+  width: 41px;
+  text-align: center;
+  margin: 3% 0% 0% 3%;
+}
+
 .imageGeneratorGUI_selectList {
   padding: 0px 0px 1px 0px;
   width: 40%;
@@ -98,6 +105,17 @@
   font-size: 18px;
   margin-top: 2%;
   margin-bottom: 2%;
+}
+
+.imageGeneratorGUIgenerationTimeContainer {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  display: none;
+}
+
+.imageGeneratorGUI_pauseButton {
+  width: 100px;
 }
 
 .imageGeneratorGUIpromptContainer {
@@ -221,6 +239,11 @@
 .banner_imageGeneratorGUISubTitle {
   font-size: 13px;
   color: #848484;
+}
+
+.imageGeneratorGUIrow {
+  display: flex;
+  flex-direction: row;
 }
 
 

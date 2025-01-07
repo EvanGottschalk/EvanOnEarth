@@ -53,6 +53,8 @@ let provider = "Livepeer";
 let image_URL = default_image;
 let generated_text = '...';
 
+let generation_time = 0;
+let pause_generation = false;
 
 let mobile = window.innerWidth <= 600;
 // let mobile = false;
@@ -236,7 +238,16 @@ const ImageGeneratorGUI = () => {
       navigator.clipboard.writeText(default_negative_prompt);
     } else if (element_ID === 'copySimplifierPrefixButton') {
       navigator.clipboard.writeText(simplifier_prefix);
-    } else {
+    } else if (element_ID === 'pauseButton') {
+      pause_generation = !pause_generation;
+      if (pause_generation) {
+        event.target.value = "Resume";
+      } else {
+        event.target.value = "Pause";
+      };
+    } else if (element_ID === 'generateImageButton') {
+      document.getElementById('generationTimeContainer').style.display = 'block';
+
       const checked_models = await getCheckedModels();
       quantity = document.getElementById("dropdownQuantity").value;
       console.log('quantity', quantity);
@@ -254,15 +265,9 @@ const ImageGeneratorGUI = () => {
         console.log('model_currently_generating', model_currently_generating);
         console.log('provider', provider);
         for (let output_ID = 0; output_ID < quantity; output_ID++) {
-          if (event.target.id === 'generateImageButton') {
-            console.log('output_ID', output_ID);
-            image_URL = await handleImageGeneration(prompt, negative_prompt, guidance_scale, num_inference_steps, model_currently_generating, provider_currently_generating, output_ID);
-            console.log("image_URL:", image_URL);
-          } else if (event.target.id === 'generateTextButton') {
-            // let image_generator_response, image_generator_promise, image_generator_result, x;
-            generated_text = await handleTextGeneration(prompt, checked_models[i]);
-            console.log("generated_text", generated_text);
-          };
+          console.log('output_ID', output_ID);
+          image_URL = await handleImageGeneration(prompt, negative_prompt, guidance_scale, num_inference_steps, model_currently_generating, provider_currently_generating, output_ID);
+          console.log("image_URL:", image_URL);
         };
       };
     };
@@ -405,6 +410,7 @@ const ImageGeneratorGUI = () => {
   // }
 
   async function displayImage(image_element, new_image) {
+    console.log('\nImageGeneratorGUI >>> RUNNING displayImage()');
     image_element.src = new_image;
     console.log('Image Displayed!', new_image);
     console.log('New Image src:', image_element.src);
@@ -413,6 +419,8 @@ const ImageGeneratorGUI = () => {
 
 
   async function handleImageGeneration(prompt, negative_prompt, guidance_scale, num_inference_steps, model_currently_generating, provider_currently_generating, output_ID) {
+    console.log('\nImageGeneratorGUI >>> RUNNING handleImageGeneration()');
+    // Page element setup
     var image_title_element = document.getElementById('imageTitle_' + model_currently_generating);
     var image_short_name = image_title_element.innerHTML;
     var image_element;
@@ -421,60 +429,56 @@ const ImageGeneratorGUI = () => {
     } else {
       image_element = document.getElementById('generatedImage_' + model_currently_generating + '_' + output_ID.toString());
     }
-  
-    // image_URL_element.innerHTML = "Image URL: Generating";
     image_title_element.innerHTML = image_short_name + " Generating";
     image_element.src = generating_placeholder_0;
-  
-    let image_generator_response, image_generator_promise, image_generator_result, x;
-    image_generator_response = image_generator.generateImage(prompt, negative_prompt, 512, 512, guidance_scale, num_inference_steps, model_currently_generating, provider_currently_generating);
+    const generation_time_element = document.getElementById('generationTime');
     
-  
+    // Image generation
+    let image_generator_response, image_generator_promise, image_generator_result;
+    image_generator_response = image_generator.generateImage(prompt, negative_prompt, 512, 512, guidance_scale, num_inference_steps, model_currently_generating, provider_currently_generating);
+
+    // Loop
+    var number_of_loops = 0;
     var loop_count = 1;
     var loop = true;
     console.log('len', image_generator_response.length);
     console.log(image_generator_response);
     while ( loop ) {
       await pause(500);
-      if (loop_count > 3) {
-        image_title_element.innerHTML = image_short_name + " Generating";
-        image_element.src = generating_placeholder_0;
-        loop_count = 0;
-      } else {
-        image_title_element.insertAdjacentText('beforeEnd', '.');
-        image_element.src = generating_placeholder_list[loop_count];
-      }
-      loop_count+=1;
-      console.log("loop_count", loop_count);
-      console.log('image_generator_response.len', image_generator_response.length);
-      console.log('image_generator_response', image_generator_response);
-      image_generator_promise = image_generator_response.then((result) => {
-        console.log("result", result);
-        // if (Array.isArray(result)) {
-        //   loop = false;
-        //   image_generator_result = result;
-        // };
-        if (typeof result === 'string') {
-          image_element.src = loading_placeholder;
-          
-          loop = false;
-          image_generator_result = result;
+      if (!pause_generation) {
+        if (loop_count % 2 === 0) {
+          generation_time += 1;
+          generation_time_element.value = await convertSecondsToTime(generation_time);
         };
-      });
-      console.log('promise', image_generator_promise);
+        if (loop_count > 3) {
+          image_title_element.innerHTML = image_short_name + " Generating";
+          image_element.src = generating_placeholder_0;
+          loop_count = 0;
+          number_of_loops++;
+          console.log('number_of_loops', number_of_loops);
+        } else {
+          image_title_element.insertAdjacentText('beforeEnd', '.');
+          image_element.src = generating_placeholder_list[loop_count];
+        };
+        loop_count+=1;
+        // console.log("loop_count", loop_count);
+        // console.log('image_generator_response.len', image_generator_response.length);
+        // console.log('image_generator_response', image_generator_response);
+        image_generator_promise = image_generator_response.then((result) => {
+          console.log("result", result);
+          if (typeof result === 'string') {
+            image_element.src = loading_placeholder;
+            loop = false;
+            image_generator_result = result;
+          };
+        });
+      };
     };
 
-    await pause(100); // brief pause to assign new image URL, which comes right after displaying the loading placeholder
-  
     console.log('image_generator_response', image_generator_response);
     console.log('image_generator_response[image_URL]', image_generator_response['image_URL']);
-    // const image_URL = image_generator_result[0]['url'];
 
-    // if (model_currently_generating === 'DALL-E') {
-    //   image_generator_result = image_generator_result['image_URL']
-    // };
-
-
+    await pause(100); // brief pause to assign new image URL, which comes right after displaying the loading placeholder
     image_URL = image_generator_result;
     image_title_element.innerHTML = image_short_name;
     // image_element.src = image_URL;
@@ -542,6 +546,16 @@ const ImageGeneratorGUI = () => {
     .catch((err) => {
       console.error("Failed to copy URL:", err);
     });
+  };
+
+
+  async function convertSecondsToTime(seconds) {
+    const total_minutes = Math.floor(seconds / 60);
+    const seconds_remainder = seconds % 60; 
+
+    const formatted_seconds = seconds_remainder.toString().padStart(2, '0');
+
+    return `${total_minutes}:${formatted_seconds}`;
   };
 
 
@@ -616,8 +630,12 @@ const ImageGeneratorGUI = () => {
         </label>
         <label className="imageGeneratorGUImodelOption">
           <input type="checkbox" value="DALL-E" onChange={handleModelChange}/>
-          DALL-E
+          DALL-E 3
         </label>
+        {/* <label className="imageGeneratorGUImodelOption">
+          <input type="checkbox" value="DALL-E" onChange={handleModelChange}/>
+          DALL-E 2
+        </label> */}
       </div>
       <div className='imageGeneratorGUITextContainer'>
         <div className='imageGeneratorGUITitle' data-aos="fade-right" data-aos-delay={15 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" style={{
@@ -670,6 +688,15 @@ const ImageGeneratorGUI = () => {
           <span className='banner_imageGeneratorGUITitle' id="banner_imageGeneratorGUITitleContainer" data-aos-delay={2 * delay_gap} data-aos="zoom-in">Image Outputs</span>
           {/* <span className='banner_imageGeneratorGUISubTitle' id="banner_imageGeneratorGUITitleContainer" data-aos="zoom-in" data-aos-delay={3 * delay_gap} target="_blank">@EvanOnEarth_eth</span> */}
         </div>
+      </div>
+      <div className='imageGeneratorGUIgenerationTimeContainer ' id='generationTimeContainer'>
+        <div className='imageGeneratorGUIrow'>
+          <div className='imageGeneratorGUITitle' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+            Generation Time:
+          </div>
+          <input id='generationTime' className='imageGeneratorGUIpromptEntry imageGeneratorNumberDisplay' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" value="0:00" readOnly/>
+        </div>
+        <input value="Pause" className="imageGeneratorGUI_submitButton imageGeneratorGUI_pauseButton" id="pauseButton" type="button" data-aos="fade-right" data-aos-delay={20 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" onClick={handleSubmitClick}/>
       </div>
       <div className="imageGeneratorGUI_allOutputContainer" id="imageGeneratorGUI_allOutputContainer">
         <div className='imageGeneratorGUImodelOutputContainer' id="modelOutputContainer_black-forest-labs/FLUX.1-dev">

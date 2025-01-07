@@ -3,10 +3,6 @@
 
 import { Livepeer } from "@livepeer/ai";
 
-// console.log("API Key in image_generator.js:", process.env.REACT_APP_OPENAI_API_KEY);
-
-
-
 export default { generateImage }
 
 
@@ -17,6 +13,8 @@ export default { generateImage }
 //--------------------------------------------------------------------------------------------------
 //# Variables
 
+const API_URL = 'https://alchm-backend.onrender.com/generate-image';
+
 const livepeerAI = new Livepeer({
   httpBearer: "",
 });
@@ -24,7 +22,14 @@ const livepeerAI = new Livepeer({
 
 
 
-
+const default_prompt = "a magic pizza with a face";
+const default_negative_prompt = "";
+const default_width = 512;
+const default_height = 512;
+const default_guidance_scale = "";
+const default_num_inference_steps = "";
+const default_model = "black-forest-labs/FLUX.1-dev";
+const default_provider = "Livepeer";
 
 
 
@@ -35,8 +40,17 @@ const livepeerAI = new Livepeer({
 //--------------------------------------------------------------------------------------------------
 //# Functions
 
-export async function generateImage(prompt, negative_prompt, width, height, guidance_scale, num_inference_steps, model, provider="Livepeer") {
+export async function generateImage(
+ prompt=default_prompt,
+ negative_prompt=default_negative_prompt,
+ width=default_width,
+ height=default_height,
+ guidance_scale=default_guidance_scale,
+ num_inference_steps=default_num_inference_steps,
+ model=default_model,
+ provider=default_provider) {
   console.log('\nimage_generator.js >>> RUNNING generateImage()');
+
   console.log('prompt:', prompt);
   console.log('negative_prompt:', negative_prompt);
   console.log('width:', width);
@@ -45,20 +59,53 @@ export async function generateImage(prompt, negative_prompt, width, height, guid
   console.log('num_inference_steps:', num_inference_steps);
   console.log('model:', model);
   console.log('provider:', provider);
-  let image_URL;
-  if (provider === "Livepeer") {
-    image_URL = generateImage_Livepeer(prompt, negative_prompt, width, height, guidance_scale, num_inference_steps, model);
-  } else if (provider === "OpenAI") {
-    image_URL = generateImage_DALLE(prompt, width, height, model);
-  }
+  
+  console.log('generateImage() -> REQUEST SENT to', API_URL);
+  try {
+    const response = await fetch(API_URL, {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+        },
+      body: JSON.stringify({ prompt, negative_prompt, width, height, guidance_scale, num_inference_steps, model, provider })
+    })
+    if (!response.ok) {
+      throw new Error(`Server error: ${response.status}`);
+    };
+    const data = await response.json()
 
-  return(image_URL);
-}
+    console.log('generateImage() -> RESPONSE RECEIVED from', API_URL);
+    console.log('data', data);
+
+    return(data.image_URL);
+
+  } catch (error) {
+    console.error('Error generating image:', error)
+  } finally {
+    console.log("Done generating image!")
+  };
+
+  // let image_URL;
+  // if (provider === "Livepeer") {
+  //   image_URL = generateImage_Livepeer(prompt, negative_prompt, width, height, guidance_scale, num_inference_steps, model);
+  // } else if (provider === "OpenAI") {
+  //   image_URL = generateImage_DALLE(prompt, width, height, model);
+  // }
+
+  // return(image_URL);
+};
 
 
-async function generateImage_Livepeer(prompt, negative_prompt="", width=1024, height=1024, guidance_scale=10, num_inference_steps=10,
+async function generateImage_Livepeer(prompt, negative_prompt="", width=1024, height=1024, guidance_scale, num_inference_steps,
   model="black-forest-labs/FLUX.1-dev") {
   console.log('\nimage_generator.js >>> RUNNING generateImage_Livepeer()');
+  console.log('prompt:', prompt);
+  console.log('negative_prompt:', negative_prompt);
+  console.log('width:', width);
+  console.log('height:', height);
+  console.log('guidance_scale:', guidance_scale);
+  console.log('num_inference_steps:', num_inference_steps);
+  console.log('model:', model);
   const result = await livepeerAI.generate.textToImage({
     prompt: prompt,
     negative_prompt: negative_prompt,
@@ -75,7 +122,7 @@ async function generateImage_Livepeer(prompt, negative_prompt="", width=1024, he
   return(result.imageResponse.images[0]['url']);
 }
 
-async function generateImage_DALLE(prompt, width=1024, height=1024, model="black-forest-labs/FLUX.1-dev") {
+async function generateImage_DALLE(prompt, width=1024, height=1024, model="DALL-E 3") {
   console.log('\nimage_generator.js >>> RUNNING generateImage_DALLE()');
   try {
     const response = await fetch('https://alchm-backend.onrender.com/generate-image', {
@@ -83,7 +130,7 @@ async function generateImage_DALLE(prompt, width=1024, height=1024, model="black
       headers: {
           'Content-Type': 'application/json',
         },
-      body: JSON.stringify({ prompt })
+      body: JSON.stringify({ prompt, model })
     })
 
     if (!response.ok) {
@@ -91,16 +138,13 @@ async function generateImage_DALLE(prompt, width=1024, height=1024, model="black
     }
 
     const data = await response.json()
-
-
-
-
-    console.log("DALL-E Response `data`", data);
-    // console.log("DALL-E Response `data.imageUrl`", data.imageUrl);
-    console.log("DALL-E Response `data.imageURL`", data.image_URL);
-    // console.log("DALL-E Response `data.data.imageUrl`", data.data.imageUrl);
-    // console.log("DALL-E Response `data.data[0].imageUrl`", data.data[0].imageUrl);
+    // console.log("DALL-E Response `data`", data);
+    // // console.log("DALL-E Response `data.imageUrl`", data.imageUrl);
+    // console.log("DALL-E Response `data.imageURL`", data.image_URL);
+    // // console.log("DALL-E Response `data.data.imageUrl`", data.data.imageUrl);
+    // // console.log("DALL-E Response `data.data[0].imageUrl`", data.data[0].imageUrl);
     return(data.image_URL);
+
   } catch (error) {
       console.error('Error generating image:', error)
   } finally {
