@@ -303,7 +303,7 @@
   }
 
   .imageGeneratorGUI_submitButton {
-    margin-top: 20px;
+    margin-top: 3%;
   }
 
   .banner_imageGeneratorGUI {
@@ -354,5 +354,10 @@
 
   .imageGeneratorGUIdropdownList {
     width: 58px;
+  }
+
+  .imageGeneratorNumberDisplay {
+    margin: 4% 0% 0% 2%;
+    width: 48px;
   }
 }
