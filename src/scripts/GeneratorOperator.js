@@ -66,9 +66,10 @@ export async function generateImage(prompt, negative_prompt, width, height, guid
     return(data.image_URL);
 
   } catch (error) {
-    console.error('Error generating image:', error)
+    console.error('Error generating image:', error);
+    return('error');
   } finally {
-    console.log("Done generating image!")
+    console.log("Done generating image!");
   };
 };
 

@@ -482,11 +482,17 @@ const ImageGeneratorGUI = () => {
         // console.log('image_generator_response.len', image_generator_response.length);
         // console.log('image_generator_response', image_generator_response);
         image_generator_promise = image_generator_response.then((result) => {
-          console.log("result", result);
+          console.log("result:", result);
           if (typeof result === 'string') {
-            image_element.src = loading_placeholder;
-            loop = false;
-            image_generator_result = result;
+            if (result === 'error') {
+              // image_element.src = generation_failed_placeholder;
+              loop = false;
+              image_generator_result = generation_failed_placeholder
+            } else {
+              image_element.src = loading_placeholder;
+              loop = false;
+              image_generator_result = result;
+            };
           };
         });
       };
