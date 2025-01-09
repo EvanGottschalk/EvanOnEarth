@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import Aos from "aos";
 import "aos/dist/aos.css";
-import image_generator from "./image_generator";
+import image_generator from "../../scripts/image_generator";
 import text_generator from "./text_generator";
 
 import './imageGeneratorGUI.css'
@@ -15,6 +15,7 @@ import generating_placeholder_1 from '../../image/generating/generating_1.webp';
 import generating_placeholder_2 from '../../image/generating/generating_2.webp';
 import generating_placeholder_3 from '../../image/generating/generating_3.webp';
 import loading_placeholder from '../../image/generating/image_loading_preview.webp';
+import generation_failed_placeholder from '../../image/generating/generation_failed.webp'
 import { all } from 'redux-saga/effects';
 
 
@@ -247,6 +248,7 @@ const ImageGeneratorGUI = () => {
       };
     } else if (element_ID === 'generateImageButton') {
       document.getElementById('generationTimeContainer').style.display = 'block';
+      await setGenerationTime(0);
 
       const checked_models = await getCheckedModels();
       quantity = document.getElementById("dropdownQuantity").value;
@@ -416,6 +418,22 @@ const ImageGeneratorGUI = () => {
     console.log('New Image src:', image_element.src);
   };
 
+  async function setGenerationTime(seconds) {
+    console.log('\nImageGeneratorGUI >>> RUNNING setGenerationTime()');
+
+    generation_time = seconds;
+    const generation_time_element = document.getElementById('generationTime');
+
+    const total_minutes = Math.floor(seconds / 60);
+    const seconds_remainder = seconds % 60; 
+    const formatted_seconds = seconds_remainder.toString().padStart(2, '0');
+    const formatted_time = `${total_minutes}:${formatted_seconds}`;
+
+    generation_time_element.value = formatted_time;
+
+    return(formatted_time);
+  };
+
 
 
   async function handleImageGeneration(prompt, negative_prompt, guidance_scale, num_inference_steps, model_currently_generating, provider_currently_generating, output_ID) {
@@ -431,7 +449,6 @@ const ImageGeneratorGUI = () => {
     }
     image_title_element.innerHTML = image_short_name + " Generating";
     image_element.src = generating_placeholder_0;
-    const generation_time_element = document.getElementById('generationTime');
     
     // Image generation
     let image_generator_response, image_generator_promise, image_generator_result;
@@ -448,7 +465,7 @@ const ImageGeneratorGUI = () => {
       if (!pause_generation) {
         if (loop_count % 2 === 0) {
           generation_time += 1;
-          generation_time_element.value = await convertSecondsToTime(generation_time);
+          await setGenerationTime(generation_time);
         };
         if (loop_count > 3) {
           image_title_element.innerHTML = image_short_name + " Generating";
@@ -549,14 +566,7 @@ const ImageGeneratorGUI = () => {
   };
 
 
-  async function convertSecondsToTime(seconds) {
-    const total_minutes = Math.floor(seconds / 60);
-    const seconds_remainder = seconds % 60; 
 
-    const formatted_seconds = seconds_remainder.toString().padStart(2, '0');
-
-    return `${total_minutes}:${formatted_seconds}`;
-  };
 
 
 
@@ -681,7 +691,7 @@ const ImageGeneratorGUI = () => {
       </div>
       <div className='imageGeneratorGUI_modelDescription' id='textOutput' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">...</div>
       <div className='imageGeneratorGUITextContainer'>
-        <input value="Generate Image(s)" className="imageGeneratorGUI_submitButton" id="generateImageButton" type="submit" data-aos="fade-right" data-aos-delay={20 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" onClick={handleSubmitClick}/>
+        <input value="Generate" className="imageGeneratorGUI_submitButton" id="generateImageButton" type="submit" data-aos="fade-right" data-aos-delay={20 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" onClick={handleSubmitClick}/>
       </div>
       <div className='banner_imageGeneratorGUI'>
         <div className='banner_imageGeneratorGUITitleContainer' data-aos="fade-in" data-aos-delay={delay_gap * 1} id='banner_imageGeneratorGUITitleContainer'>

@@ -3,7 +3,7 @@
 
 // import { Livepeer } from "@livepeer/ai";
 
-export default { generateImage }
+export default { generateImage, generateText };
 
 
 
@@ -15,7 +15,9 @@ export default { generateImage }
 //--------------------------------------------------------------------------------------------------
 //# Variables
 
-const API_URL = 'https://alchm-backend.onrender.com/generate-image';
+const API_URL = 'https://alchm-backend.onrender.com';
+const API_endpoints = {'text_to_image': '/generate-image',
+                       'text_to_text': '/generate-text'};
 
 // const livepeerAI = new Livepeer({
 //   httpBearer: "",
@@ -44,9 +46,9 @@ export async function generateImage(prompt, negative_prompt, width, height, guid
   console.log('model:', model);
   console.log('provider:', provider);
   
-  console.log('generateImage() -> REQUEST SENT to', API_URL);
+  console.log('generateImage() -> REQUEST SENT to', API_URL + API_endpoints['text_to_image']);
   try {
-    const response = await fetch(API_URL, {
+    const response = await fetch(API_URL + API_endpoints['text_to_image'], {
       method: 'POST',
       headers: {
           'Content-Type': 'application/json',
@@ -58,7 +60,7 @@ export async function generateImage(prompt, negative_prompt, width, height, guid
     };
     const data = await response.json()
 
-    console.log('generateImage() -> RESPONSE RECEIVED from', API_URL);
+    console.log('generateImage() -> RESPONSE RECEIVED from', API_URL + API_endpoints['text_to_image']);
     console.log('data', data);
 
     return(data.image_URL);
@@ -69,6 +71,82 @@ export async function generateImage(prompt, negative_prompt, width, height, guid
     console.log("Done generating image!")
   };
 };
+
+
+export async function generateText(prompt, temperature, max_tokens, top_p, frequency_penalty, presence_penalty, stop, user, model, provider) {
+  console.log('\nimage_generator.js >>> RUNNING generateText()');
+
+  console.log('prompt:', prompt);
+  console.log('temperature:', temperature);
+  console.log('max_tokens:', max_tokens);
+  console.log('top_p:', top_p);
+  console.log('frequency_penalty:', frequency_penalty);
+  console.log('presence_penalty:', presence_penalty);
+  console.log('stop:', stop);
+  console.log('user:', user);
+  console.log('model:', model);
+  console.log('provider:', provider);
+  
+  console.log('generateText() -> REQUEST SENT to', API_URL + API_endpoints['text_to_text']);
+  try {
+    const response = await fetch(API_URL + API_endpoints['text_to_text'], {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+        },
+      body: JSON.stringify({ prompt, temperature, max_tokens, top_p, frequency_penalty, presence_penalty, stop, user, model, provider })
+    })
+    if (!response.ok) {
+      throw new Error(`Server error: ${response.status}`);
+    };
+    const data = await response.json()
+
+    console.log('generateText() -> RESPONSE RECEIVED from', API_URL + API_endpoints['text_to_text']);
+    console.log('data', data);
+
+    return(data.generated_text);
+
+  } catch (error) {
+    console.error('Error generating text:', error)
+  } finally {
+    console.log("Done generating text!")
+  };
+};
+
+
+
+// async function generateText_OpenAI(prompt, model="gpt-3.5-turbo") {
+//   try {
+//     const response = await fetch('https://alchm-backend.onrender.com/generate-text', {
+//       method: 'POST',
+//       headers: {
+//           'Content-Type': 'application/json',
+//         },
+//       body: JSON.stringify({ prompt })
+//     })
+
+//     if (!response.ok) {
+//       throw new Error(`Server error: ${response.status}`);
+//     }
+
+//     const data = await response.json()
+
+
+
+
+//     console.log("DALL-E Response `data`", data);
+//     console.log("DALL-E Response `data.generated_text`", data.generated_text);
+//     console.log("DALL-E Response `data.generatedText`", data.generatedText);
+//     // console.log("DALL-E Response `data.data.imageUrl`", data.data.imageUrl);
+//     // console.log("DALL-E Response `data.data[0].imageUrl`", data.data[0].imageUrl);
+//     return(data.generated_text);
+//   } catch (error) {
+//       console.error('Error generating image:', error)
+//   } finally {
+//       console.log("Done generating image!")
+//   }
+
+// }
 
 
 // async function generateImage_Livepeer(prompt, negative_prompt="", width=1024, height=1024, guidance_scale, num_inference_steps,
