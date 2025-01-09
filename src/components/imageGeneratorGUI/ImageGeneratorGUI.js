@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from 'react';
 import Aos from "aos";
 import "aos/dist/aos.css";
-import image_generator from "../../scripts/image_generator";
+import image_generator from "../../scripts/GeneratorOperator";
 import text_generator from "./text_generator";
 
 import './imageGeneratorGUI.css'
