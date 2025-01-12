@@ -43,13 +43,20 @@ const delay_gap = 100;
 const default_negative_prompt = "out of frame, lowres, text, error, cropped, worst quality, low quality, jpeg artifacts, ugly, duplicate, morbid, mutilated, extra fingers, mutated hands, poorly drawn hands, poorly drawn face, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra limbs, cloned face, disfigured, gross proportions, malformed limbs, missing arms, missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck, username, watermark, signature"
 const simplifier_prefix = "I NEED to test how the tool works with extremely simple prompts. DO NOT add any detail, just use it AS-IS:";
 
-let prompt = "";
-let negative_prompt = "";
-let quantity = 1;
-let guidance_scale = 0;
-let num_inference_steps = 0;
-let model = "black-forest-labs/FLUX.1-dev";
-let provider = "Livepeer";
+let parameter_dict = {"prompt": "",
+                      "negative_prompt": "",
+                      "quantity": 1,
+                      "guidance_scale": "",
+                      "num_inference_steps": "",
+                      "model": ""};
+
+// let prompt = "";
+// let negative_prompt = "";
+// let quantity = 1;
+// let guidance_scale = 0;
+// let num_inference_steps = 0;
+// let model = "black-forest-labs/FLUX.1-dev";
+// let provider = "Livepeer";
 
 let image_URL = default_image;
 let generated_text = '...';
@@ -121,38 +128,34 @@ const ImageGeneratorGUI = () => {
   }
 
   function handlePromptChange(event) {
-    prompt = event.target.value;
-    console.log("prompt", prompt);
+    parameter_dict["prompt"] = event.target.value;
+    console.log("prompt", parameter_dict["prompt"]);
   }
 
   function handleNegativePromptChange(event) {
-    negative_prompt = event.target.value;
-    console.log("negative_prompt", negative_prompt);
+    parameter_dict["negative_prompt"] = event.target.value;
+    console.log("negative_prompt", parameter_dict["negative_prompt"]);
   }
 
   function handleModelChange(event) {
-    model = event.target.value;
+    // parameter_dict["model"] = event.target.value;
+    const selected_model = event.target.value;
 
-    if (model === "DALL-E") {
-      provider = "OpenAI";
-    } else {
-      provider = "Livepeer";
-    };
-    console.log("Selected Model:", model);
+    console.log("Selected Model:", selected_model);
     console.log("document.getElementById('modelDescription').innerHTML", document.getElementById('modelDescription').innerHTML);
     console.log("document.getElementById(event.target.alt)", document.getElementById(event.target.alt));
     
     const title_element = document.getElementById('modelDescriptionTitle');
     const description_element = document.getElementById('modelDescription');
     const link_element = document.getElementById('modelLink');
-    const model_output_container = document.getElementById('modelOutputContainer_' + model);
+    const model_output_container = document.getElementById('modelOutputContainer_' + selected_model);
     // const checkbox_element = document.getElementById(event.target.id);
     if (event.target.checked) {
       model_output_container.style.display = 'block';
-      title_element.innerHTML = `<u><b>` + model + `</b></u>`;
-      description_element.innerHTML = model_dict[model]['description'];
+      title_element.innerHTML = `<u><b>` + selected_model + `</b></u>`;
+      description_element.innerHTML = model_dict[selected_model]['description'];
       link_element.innerHTML = "Learn More ->";
-      link_element.href = model_dict[model]['link'];
+      link_element.href = model_dict[selected_model]['link'];
     } else {
       model_output_container.style.display = 'none';
       title_element.innerHTML = "";
@@ -179,26 +182,26 @@ const ImageGeneratorGUI = () => {
           all_outputs_container.style.marginLeft = "0%";
         };
       };
-      let image_container;
+      let image_container, model_name;
       for (let i = 0; i < all_models.length; i++) {
-        model = all_models[i];
-        image_container = document.getElementById('imageOutputContainer_' + model);
+        model_name = all_models[i];
+        image_container = document.getElementById('imageOutputContainer_' + model_name);
         // Adds new img elements if the quantity was increased
-        if (new_value > quantity) {
-          for (let j = quantity; j < new_value; j++) {
+        if (new_value > parameter_dict["quantity"]) {
+          for (let j = parameter_dict["quantity"]; j < new_value; j++) {
             const new_image_element = document.createElement('img');
             new_image_element.src = default_image;
             new_image_element.alt = "Click to Copy URL";
-            new_image_element.id = 'generatedImage_' + model + '_' + j.toString();
+            new_image_element.id = 'generatedImage_' + model_name + '_' + j.toString();
             new_image_element.className = 'imageGeneratorGUI_generatedImage';
             new_image_element.onclick = copyImageURL;
 
             image_container.appendChild(new_image_element);
           }
         // Removes extra img elements if the quantity is reduced
-        } else if (new_value < quantity) {
-          for (let j = quantity - (quantity - new_value); j < quantity; j++) {
-            const image_element = document.getElementById('generatedImage_' + model + '_' + j.toString());
+        } else if (new_value < parameter_dict["quantity"]) {
+          for (let j = parameter_dict["quantity"] - (parameter_dict["quantity"] - new_value); j < parameter_dict["quantity"]; j++) {
+            const image_element = document.getElementById('generatedImage_' + model_name + '_' + j.toString());
             image_element.remove();
           };
         };
@@ -212,21 +215,21 @@ const ImageGeneratorGUI = () => {
           // const new_width = (100 / new_value).toString() + "%";
           let image_element;
           if (i === 0) {
-            image_element = document.getElementById('generatedImage_' + model);
+            image_element = document.getElementById('generatedImage_' + model_name);
           } else {
-            image_element = document.getElementById('generatedImage_' + model + '_' + i.toString());
+            image_element = document.getElementById('generatedImage_' + model_name + '_' + i.toString());
           };
           image_element.style.width = new_width;
         };
       };
 
-      quantity = new_value;
+      parameter_dict["quantity"] = new_value;
     } else if (element_ID === 'guidanceScaleEntry') {
-      guidance_scale = new_value;
-      console.log('guidance_scale', guidance_scale);
+      parameter_dict["guidance_scale"] = new_value;
+      console.log('guidance_scale', parameter_dict["guidance_scale"]);
     } else if (element_ID === 'inferenceStepsEntry') {
-      num_inference_steps = new_value;
-      console.log('num_inference_steps', num_inference_steps);
+      parameter_dict["num_inference_steps"] = new_value;
+      console.log('num_inference_steps', parameter_dict["num_inference_steps"]);
     };
   };
 
@@ -251,24 +254,14 @@ const ImageGeneratorGUI = () => {
       await setGenerationTime(0);
 
       const checked_models = await getCheckedModels();
-      quantity = document.getElementById("dropdownQuantity").value;
-      console.log('quantity', quantity);
-      prompt = document.getElementById("promptEntry").value;
-      negative_prompt = document.getElementById("negativePromptEntry").value;
-      guidance_scale = document.getElementById("guidanceScaleEntry").value;
-      num_inference_steps = document.getElementById("inferenceStepsEntry").value;
+      parameter_dict = await updateParameterDict();
 
       for (let i = 0; i < checked_models.length; i++) {
-        let model_currently_generating = checked_models[i];
-        let provider_currently_generating = "Livepeer";
-        if (model_currently_generating === "DALL-E") {
-          provider_currently_generating = "OpenAI";
-        };
-        console.log('model_currently_generating', model_currently_generating);
-        console.log('provider', provider);
-        for (let output_ID = 0; output_ID < quantity; output_ID++) {
+        parameter_dict["model"] = checked_models[i];
+        console.log('model_currently_generating', parameter_dict["model"]);
+        for (let output_ID = 0; output_ID < parameter_dict["quantity"]; output_ID++) {
           console.log('output_ID', output_ID);
-          image_URL = await handleImageGeneration(prompt, negative_prompt, guidance_scale, num_inference_steps, model_currently_generating, provider_currently_generating, output_ID);
+          image_URL = await handleImageGeneration(parameter_dict, output_ID);
           console.log("image_URL:", image_URL);
         };
       };
@@ -419,7 +412,7 @@ const ImageGeneratorGUI = () => {
   };
 
   async function setGenerationTime(seconds) {
-    console.log('\nImageGeneratorGUI >>> RUNNING setGenerationTime()');
+    // console.log('\nImageGeneratorGUI >>> RUNNING setGenerationTime()');
 
     generation_time = seconds;
     const generation_time_element = document.getElementById('generationTime');
@@ -434,25 +427,38 @@ const ImageGeneratorGUI = () => {
     return(formatted_time);
   };
 
+  async function updateParameterDict() {
+    console.log('\nImageGeneratorGUI >>> RUNNING updateParameterDict()');
+    parameter_dict["quantity"] = document.getElementById("dropdownQuantity").value;
+    console.log('quantity', parameter_dict["quantity"]);
+    parameter_dict["prompt"] = document.getElementById("promptEntry").value;
+    parameter_dict["negative_prompt"] = document.getElementById("negativePromptEntry").value;
+    parameter_dict["guidance_scale"] = document.getElementById("guidanceScaleEntry").value;
+    parameter_dict["num_inference_steps"] = document.getElementById("inferenceStepsEntry").value;
+    return(parameter_dict);
+  };
 
 
-  async function handleImageGeneration(prompt, negative_prompt, guidance_scale, num_inference_steps, model_currently_generating, provider_currently_generating, output_ID) {
+
+  async function handleImageGeneration(parameter_dict, output_ID) {
     console.log('\nImageGeneratorGUI >>> RUNNING handleImageGeneration()');
+    console.log('parameter_dict:', parameter_dict);
+    console.log('output_ID:', output_ID);
     // Page element setup
-    var image_title_element = document.getElementById('imageTitle_' + model_currently_generating);
+    var image_title_element = document.getElementById('imageTitle_' + parameter_dict["model"]);
     var image_short_name = image_title_element.innerHTML;
     var image_element;
     if (output_ID === 0) {
-      image_element = document.getElementById('generatedImage_' + model_currently_generating);
+      image_element = document.getElementById('generatedImage_' + parameter_dict["model"]);
     } else {
-      image_element = document.getElementById('generatedImage_' + model_currently_generating + '_' + output_ID.toString());
+      image_element = document.getElementById('generatedImage_' + parameter_dict["model"] + '_' + output_ID.toString());
     }
     image_title_element.innerHTML = image_short_name + " Generating";
     image_element.src = generating_placeholder_0;
     
     // Image generation
     let image_generator_response, image_generator_promise, image_generator_result;
-    image_generator_response = image_generator.generateImage(prompt, negative_prompt, 512, 512, guidance_scale, num_inference_steps, model_currently_generating, provider_currently_generating);
+    image_generator_response = image_generator.generateImage(parameter_dict);
 
     // Loop
     var number_of_loops = 0;
@@ -547,13 +553,13 @@ const ImageGeneratorGUI = () => {
     // const model = event.target.id.split('generatedImage_')[1];
     let copied_image_URL = event.target.src;
     let output_ID, copied_message_element;
-    model = event.target.id.split('generatedImage_')[1];
-    if (model[model.length - 2] === '_' && Number.isInteger(parseInt(model[model.length - 1]))) {
-      model = model.slice(0, -2);
-      output_ID = model.slice(-1, model.length);
+    parameter_dict["model"] = event.target.id.split('generatedImage_')[1];
+    if (parameter_dict["model"][parameter_dict["model"].length - 2] === '_' && Number.isInteger(parseInt(parameter_dict["model"][parameter_dict["model"].length - 1]))) {
+      parameter_dict["model"] = parameter_dict["model"].slice(0, -2);
+      output_ID = parameter_dict["model"].slice(-1, parameter_dict["model"].length);
     };
     
-    copied_message_element = document.getElementById("copiedMessage_" + model);
+    copied_message_element = document.getElementById("copiedMessage_" + parameter_dict["model"]);
     copied_message_element.style.opacity = 1;
     copied_message_element.style.transition = "none";
 

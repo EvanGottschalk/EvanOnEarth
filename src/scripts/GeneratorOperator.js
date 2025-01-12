@@ -34,17 +34,18 @@ const API_endpoints = {'text_to_image': '/generate-image',
 //--------------------------------------------------------------------------------------------------
 //# Functions
 
-export async function generateImage(prompt, negative_prompt, width, height, guidance_scale, num_inference_steps, model, provider) {
-  console.log('\nimage_generator.js >>> RUNNING generateImage()');
+export async function generateImage(parameter_dict) {
+  console.log('\nGeneratorOperator.js >>> RUNNING generateImage()');
 
-  console.log('prompt:', prompt);
-  console.log('negative_prompt:', negative_prompt);
-  console.log('width:', width);
-  console.log('height:', height);
-  console.log('guidance_scale:', guidance_scale);
-  console.log('num_inference_steps:', num_inference_steps);
-  console.log('model:', model);
-  console.log('provider:', provider);
+  console.log('parameter_dict:', parameter_dict);
+  // console.log('prompt:', prompt);
+  // console.log('negative_prompt:', negative_prompt);
+  // console.log('width:', width);
+  // console.log('height:', height);
+  // console.log('guidance_scale:', guidance_scale);
+  // console.log('num_inference_steps:', num_inference_steps);
+  // console.log('model:', model);
+  // console.log('provider:', provider);
   
   console.log('generateImage() -> REQUEST SENT to', API_URL + API_endpoints['text_to_image']);
   try {
@@ -53,7 +54,7 @@ export async function generateImage(prompt, negative_prompt, width, height, guid
       headers: {
           'Content-Type': 'application/json',
         },
-      body: JSON.stringify({ prompt, negative_prompt, width, height, guidance_scale, num_inference_steps, model, provider })
+      body: JSON.stringify(parameter_dict)
     })
     if (!response.ok) {
       throw new Error(`Server error: ${response.status}`);
