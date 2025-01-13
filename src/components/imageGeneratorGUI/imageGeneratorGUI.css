@@ -246,6 +246,11 @@
   flex-direction: row;
 }
 
+.imageGeneratorGUIimageOutputSizeTitle {
+  color: #848484;
+  font-size: 14px;
+}
+
 
 
 @media only screen and (max-width: 560px) {

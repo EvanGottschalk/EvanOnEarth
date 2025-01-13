@@ -46,6 +46,8 @@ const simplifier_prefix = "I NEED to test how the tool works with extremely simp
 let parameter_dict = {"prompt": "",
                       "negative_prompt": "",
                       "quantity": 1,
+                      "width": "",
+                      "height": "",
                       "guidance_scale": "",
                       "num_inference_steps": "",
                       "model": ""};
@@ -108,8 +110,11 @@ const ImageGeneratorGUI = () => {
     Aos.init({ duration: 2000 });
   }, []);
 
+  // Check default checklist options
   document.addEventListener("DOMContentLoaded", () => {
-    const checkbox = document.querySelector('input[value="black-forest-labs/FLUX.1-dev"]');
+    let checkbox = document.querySelector('input[value="black-forest-labs/FLUX.1-dev"]');
+    checkbox.checked = true; 
+    checkbox = document.querySelector('input[value="256x256"]');
     checkbox.checked = true; 
   });
 
@@ -141,9 +146,9 @@ const ImageGeneratorGUI = () => {
     // parameter_dict["model"] = event.target.value;
     const selected_model = event.target.value;
 
-    console.log("Selected Model:", selected_model);
-    console.log("document.getElementById('modelDescription').innerHTML", document.getElementById('modelDescription').innerHTML);
-    console.log("document.getElementById(event.target.alt)", document.getElementById(event.target.alt));
+    console.log("handleModelChange() -> Selected Model:", selected_model);
+    // console.log("document.getElementById('modelDescription').innerHTML", document.getElementById('modelDescription').innerHTML);
+    // console.log("document.getElementById(event.target.alt)", document.getElementById(event.target.alt));
     
     const title_element = document.getElementById('modelDescriptionTitle');
     const description_element = document.getElementById('modelDescription');
@@ -165,12 +170,123 @@ const ImageGeneratorGUI = () => {
     };    
   };
 
+  async function handleSizeChange(event) {
+    let selected_size = event.target.value;
+    console.log("handleSizeChange() -> Selected Size:", selected_size);
+
+    // Sets the size to the default size if all size checkboxes are turned off
+    const selected_sizes = await getCheckedValues('size');
+    if (selected_sizes.length === 0) {
+      event.target.checked = true;
+    } else {
+      const all_models = await getAllChecklistOptions('model');
+
+      all_models.forEach((model) => {
+        const model_output_container = document.getElementById('modelOutputContainer_' + model);
+        if (event.target.checked) {
+          const new_size_container = document.createElement('div');
+          new_size_container.id = 'sizeContainer_' + model + '_' + selected_size;
+          new_size_container.className = 'imageGeneratorGUIimageOutputSizeTitle';
+          new_size_container.innerHTML = selected_size;
+
+          const new_image_output_container = document.createElement('div');
+          new_image_output_container.className = 'imageGeneratorGUI_imageOutputContainer';
+          new_image_output_container.id = 'imageOutputContainer_' + model + '_' + selected_size;
+
+          for (let j = 0; j < parameter_dict["quantity"]; j++) {
+            const new_image_element = document.createElement('img');
+            new_image_element.src = default_image;
+            new_image_element.alt = "Click to Copy URL";
+            if (j === 0) {
+              new_image_element.id = 'generatedImage_' + model + '_' + selected_size;
+            } else {
+              new_image_element.id = 'generatedImage_' + model + '_' + selected_size + '_' + j.toString();
+            };
+            new_image_element.className = 'imageGeneratorGUI_generatedImage';
+            new_image_element.onclick = copyImageURL;
+            if (!mobile) {
+              new_image_element.style.width = (100 / parameter_dict['quantity']).toString() + "%";
+            };
+
+            new_image_output_container.appendChild(new_image_element);
+          };
+          new_size_container.appendChild(new_image_output_container);
+          model_output_container.appendChild(new_size_container);
+        } else {
+          const size_container_to_remove = document.getElementById('sizeContainer_' + model + '_' + selected_size);
+          if (size_container_to_remove) {
+            size_container_to_remove.remove();
+          };
+        };
+      });
+    };   
+  };
+
+  // async function updateImageDisplay(new_value) {
+  //   const all_models = await getAllChecklistOptions('model');
+  //   const all_sizes = await getAllChecklistOptions('size');
+  //   const all_outputs_container = document.getElementById('imageGeneratorGUI_allOutputContainer');
+  //   // On desktop, stretches image output view beyond limits of UI while maintaining image size
+  //   if (!mobile) {
+  //     if (new_value > 3) {
+  //       all_outputs_container.style.width = (50 + (new_value - 3) * (50 / 3)).toString() + '%';
+  //       all_outputs_container.style.marginLeft = (-2 * (new_value - 3)).toString() + '%';
+  //     } else {
+  //       all_outputs_container.style.width = "50.5%";
+  //       all_outputs_container.style.marginLeft = "0%";
+  //     };
+  //   };
+  //   let image_container, model_name;
+  //   for (let i = 0; i < all_models.length; i++) {
+  //     model_name = all_models[i];
+  //     image_container = document.getElementById('imageOutputContainer_' + model_name);
+  //     for (let k = 0; k < all_sizes.length; k++) {
+  //       size = all_sizes[k];
+  //       // Adds new img elements if the quantity was increased
+  //       if (new_value > parameter_dict["quantity"]) {
+  //         for (let j = parameter_dict["quantity"]; j < new_value; j++) {
+  //           const new_image_element = document.createElement('img');
+  //           new_image_element.src = default_image;
+  //           new_image_element.alt = "Click to Copy URL";
+  //           new_image_element.id = 'generatedImage_' + model_name + '_' + j.toString();
+  //           new_image_element.className = 'imageGeneratorGUI_generatedImage';
+  //           new_image_element.onclick = copyImageURL;
+
+  //           image_container.appendChild(new_image_element);
+  //         }
+  //       // Removes extra img elements if the quantity is reduced
+  //       } else if (new_value < parameter_dict["quantity"]) {
+  //         for (let j = parameter_dict["quantity"] - (parameter_dict["quantity"] - new_value); j < parameter_dict["quantity"]; j++) {
+  //           const image_element = document.getElementById('generatedImage_' + model_name + '_' + j.toString());
+  //           image_element.remove();
+  //         };
+  //       };
+  //     // Sets the sizes of the sizes of the img elements to match the quantity
+  //     for (let i = 0; i < new_value; i++) {
+  //       let new_width = "100%";
+  //       if (!mobile) {
+  //         new_width = (100 / new_value).toString() + "%";
+  //       };
+        
+  //       // const new_width = (100 / new_value).toString() + "%";
+  //       let image_element;
+  //       if (i === 0) {
+  //         image_element = document.getElementById('generatedImage_' + model_name);
+  //       } else {
+  //         image_element = document.getElementById('generatedImage_' + model_name + '_' + i.toString());
+  //       };
+  //       image_element.style.width = new_width;
+  //     };
+  //   };
+  // };
+
   async function handleDropdownChange(event) {
     console.log('\nImageGeneratorGUI >>> RUNNING handleDropdownChange()');
     const element_ID = event.target.id;
     const new_value = event.target.value;
     if (element_ID === "dropdownQuantity") {
-      const all_models = await getAllModels();
+      const all_models = await getAllChecklistOptions('model');
+      const all_sizes = await getCheckedValues('size');
       const all_outputs_container = document.getElementById('imageGeneratorGUI_allOutputContainer');
       // On desktop, stretches image output view beyond limits of UI while maintaining image size
       if (!mobile) {
@@ -182,44 +298,53 @@ const ImageGeneratorGUI = () => {
           all_outputs_container.style.marginLeft = "0%";
         };
       };
-      let image_container, model_name;
+      let image_container, model_name, size;
       for (let i = 0; i < all_models.length; i++) {
         model_name = all_models[i];
-        image_container = document.getElementById('imageOutputContainer_' + model_name);
-        // Adds new img elements if the quantity was increased
-        if (new_value > parameter_dict["quantity"]) {
-          for (let j = parameter_dict["quantity"]; j < new_value; j++) {
-            const new_image_element = document.createElement('img');
-            new_image_element.src = default_image;
-            new_image_element.alt = "Click to Copy URL";
-            new_image_element.id = 'generatedImage_' + model_name + '_' + j.toString();
-            new_image_element.className = 'imageGeneratorGUI_generatedImage';
-            new_image_element.onclick = copyImageURL;
+        for (let k = 0; k < all_sizes.length; k++) {
+          size = all_sizes[k];
+          image_container = document.getElementById('imageOutputContainer_' + model_name + '_' + size.toString());
+          // Adds new img elements if the quantity was increased
+          if (new_value > parameter_dict["quantity"]) {
+            for (let j = parameter_dict["quantity"]; j < new_value; j++) {
+              const new_image_element = document.createElement('img');
+              new_image_element.src = default_image;
+              new_image_element.alt = "Click to Copy URL";
+              new_image_element.id = 'generatedImage_' + model_name + '_' + size.toString() + '_' + j.toString();
+              new_image_element.className = 'imageGeneratorGUI_generatedImage';
+              new_image_element.onclick = copyImageURL;
 
-            image_container.appendChild(new_image_element);
-          }
-        // Removes extra img elements if the quantity is reduced
-        } else if (new_value < parameter_dict["quantity"]) {
-          for (let j = parameter_dict["quantity"] - (parameter_dict["quantity"] - new_value); j < parameter_dict["quantity"]; j++) {
-            const image_element = document.getElementById('generatedImage_' + model_name + '_' + j.toString());
-            image_element.remove();
+              image_container.appendChild(new_image_element);
+            };
+          // Removes extra img elements if the quantity is reduced
+          } else if (new_value < parameter_dict["quantity"]) {
+            for (let j = parameter_dict["quantity"] - (parameter_dict["quantity"] - new_value); j < parameter_dict["quantity"]; j++) {
+              const image_element = document.getElementById('generatedImage_' + model_name + '_' + size.toString() + '_' + j.toString());
+              image_element.remove();
+            };
           };
-        };
-        // Sets the sizes of the sizes of the img elements to match the quantity
-        for (let i = 0; i < new_value; i++) {
-          let new_width = "100%";
-          if (!mobile) {
-            new_width = (100 / new_value).toString() + "%";
+          // Sets the sizes of the sizes of the img elements to match the quantity
+          for (let k = 0; k < new_value; k++) {
+            let new_width = "100%";
+            if (!mobile) {
+              new_width = (100 / new_value).toString() + "%";
+            };
+            
+            // const new_width = (100 / new_value).toString() + "%";
+            let image_element;
+            if (k === 0) {
+              image_element = document.getElementById('generatedImage_' + model_name + '_' + size);
+              image_element.style.width = new_width;
+            } else {
+              image_element = document.getElementById('generatedImage_' + model_name + '_' + size + '_' + k.toString());
+            };
+            if (image_element) {
+              image_element.style.width = new_width;
+            } else {
+              console.log('image_element not found');
+              console.log('generatedImage_' + model_name + '_' + size.toString() + '_' + k.toString());
+            };
           };
-          
-          // const new_width = (100 / new_value).toString() + "%";
-          let image_element;
-          if (i === 0) {
-            image_element = document.getElementById('generatedImage_' + model_name);
-          } else {
-            image_element = document.getElementById('generatedImage_' + model_name + '_' + i.toString());
-          };
-          image_element.style.width = new_width;
         };
       };
 
@@ -253,16 +378,22 @@ const ImageGeneratorGUI = () => {
       document.getElementById('generationTimeContainer').style.display = 'block';
       await setGenerationTime(0);
 
-      const checked_models = await getCheckedModels();
+      const checked_models = await getCheckedValues('model');
+      const checked_sizes = await getCheckedValues('size');
       parameter_dict = await updateParameterDict();
 
       for (let i = 0; i < checked_models.length; i++) {
         parameter_dict["model"] = checked_models[i];
         console.log('model_currently_generating', parameter_dict["model"]);
-        for (let output_ID = 0; output_ID < parameter_dict["quantity"]; output_ID++) {
-          console.log('output_ID', output_ID);
-          image_URL = await handleImageGeneration(parameter_dict, output_ID);
-          console.log("image_URL:", image_URL);
+
+        for (let j = 0; j < checked_sizes.length; j++) {
+          parameter_dict["width"] = checked_sizes[j].split("x")[0];
+          parameter_dict["height"] = checked_sizes[j].split("x")[1];
+          for (let output_ID = 0; output_ID < parameter_dict["quantity"]; output_ID++) {
+            console.log('output_ID', output_ID);
+            image_URL = await handleImageGeneration(parameter_dict, output_ID);
+            console.log("image_URL:", image_URL);
+          };
         };
       };
     };
@@ -444,15 +575,20 @@ const ImageGeneratorGUI = () => {
     console.log('\nImageGeneratorGUI >>> RUNNING handleImageGeneration()');
     console.log('parameter_dict:', parameter_dict);
     console.log('output_ID:', output_ID);
+    const model = parameter_dict["model"];
+    console.log('Model Currently Generating:', model);
+    const size = parameter_dict["width"].toString() + "x" + parameter_dict["height"].toString();
+    console.log('Size Currently Generating:', size);
     // Page element setup
     var image_title_element = document.getElementById('imageTitle_' + parameter_dict["model"]);
     var image_short_name = image_title_element.innerHTML;
     var image_element;
     if (output_ID === 0) {
-      image_element = document.getElementById('generatedImage_' + parameter_dict["model"]);
+      image_element = document.getElementById('generatedImage_' + model + '_' + size);
     } else {
-      image_element = document.getElementById('generatedImage_' + parameter_dict["model"] + '_' + output_ID.toString());
-    }
+      image_element = document.getElementById('generatedImage_' + model + '_' + size + '_' + output_ID.toString());
+    };
+    
     image_title_element.innerHTML = image_short_name + " Generating";
     image_element.src = generating_placeholder_0;
     
@@ -516,36 +652,48 @@ const ImageGeneratorGUI = () => {
     return(image_URL);
   }
 
-  async function getAllModels() {
-    console.log('\nImageGeneratorGUI >>> RUNNING getAllModels()');
-    const checklist_element = document.getElementById("checklistModels"); 
-    const checklist_models = checklist_element.querySelectorAll("input[type='checkbox']"); 
-    const all_models = []; 
+  async function getAllChecklistOptions(parameter) {
+    console.log('\nImageGeneratorGUI >>> RUNNING getAllChecklistOptions()');
+
+    let checklist_element;
+    if (parameter === 'model') {
+      checklist_element = document.getElementById("checklistModels");
+    } else if (parameter === 'size') {
+      checklist_element = document.getElementById("checklistSizes");
+    };
+    const checklist_options = checklist_element.querySelectorAll("input[type='checkbox']"); 
+    const all_checklist_options = []; 
   
-    checklist_models.forEach((checkbox) => {
-      all_models.push(checkbox.value); 
+    checklist_options.forEach((checkbox) => {
+      all_checklist_options.push(checkbox.value); 
     });
 
-    console.log("all_models", all_models);
-    return all_models;
-  }
+    console.log("all_checklist_options", all_checklist_options);
+    return all_checklist_options;
+  };
 
 
-  async function getCheckedModels() {
-    console.log('\nImageGeneratorGUI >>> RUNNING getCheckedModels()');
-    const checklist_element = document.getElementById("checklistModels"); 
-    const checklist_models = checklist_element.querySelectorAll("input[type='checkbox']"); 
-    const checked_models = []; 
+  async function getCheckedValues(parameter) {
+    console.log('\nImageGeneratorGUI >>> RUNNING getCheckedValues()');
+
+    let checklist_element;
+    if (parameter === 'model') {
+      checklist_element = document.getElementById("checklistModels");
+    } else if (parameter === 'size' || parameter === 'width' || parameter === 'height') {
+      checklist_element = document.getElementById("checklistSizes");
+    };
+    const checklist_values = checklist_element.querySelectorAll("input[type='checkbox']"); 
+    const checked_items = []; 
   
-    checklist_models.forEach((checkbox) => {
+    checklist_values.forEach((checkbox) => {
       if (checkbox.checked) {
-        checked_models.push(checkbox.value); 
+        checked_items.push(checkbox.value); 
       }
     });
 
-    console.log("checked_models", checked_models);
-    return checked_models;
-  }
+    console.log("checked_items", checked_items);
+    return(checked_items);
+  };
 
 
   function copyImageURL(event) {
@@ -615,9 +763,7 @@ const ImageGeneratorGUI = () => {
           Select Model(s):
         </div>
       </div>
-      <div className='imageGeneratorGUI_checklist' id='checklistModels' data-aos="fade-right" data-aos-delay={14 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" style={{
-        textDecoration: 'none'
-      }}>
+      <div className='imageGeneratorGUI_checklist' id='checklistModels' data-aos="fade-right" data-aos-delay={14 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
         <label className="imageGeneratorGUImodelOption">
           <input type="checkbox" value="black-forest-labs/FLUX.1-dev" onChange={handleModelChange} />
           black-forest-labs/FLUX.1-dev
@@ -660,16 +806,62 @@ const ImageGeneratorGUI = () => {
         </label> */}
       </div>
       <div className='imageGeneratorGUITextContainer'>
-        <div className='imageGeneratorGUITitle' data-aos="fade-right" data-aos-delay={15 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" style={{
-          textDecoration: 'none',
-          color: '#bbbbbb'}}>Model Description:
+        <div className='imageGeneratorGUITitle' data-aos="fade-right" data-aos-delay={15 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+          Model Description:
         </div>
       </div>
       <div className='imageGeneratorGUI_modelDescription' id='modelDescriptionTitle' data-aos="fade-right" data-aos-delay={16 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"><u><b>black-forest-labs/FLUX.1-dev</b></u></div>
-      <div className='imageGeneratorGUI_modelDescription' id='modelDescription' data-aos="fade-right" data-aos-delay={16 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">FLUX.1 defines the new state-of-the-art in image synthesis. Our models set new standards in their respective model class. FLUX.1 [pro] and [dev] surpass popular  models like Midjourney v6.0, DALL·E 3 (HD) and SD3-Ultra in each of the following aspects: Visual Quality, Prompt Following, Size/Aspect Variability, Typography and Output Diversity. FLUX.1 [schnell] is the most advanced few-step model to date, outperforming not even its in-class competitors but also strong non-distilled models like Midjourney v6.0 and DALL·E 3 (HD) .  Our models are specifically finetuned to preserve the entire output diversity from pretraining.</div>
-      <a href="https://blackforestlabs.ai/announcing-black-forest-labs/" target='_blank' rel="noreferrer" className='imageGeneratorGUI_modelLink' id='modelLink' data-aos="fade-right" data-aos-delay={16 * delay_gap}data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" ><u>Learn More -></u></a>
+      <div className='imageGeneratorGUI_modelDescription' id='modelDescription' data-aos="fade-right" data-aos-delay={16 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+        FLUX.1 defines the new state-of-the-art in image synthesis. Our models set new standards in their respective model class. FLUX.1 [pro] and [dev] surpass popular  models like Midjourney v6.0, DALL·E 3 (HD) and SD3-Ultra in each of the following aspects: Visual Quality, Prompt Following, Size/Aspect Variability, Typography and Output Diversity. FLUX.1 [schnell] is the most advanced few-step model to date, outperforming not even its in-class competitors but also strong non-distilled models like Midjourney v6.0 and DALL·E 3 (HD) .  Our models are specifically finetuned to preserve the entire output diversity from pretraining.
+      </div>
+      <a href="https://blackforestlabs.ai/announcing-black-forest-labs/" target='_blank' rel="noreferrer" className='imageGeneratorGUI_modelLink' id='modelLink' data-aos="fade-right" data-aos-delay={16 * delay_gap}data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" >
+        <u>Learn More -></u>
+      </a>
       <div className='imageGeneratorGUITextContainer'>
         <div className='imageGeneratorGUITitle' data-aos="fade-right" data-aos-delay={13 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+          Select Size(s):
+        </div>
+      </div>
+      <div className='imageGeneratorGUI_checklist' id='checklistSizes' data-aos="fade-right" data-aos-delay={14 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+        <label className="imageGeneratorGUIsizeOption">
+          <input type="checkbox" value="256x256" onChange={handleSizeChange} />
+          256x256
+        </label>
+        <label className="imageGeneratorGUIsizeOption">
+          <input type="checkbox" value="512x512" id="checkBox_512x512" onChange={handleSizeChange} />
+          512x512
+        </label>
+        <label className="imageGeneratorGUIsizeOption">
+          <input type="checkbox" value="1024x1024" onChange={handleSizeChange} />
+          1024x1024
+        </label>
+        <label className="imageGeneratorGUIsizeOption">
+          <input type="checkbox" value="2048x2048" onChange={handleSizeChange} />
+          2048x2048
+        </label>
+        <label className="imageGeneratorGUIsizeOption">
+          <input type="checkbox" value="960x536" onChange={handleSizeChange}/>
+          960x536 (16:9 | YouTube)
+        </label>
+        <label className="imageGeneratorGUIsizeOption">
+          <input type="checkbox" value="1920x1080" onChange={handleSizeChange}/>
+          1920x1080 (16:9 | YouTube)
+        </label>
+        <label className="imageGeneratorGUIsizeOption">
+          <input type="checkbox" value="536x960" onChange={handleSizeChange}/>
+          536x960 (16:9 | TikTok)
+        </label>
+        <label className="imageGeneratorGUIsizeOption">
+          <input type="checkbox" value="1080x1920" onChange={handleSizeChange}/>
+          1080x1920 (16:9 | TikTok)
+        </label>
+        <label className="imageGeneratorGUIsizeOption">
+          <input disabled type="checkbox" value="Custom" onChange={handleSizeChange}/>
+          Custom (coming soon!)
+        </label>
+      </div>
+      <div className='imageGeneratorGUITextContainer'>
+      <div className='imageGeneratorGUITitle' data-aos="fade-right" data-aos-delay={13 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
           # of Ouputs (per model):
         </div>
         <select className='imageGeneratorGUIdropdownList' id='dropdownQuantity' onChange={handleDropdownChange} data-aos="fade-right" data-aos-delay={14 * delay_gap}data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" style={{
@@ -686,6 +878,19 @@ const ImageGeneratorGUI = () => {
           <option value="9">9</option>
           <option value="10">10</option> */}
         </select>
+        {/* <div className='imageGeneratorGUITitle' data-aos="fade-right" data-aos-delay={13 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+          Image Width:
+        </div>
+        <select className='imageGeneratorGUIdropdownList' id='dropdownWidth' onChange={handleDropdownChange} data-aos="fade-right" data-aos-delay={14 * delay_gap}data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" style={{
+          textDecoration: 'none'}}>
+          <option value="64">64px</option>
+          <option value="128">128px</option>
+          <option value="256">256px</option>
+          <option value="512">512px</option>
+          <option value="1024">1024px</option>
+          <option value="2048">2048px</option>
+          <option value="Custom">Custom</option>
+        </select> */}
         <div className='imageGeneratorGUITitle' data-aos="fade-right" data-aos-delay={13 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
           Imaginitive Freedom:
         </div>
@@ -728,9 +933,17 @@ const ImageGeneratorGUI = () => {
             </div>
             <span className="imageGeneratorGUI_copiedMessage" id="copiedMessage_black-forest-labs/FLUX.1-dev">Image URL Copied!</span>
           </div>
-          <div className="imageGeneratorGUI_imageOutputContainer" id="imageOutputContainer_black-forest-labs/FLUX.1-dev">
-            <img src={image_URL} alt='' id='generatedImage_black-forest-labs/FLUX.1-dev' className='imageGeneratorGUI_generatedImage' onClick={copyImageURL}/>
+          <div id="sizeContainer_black-forest-labs/FLUX.1-dev_256x256" className="imageGeneratorGUIimageOutputSizeTitle">
+          256x256
+            <div className="imageGeneratorGUI_imageOutputContainer" id="imageOutputContainer_black-forest-labs/FLUX.1-dev_256x256">
+              <img src={image_URL} alt='' id='generatedImage_black-forest-labs/FLUX.1-dev_256x256' className='imageGeneratorGUI_generatedImage' onClick={copyImageURL}/>
+            </div>
           </div>
+          {/* <div id="sizeContainer_black-forest-labs/FLUX.1-dev_512x512" className="imageGeneratorGUIimageOutputSizeTitle">512x512
+            <div className="imageGeneratorGUI_imageOutputContainer" id="imageOutputContainer_black-forest-labs/FLUX.1-dev_512x512">
+              <img src={image_URL} alt='' id='generatedImage_black-forest-labs/FLUX.1-dev_512x512' className='imageGeneratorGUI_generatedImage' onClick={copyImageURL}/>
+            </div>
+          </div> */}
         </div>
         <div className='imageGeneratorGUImodelOutputContainer' id="modelOutputContainer_ByteDance/SDXL-Lightning" style={{display: "none"}}>
           <div className="imageGeneratorGUI_modelTitleContainer">
@@ -739,8 +952,11 @@ const ImageGeneratorGUI = () => {
             </div>
             <span className="imageGeneratorGUI_copiedMessage" id="copiedMessage_ByteDance/SDXL-Lightning">Image URL Copied!</span>
           </div>
-          <div className="imageGeneratorGUI_imageOutputContainer" id="imageOutputContainer_ByteDance/SDXL-Lightning">
-            <img src={image_URL} alt='' id='generatedImage_ByteDance/SDXL-Lightning' className='imageGeneratorGUI_generatedImage' onClick={copyImageURL}/>
+          <div id="sizeContainer_ByteDance/SDXL-Lightning_256x256" className="imageGeneratorGUIimageOutputSizeTitle">
+          256x256
+            <div className="imageGeneratorGUI_imageOutputContainer" id="imageOutputContainer_ByteDance/SDXL-Lightning_256x256">
+              <img src={image_URL} alt='' id='generatedImage_ByteDance/SDXL-Lightning_256x256' className='imageGeneratorGUI_generatedImage' onClick={copyImageURL}/>
+            </div>
           </div>
         </div>
         <div className='imageGeneratorGUImodelOutputContainer' id="modelOutputContainer_SG161222/RealVisXL_V4.0" style={{display: "none"}}>
@@ -750,8 +966,11 @@ const ImageGeneratorGUI = () => {
             </div>
             <span className="imageGeneratorGUI_copiedMessage" id="copiedMessage_SG161222/RealVisXL_V4.0">Image URL Copied!</span>
           </div>
-          <div className="imageGeneratorGUI_imageOutputContainer" id="imageOutputContainer_SG161222/RealVisXL_V4.0">
-            <img src={image_URL} alt='' id='generatedImage_SG161222/RealVisXL_V4.0' className='imageGeneratorGUI_generatedImage' onClick={copyImageURL}/>
+          <div id="sizeContainer_SG161222/RealVisXL_V4.0_256x256" className="imageGeneratorGUIimageOutputSizeTitle">
+          256x256
+            <div className="imageGeneratorGUI_imageOutputContainer" id="imageOutputContainer_SG161222/RealVisXL_V4.0_256x256">
+              <img src={image_URL} alt='' id='generatedImage_SG161222/RealVisXL_V4.0_256x256' className='imageGeneratorGUI_generatedImage' onClick={copyImageURL}/>
+            </div>
           </div>
         </div>
         <div className='imageGeneratorGUImodelOutputContainer' id="modelOutputContainer_SG161222/RealVisXL_V4.0_Lightning" style={{display: "none"}}>
@@ -761,8 +980,11 @@ const ImageGeneratorGUI = () => {
             </div>
             <span className="imageGeneratorGUI_copiedMessage" id="copiedMessage_SG161222/RealVisXL_V4.0_Lightning">Image URL Copied!</span>
           </div>
-          <div className="imageGeneratorGUI_imageOutputContainer" id="imageOutputContainer_SG161222/RealVisXL_V4.0_Lightning">
-            <img src={image_URL} alt='' id='generatedImage_SG161222/RealVisXL_V4.0_Lightning' className='imageGeneratorGUI_generatedImage' onClick={copyImageURL}/>
+          <div id="sizeContainer_SG161222/RealVisXL_V4.0_Lightning_256x256" className="imageGeneratorGUIimageOutputSizeTitle">
+          256x256
+            <div className="imageGeneratorGUI_imageOutputContainer" id="imageOutputContainer_SG161222/RealVisXL_V4.0_Lightning_256x256">
+              <img src={image_URL} alt='' id='generatedImage_SG161222/RealVisXL_V4.0_Lightning_256x256' className='imageGeneratorGUI_generatedImage' onClick={copyImageURL}/>
+            </div>
           </div>
         </div>
         <div className='imageGeneratorGUImodelOutputContainer' id="modelOutputContainer_DALL-E" style={{display: "none"}}>
@@ -772,8 +994,11 @@ const ImageGeneratorGUI = () => {
             </div>
             <span className="imageGeneratorGUI_copiedMessage" id="copiedMessage_DALL-E">Image URL Copied!</span>
           </div>
-          <div className="imageGeneratorGUI_imageOutputContainer" id="imageOutputContainer_DALL-E">
-            <img src={image_URL} alt='' id='generatedImage_DALL-E' className='imageGeneratorGUI_generatedImage' onClick={copyImageURL}/>
+          <div id="sizeContainer_DALL-E_256x256" className="imageGeneratorGUIimageOutputSizeTitle">
+          256x256
+            <div className="imageGeneratorGUI_imageOutputContainer" id="imageOutputContainer_DALL-E_256x256">
+              <img src={image_URL} alt='' id='generatedImage_DALL-E_256x256' className='imageGeneratorGUI_generatedImage' onClick={copyImageURL}/>
+            </div>
           </div>
         </div>
       </div>
