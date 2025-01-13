@@ -90,7 +90,7 @@ const model_dict = {"black-forest-labs/FLUX.1-dev": {"description": "FLUX.1 defi
                     "SG161222/RealVisXL_V4.0_Lightning": {"description": "A streamlined version of RealVisXL_V4.0, designed for faster inference while still aiming for photorealism.",
                                                      "link": "https://huggingface.co/SG161222/RealVisXL_V4.0_Lightning"},
                     "DALL-E": {"description": "Text-to-image generation powered by OpenAI and ChatGPT.",
-                                                     "link": "https://openai.com/index/dall-e-3/"}}
+                                                     "link": "https://openai.com/index/dall-e-3/"}};
 
 //AppStart                                                     
 const ImageGeneratorGUI = () => {
@@ -375,6 +375,8 @@ const ImageGeneratorGUI = () => {
         event.target.value = "Pause";
       };
     } else if (element_ID === 'generateImageButton') {
+      pause_generation = false
+      document.getElementById('pauseButton').value = "Pause";
       document.getElementById('generationTimeContainer').style.display = 'block';
       await setGenerationTime(0);
 
@@ -698,16 +700,21 @@ const ImageGeneratorGUI = () => {
 
   function copyImageURL(event) {
     console.log('\nImageGeneratorGUI >>> RUNNING copyImageURL()');
-    // const model = event.target.id.split('generatedImage_')[1];
+
     let copied_image_URL = event.target.src;
-    let output_ID, copied_message_element;
-    parameter_dict["model"] = event.target.id.split('generatedImage_')[1];
-    if (parameter_dict["model"][parameter_dict["model"].length - 2] === '_' && Number.isInteger(parseInt(parameter_dict["model"][parameter_dict["model"].length - 1]))) {
-      parameter_dict["model"] = parameter_dict["model"].slice(0, -2);
-      output_ID = parameter_dict["model"].slice(-1, parameter_dict["model"].length);
+    console.log("Image URL:", copied_image_URL);
+
+    const image_element_ID = event.target.id.split('generatedImage_')[1];
+    // console.log('image_element_ID:', image_element_ID);
+
+    let model_name;
+    for (const model in model_dict) {
+      if (image_element_ID.includes(model)) {
+        model_name = model;
+      };
     };
     
-    copied_message_element = document.getElementById("copiedMessage_" + parameter_dict["model"]);
+    const copied_message_element = document.getElementById("copiedMessage_" + model_name);
     copied_message_element.style.opacity = 1;
     copied_message_element.style.transition = "none";
 

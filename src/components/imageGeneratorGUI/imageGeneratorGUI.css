@@ -145,6 +145,8 @@
   justify-content: center;
   flex-direction: column;
   cursor: pointer;
+  height: auto; /* Maintain aspect ratio */
+  object-fit: contain;
 }
 
 
