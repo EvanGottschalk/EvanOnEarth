@@ -1,4 +1,4 @@
-.imageGeneratorGUI {
+.textGeneratorGUI {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -14,7 +14,7 @@
 
 
 
-.imageGeneratorGUITextContainer {
+.textGeneratorGUITextContainer {
   width: 50.5%;
   padding: 0px 0px 0px 0px;
   margin: 0px 0px 0px 0px;
@@ -24,13 +24,13 @@
   flex-direction: column;
 }
 
-.imageGeneratorGUIText {
+.textGeneratorGUIText {
   text-align: left;
   color: white;
   font-size: 16px;
 }
 
-.imageGeneratorGUITitle {
+.textGeneratorGUITitle {
   text-align: left;
   color: #bbbbbb;
   text-decoration: 'none';
@@ -40,7 +40,7 @@
 }
 
 
-.imageGeneratorGUIpromptEntry {
+.textGeneratorGUIpromptEntry {
   padding: 3px 3px 3px 3px;
   width: 50%;
   height: 144px;
@@ -50,23 +50,23 @@
   font-size: 16px;
 }
 
-.imageGeneratorGUInegativePromptEntry {
+.textGeneratorGUInegativePromptEntry {
   height: 112px;
 }
 
-.imageGeneratorGUInumberEntry {
+.textGeneratorGUInumberEntry {
   height: 16px;
   width: 41px;
 }
 
-.imageGeneratorGUInumberDisplay {
+.imageGeneratorNumberDisplay {
   height: 16px;
   width: 41px;
   text-align: center;
   margin: 3% 0% 0% 3%;
 }
 
-.imageGeneratorGUI_selectList {
+.textGeneratorGUI_selectList {
   padding: 0px 0px 1px 0px;
   width: 40%;
   font-size: 16px;
@@ -75,14 +75,14 @@
 
 
 
-.imageGeneratorGUIdropdownList {
+.textGeneratorGUIdropdownList {
   width: 50px;
   padding: 0px 0px 1px 0px;
   font-size: 16px;
   margin: 0px 6px 0px 0px;
 }
 
-.imageGeneratorGUI_checklist {
+.textGeneratorGUI_checklist {
   flex-direction: column;
   display: flex;
   color: #000000;
@@ -95,48 +95,48 @@
   font-family: 'Arial';
 }
 
-.imageGeneratorGUImodelOption {
+.textGeneratorGUImodelOption {
   cursor: pointer;
 }
 
 
-.imageGeneratorGUI_submitButton {
+.textGeneratorGUI_submitButton {
   width: 180px;
   font-size: 18px;
   margin-top: 2%;
   margin-bottom: 2%;
 }
 
-.imageGeneratorGUIgenerationTimeContainer {
+.textGeneratorGUIgenerationTimeContainer {
   align-items: center;
   justify-content: center;
   text-align: center;
   display: none;
 }
 
-.imageGeneratorGUI_pauseButton {
+.textGeneratorGUI_pauseButton {
   width: 100px;
 }
 
-.imageGeneratorGUIpromptContainer {
+.textGeneratorGUIpromptContainer {
   flex-direction: row;
   margin: 0% 0% 0% 0%;
   padding: 0% 0% 0% 0%;
 }
 
-.imageGeneratorGUIfloatRightButton {
+.textGeneratorGUIfloatRightButton {
   width: 260px;
   margin: 1.5% 0% 0.5% 0%;
   white-space: nowrap;
 }
 
-.imageGeneratorGUIcopyNegativePromptTitle {
+.textGeneratorGUIcopyNegativePromptTitle {
   width: 70%;
 }
 
 
 
-.imageGeneratorGUI_generatedImage {
+.textGeneratorGUI_generatedImage {
   width: 100%;
   padding: 0px 0px 0px 0px;
   margin: 0px 10px 10px 0px;
@@ -150,7 +150,7 @@
 }
 
 
-.imageGeneratorGUI_modelDescription {
+.textGeneratorGUI_modelDescription {
   background-color: #ffffff;
   font-size: 15px;
   color: #000000;
@@ -160,7 +160,7 @@
   margin: 0px 0px 0px 0px;
 }
 
-.imageGeneratorGUI_modelLink {
+.textGeneratorGUI_modelLink {
   background-color: #ffffff;
   font-size: 15px;
   text-decoration: underline;
@@ -172,23 +172,23 @@
 }
 
 
-.imageGeneratorGUI_allOutputContainer {
+.textGeneratorGUI_allOutputContainer {
   width: 50.5%;
   align-items: center;
   justify-content: center;
 }
 
-.imageGeneratorGUI_modelTitleContainer {
+.textGeneratorGUI_modelTitleContainer {
   display: flex;
   flex-direction: row;
 }
 
-.imageGeneratorGUI_imageOutputContainer {
+.textGeneratorGUI_imageOutputContainer {
   display: flex;
   flex-direction: row;
 }
 
-.imageGeneratorGUI_copiedMessage {
+.textGeneratorGUI_copiedMessage {
   color: #ffffff;
   text-align: center;
   align-items: center;
@@ -197,7 +197,7 @@
   opacity: 0;
 }
 
-.banner_imageGeneratorGUIContainer {
+.banner_textGeneratorGUIContainer {
   object-fit: cover;
   align-items: center;
   justify-content: center;
@@ -210,7 +210,7 @@
   overflow: hidden;
 }
 
-.banner_imageGeneratorGUI {
+.banner_textGeneratorGUI {
   width: 100%;
   margin: 5% 0% 1% 0%;
   object-fit: cover;
@@ -223,7 +223,7 @@
   border-color: #ffffff;
 }
 
-.banner_imageGeneratorGUITitleContainer {
+.banner_textGeneratorGUITitleContainer {
   z-index: 10;
   color: #ffffff;
   background-color: #000000;
@@ -234,21 +234,21 @@
   align-items: center;
 }
 
-.banner_imageGeneratorGUITitle {
+.banner_textGeneratorGUITitle {
   font-size: 35px;
 }
 
-.banner_imageGeneratorGUISubTitle {
+.banner_textGeneratorGUISubTitle {
   font-size: 13px;
   color: #848484;
 }
 
-.imageGeneratorGUIrow {
+.textGeneratorGUIrow {
   display: flex;
   flex-direction: row;
 }
 
-.imageGeneratorGUIimageOutputSizeTitle {
+.textGeneratorGUIimageOutputSizeTitle {
   color: #848484;
   font-size: 14px;
 }
@@ -256,7 +256,7 @@
 
 
 @media only screen and (max-width: 560px) {
-  .imageGeneratorGUI {
+  .textGeneratorGUI {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -266,64 +266,64 @@
   }
   
 
-  .imageGeneratorGUITextContainer {
+  .textGeneratorGUITextContainer {
     padding: 0% 0% 0% 0%;
     margin: 0% 0% 0% 0%;
     width: 90%;
   }
 
-  .imageGeneratorGUITitle {
+  .textGeneratorGUITitle {
     font-size: 19px;
     padding: 3% 0% 0% 0%;
     margin: 0% 0% 1% 0%;
   }
 
 
-  .imageGeneratorGUIpromptEntry {
+  .textGeneratorGUIpromptEntry {
     width: 89%;
     margin: 0% 0% 0% 0%;
   }
 
-  .imageGeneratorGUILink {
+  .textGeneratorGUILink {
     width: 90%;
     padding: 0% 0% 0% 0%;
     margin: 0% 0% 0% 0%;
   }
 
-  .imageGeneratorGUI_modelDescription {
+  .textGeneratorGUI_modelDescription {
     width: 88%;
     margin: 0% 0% 0% 0%;
     padding-bottom: 5%;
   }
 
-  .imageGeneratorGUI_modelLink {
+  .textGeneratorGUI_modelLink {
     width: 88%;
     margin: 0% 0% 0% 0%;
   }
 
-  .imageGeneratorGUI_selectList {
+  .textGeneratorGUI_selectList {
     width: 100%;
   }
 
-  .imageGeneratorGUI_checklist {
+  .textGeneratorGUI_checklist {
     width: 90%;
   }
 
-  .imageGeneratorGUI_submitButton {
+  .textGeneratorGUI_submitButton {
     margin-top: 3%;
   }
 
-  .banner_imageGeneratorGUI {
+  .banner_textGeneratorGUI {
     width: 150%;
   }
 
-  .banner_imageGeneratorGUIContainer {
+  .banner_textGeneratorGUIContainer {
     max-width: 100vw;
     margin: 0% 0% 0% 0%;
     padding: 0% 0% 0% 0%;
   }
 
-  .banner_imageGeneratorGUITitleContainer {
+  .banner_textGeneratorGUITitleContainer {
     border-radius: 10px;
     border-width: 2px;
     padding: 1% 3% 2.5% 3%;
@@ -333,37 +333,37 @@
     align-items: center;
   }
 
-  .imageGeneratorGUI_allOutputContainer {
+  .textGeneratorGUI_allOutputContainer {
     width: 90%;
   }
   
-  .banner_imageGeneratorGUITitle {
+  .banner_textGeneratorGUITitle {
     font-size: 25px;
   }
   
-  .banner_imageGeneratorGUISubTitle {
+  .banner_textGeneratorGUISubTitle {
     font-size: 10px;
   }
 
-  .imageGeneratorGUIfloatRightButton {
+  .textGeneratorGUIfloatRightButton {
     margin: 4.5% 0% 1% 0%;
     padding: 0% 0% 0% 0%;
     width: 150px;
   }
 
-  .imageGeneratorGUInumberEntry {
+  .textGeneratorGUInumberEntry {
     width: 48px;
   }
 
-  .imageGeneratorGUI_imageOutputContainer {
+  .textGeneratorGUI_imageOutputContainer {
     flex-direction: column;
   }
 
-  .imageGeneratorGUIdropdownList {
+  .textGeneratorGUIdropdownList {
     width: 58px;
   }
 
-  .imageGeneratorGUInumberDisplay {
+  .imageGeneratorNumberDisplay {
     margin: 4% 0% 0% 2%;
     width: 48px;
   }

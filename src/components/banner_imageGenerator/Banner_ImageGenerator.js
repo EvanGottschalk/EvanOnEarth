@@ -44,26 +44,30 @@ const Banner_ImageGenerator = () => {
     const randomNumber = Math.floor(Math.random() * totalImages) + 1;
 
     // Dynamically import the image based on the random number
-    import(`../../image/banners/${randomNumber}.png`)
+    import(`../../image/banners/imagegenerator/${randomNumber}.png`)
       .then((image) => setBannerImage(image.default))
       .catch((err) => console.error("Error loading banner image:", err));
   }, []);
 
   function mouseover(event) {
     const element_ID = event.target.id;
+    const title_container = document.getElementById("banner_imageGeneratorTitleContainer");
     if (element_ID === "banner_imageGeneratorImage") {
-      document.getElementById("banner_imageGeneratorTitleContainer").style.opacity = '0';
-    } else if (element_ID === "banner_imageGeneratorImageTitleContainer") {
-      document.getElementById("banner_imageGeneratorTitleContainer").style.opacity = '1'; 
+      title_container.style.opacity = '0';
+      updateBannerTitle('default');
+    } else if (element_ID === "banner_imageGeneratorTitleContainer") {
+      title_container.style.opacity = '1';
+      updateBannerTitle('inverted');
     };
   };
-  
+
   function mouseleave(event) {
     const element_ID = event.target.id;
     if (element_ID === "banner_imageGeneratorImage") {
       document.getElementById("banner_imageGeneratorTitleContainer").style.opacity = '1';
     } else if (element_ID === "banner_imageGeneratorImageTitleContainer") {
-      document.getElementById("banner_imageGeneratorTitleContainer").style.opacity = '1'; 
+      document.getElementById("banner_imageGeneratorTitleContainer").style.opacity = '1';
+      updateBannerTitle('default');
     };
   };
 
@@ -73,6 +77,23 @@ const Banner_ImageGenerator = () => {
       document.getElementById("banner_imageGeneratorTitleContainer").style.opacity = 1;
     } else {
       document.getElementById("banner_imageGeneratorTitleContainer").style.opacity = 0;
+    };
+  };
+
+  async function updateBannerTitle(state) {
+    const title_container = document.getElementById("banner_imageGeneratorTitleContainer");
+    if (state === 'default') {
+      title_container.style.borderColor = '#ffffff';
+      title_container.style.backgroundColor = '#000000';
+      title_container.style.borderWidth = '3px';
+      document.getElementById('imageGeneratorSubtitle').style.color = '#848484';
+      document.getElementById('imageGeneratorTitle').style.color = '#ffffff';
+    } else if (state === 'inverted') {
+      title_container.style.borderColor = '#000000';
+      title_container.style.backgroundColor = '#ffffff';
+      title_container.style.borderWidth = '4px';
+      document.getElementById('imageGeneratorSubtitle').style.color = '#9925ff';
+      document.getElementById('imageGeneratorTitle').style.color = '#000000';
     };
   };
 
@@ -86,11 +107,11 @@ const Banner_ImageGenerator = () => {
   return (
     <div className='banner_imageGeneratorContainer'>
       <div className='banner_imagegenerator'>
-        <a className='banner_imageGeneratorTitleContainer' data-aos="fade-in" data-aos-delay={delay_gap * 1} id='banner_imageGeneratorTitleContainer' alt='@EvanOnEarth_`eth' href='https://twitter.com/EvanOnEarth_eth' onMouseOver={mouseover} onMouseLeave={mouseleave}>
-          <span className='banner_imageGeneratorTitle' id="banner_imageGeneratorTitleContainer" data-aos-delay={2 * delay_gap} data-aos="zoom-in">AI Image Generator</span>
-          <span className='banner_imageGeneratorSubTitle' id="banner_imageGeneratorTitleContainer" data-aos="zoom-in" data-aos-delay={3 * delay_gap} target="_blank">@EvanOnEarth_eth</span>
+      <a className='banner_imageGeneratorTitleContainer' data-aos="fade-in" data-aos-delay={delay_gap * 1} id='banner_imageGeneratorTitleContainer' alt='@EvanOnEarth_`eth' href='https://twitter.com/EvanOnEarth_eth' onMouseOver={mouseover} onMouseLeave={mouseleave}>
+          <span className='banner_imageGeneratorTitle' id="imageGeneratorTitle" data-aos-delay={2 * delay_gap} data-aos="zoom-in">AI Image Generator</span>
+          <span className='banner_imageGeneratorSubTitle' id="imageGeneratorSubtitle" data-aos="zoom-in" data-aos-delay={3 * delay_gap} target="_blank">@EvanOnEarth_eth</span>
         </a>
-        <img data-aos="zoom-out" src={bannerImage} alt='Image Generator' id='banner_imageGeneratorImage' className='banner_imagegenerator' onMouseOver={mouseover} onMouseLeave={mouseleave} onClick={handleClick}/>
+        <img data-aos="zoom-out" src={bannerImage} alt='AI Image Generator' id='banner_imageGeneratorImage' className='banner_imagegenerator' onMouseOver={mouseover} onMouseLeave={mouseleave} onClick={handleClick}/>
       </div>
     </div>
   );
