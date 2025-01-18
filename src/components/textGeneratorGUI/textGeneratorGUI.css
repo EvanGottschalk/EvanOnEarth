@@ -137,14 +137,13 @@
 
 
 .textGeneratorGUI_generatedImage {
-  width: 100%;
-  padding: 0px 0px 0px 0px;
-  margin: 0px 10px 10px 0px;
+  width: 40%;
+  padding: 2% 30% 2% 30%;
+  margin: 0px 0px 0px 0px;
   display: flex;
   align-items: left;
   justify-content: center;
   flex-direction: column;
-  cursor: pointer;
   height: auto; /* Maintain aspect ratio */
   object-fit: contain;
 }
@@ -156,6 +155,16 @@
   color: #000000;
   font-family: 'Arial';
   width: 48.5%;
+  padding: .5% 1% .5% 1%;
+  margin: 0px 0px 0px 0px;
+}
+
+.textGeneratorGUI_generatedText {
+  background-color: #ffffff;
+  font-size: 15px;
+  color: #000000;
+  font-family: 'Arial';
+  width: 100%;
   padding: .5% 1% .5% 1%;
   margin: 0px 0px 0px 0px;
 }
