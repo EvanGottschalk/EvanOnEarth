@@ -74,20 +74,22 @@ let mobile = window.innerWidth <= 600;
 
 const model_dict = {"gpt-3.5-turbo": {"description": "GPT-3.5-turbo is optimized for general-purpose conversational applications and tasks requiring text generation, including question answering, summarization, language translation, and more. As the default model in OpenAI’s ChatGPT API, it’s specifically engineered for balanced performance, cost-effectiveness, and high-quality output, making it versatile and suitable for both commercial and experimental use.",
                                       "link": "https://platform.openai.com/docs/models#gpt-3-5-turbo"},
-                    "gpt-4": {"description":  "Latest (experimental) release of the Realistic Vision model specialized in creating photorealistic portraits.",
-                                                     "link": "https://huggingface.co/SG161222/Realistic_Vision_V6.0_B1_noVAE"},
-                    "gpt-4-turbo": {"description": "A base model for stable diffusion by Stability AI.",
-                                                     "link": "https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0"},
-                    "gpt-4o": {"description": "A stable diffusion model by Runway ML.",
-                                                     "link": "https://huggingface.co/runwayml/stable-diffusion-v1-5"},
-                    "gpt-4o-mini": {"description": "A model by Prompthero for open-ended journey generation.",
-                                                     "link": "https://huggingface.co/prompthero/openjourney-v4"},
-                    "gpt-4o-realtime-preview": {"description": "A lightning-fast diffusion model by ByteDance.",
-                                                     "link": "https://huggingface.co/ByteDance/SDXL-Lightning"},
-                    "o1-preview": {"description": "A diffusion model that excels in generating high-quality, photorealistic images.",
-                                                     "link": "https://huggingface.co/SG161222/RealVisXL_V4.0"},
-                    "o1-mini": {"description": "A streamlined version of RealVisXL_V4.0, designed for faster inference while still aiming for photorealism.",
-                                                     "link": "https://huggingface.co/SG161222/RealVisXL_V4.0_Lightning"}};
+                    "gpt-4": {"description":  "GPT-4 is an advanced language model designed to deliver enhanced accuracy, comprehension, and creativity compared to its predecessor, GPT-3.5-turbo. With more refined reasoning and problem-solving capabilities, GPT-4 is suited for complex tasks that require higher precision, such as academic research assistance, legal document drafting, technical content generation, and in-depth customer support.",
+                                                     "link": "https://platform.openai.com/docs/models#gpt-4-turbo-and-gpt-4"},
+                    "gpt-4-turbo": {"description": "GPT-4-Turbo is a streamlined variant of GPT-4, optimized to provide faster responses and more cost-effective usage while still delivering high-quality output. Though it retains much of GPT-4’s capabilities, GPT-4-Turbo is geared toward applications that benefit from reduced latency and budget-friendly operation. It’s suitable for tasks that require advanced language processing but can tolerate minor trade-offs in precision or depth compared to the original GPT-4.",
+                                                     "link": "https://platform.openai.com/docs/models#gpt-4-turbo-and-gpt-4"},
+                    "gpt-4o": {"description": "GPT-4o is a multimodal model designed to process both text and image inputs, allowing for applications that benefit from combined textual and visual understanding. It’s ideal for use cases where insights from visual data need to complement language-based tasks, such as analyzing charts, understanding image context, or engaging in text-image interactive applications.",
+                                                     "link": "https://platform.openai.com/docs/models#gpt-4o"},
+                    "gpt-4o-mini": {"description": "GPT-4o-mini is a streamlined version of GPT-4o designed for faster performance with slightly reduced capabilities. It still supports multimodal input, making it suitable for applications requiring text and image analysis but with an emphasis on speed and efficiency over highly detailed visual analysis. GPT-4o-mini is ideal for lightweight multimodal applications where quick responses are more important than in-depth image interpretation.",
+                                                     "link": "https://platform.openai.com/docs/models#gpt-4o-mini"},
+                    "gpt-4o-realtime-preview": {"description": 'GPT-4o-Realtime-Preview is designed for applications requiring real-time, multimodal interactions with an emphasis on low-latency responses. This model is particularly useful for dynamic, conversational interfaces where "speech in, speech out" capabilities and immediate feedback are essential. GPT-4o-Realtime-Preview is a powerful option for interactive voice- or image-based applications, enabling seamless, responsive engagement in scenarios like virtual assistants, guided tutorials, or interactive multimedia experiences.',
+                                                     "link": "https://platform.openai.com/docs/models#gpt-4o-realtime"},
+                    "o1": {"description": `OpenAI's o1 model is a cutting-edge AI system designed to tackle complex, multi-step tasks with enhanced reasoning capabilities. Building upon its predecessor, o1-preview, this model is engineered to "think" more deeply before responding, enabling it to handle intricate problems across various domains. The o1 model is tailored for applications requiring advanced analytical thinking and problem-solving skills. It excels in scenarios where tasks involve multiple steps and demand a high level of reasoning.`,
+                                                     "link": "https://platform.openai.com/docs/models#o1"},
+                    "o1-preview": {"description": "The o1-preview model is optimized for tasks that demand complex reasoning, logical problem-solving, and deep analytical capabilities. It is designed for domains where precision and structured thinking are essential, such as coding, scientific research, mathematics, and complex technical content. While it can still perform general language tasks, o1-preview excels in specialized areas requiring a higher level of logical and structured response.",
+                                                     "link": "https://platform.openai.com/docs/models#o1"},
+                    "o1-mini": {"description": "o1-mini is a streamlined variant of o1-preview, designed to provide quick, structured responses with reduced processing demands. While it retains o1’s focus on logical reasoning and problem-solving, o1-mini prioritizes efficiency and speed, making it suitable for lightweight applications where rapid, analytical responses are required but without the depth and detail of o1-preview. It’s a good fit for technical applications that need basic analysis, structured output, or coding assistance at a faster pace.",
+                                                     "link": "https://platform.openai.com/docs/models#o1"}};
 
 //AppStart                                                     
 const TextGeneratorGUI = () => {
@@ -112,7 +114,7 @@ const TextGeneratorGUI = () => {
     let checkbox = document.querySelector('input[value="gpt-3.5-turbo"]');
     checkbox.checked = true;
     console.log('checkbox', checkbox);
-    checkbox = document.querySelector('input[value="none"]');
+    checkbox = document.querySelector('input[value="0"]');
     checkbox.checked = true; 
     console.log('checkbox', checkbox);
   });
@@ -384,7 +386,7 @@ const TextGeneratorGUI = () => {
         parameter_dict["model"] = checked_models[i];
 
         for (let j = 0; j < checked_sizes.length; j++) {
-          parameter_dict["max_tokens"] = checked_sizes[j];
+          parameter_dict["max_tokens"] = Number(checked_sizes[j]);
 
           for (let output_ID = 0; output_ID < parameter_dict["quantity"]; output_ID++) {
             console.log('output_ID', output_ID);
@@ -415,29 +417,23 @@ const TextGeneratorGUI = () => {
     var model_short_name = model_title_element.innerHTML;
     var text_element;
     if (output_ID === 0) {
-      text_element = document.getElementById('generatedText_' + model + '_' + size.toString());
+      text_element = document.getElementById('generatedText_' + model + '_' + size);
     } else {
-      text_element = document.getElementById('generatedText_' + model + '_' + size.toString() + '_' + output_ID.toString());
+      text_element = document.getElementById('generatedText_' + model + '_' + size + '_' + output_ID.toString());
     };
 
     var image_element;
     if (output_ID === 0) {
-      image_element = document.getElementById('generatedImage_' + model + '_' + size.toString());
+      image_element = document.getElementById('generatedImage_' + model + '_' + size);
     } else {
-      image_element = document.getElementById('generatedImage_' + model + '_' + size.toString() + '_' + output_ID.toString());
+      image_element = document.getElementById('generatedImage_' + model + '_' + size + '_' + output_ID.toString());
     };
 
-    // Temporary Fix
-    // text_element = document.getElementById('imageOutputContainer_black-forest-labs/FLUX.1-dev_256x256');
-    
     model_title_element.innerHTML = model_short_name + " Generating";
     image_element.src = generating_placeholder_0;
     
     // text generation
     let text_generator_response, text_generator_promise, text_generator_result;
-
-    //temporary
-    parameter_dict['max_tokens'] = 0;
 
     text_generator_response = text_generator.generateText(parameter_dict); 
     model_title_element.innerHTML = "Generating";
@@ -756,7 +752,7 @@ const TextGeneratorGUI = () => {
         <div className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={11 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
           Enter Prompt:
         </div>
-        <input value={mobile ? "Copy Simplifier" : "Copy Simplifier Prefix"} className="textGeneratorGUI_submitButton textGeneratorGUIfloatRightButton" id="copySimplifierPrefixButton" type="button" data-aos="fade-right" data-aos-delay={20 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" onClick={handleSubmitClick}/>
+        {/* <input value={mobile ? "Copy Simplifier" : "Copy Simplifier Prefix"} className="textGeneratorGUI_submitButton textGeneratorGUIfloatRightButton" id="copySimplifierPrefixButton" type="button" data-aos="fade-right" data-aos-delay={20 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" onClick={handleSubmitClick}/> */}
       </div>
       <textarea id='promptEntry' className='textGeneratorGUIpromptEntry' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"  onChange={handlePromptChange}
         placeholder="Your prompt here..." required/>
@@ -829,8 +825,8 @@ const TextGeneratorGUI = () => {
           <input type="checkbox" value="256x256" onChange={handleMaxTokensChange} />
           256x256
         </label> */}
-        <label className="textGeneratorGUImaxTokensOption" id='maxTokensContainer_none'>
-          <input type="checkbox" value="none" id='maxTokensCheckbox_none' onChange={handleMaxTokensChange} />
+        <label className="textGeneratorGUImaxTokensOption" id='maxTokensContainer_0'>
+          <input type="checkbox" value="0" id='maxTokensCheckbox_0' onChange={handleMaxTokensChange} />
           None
         </label>
         <label className="textGeneratorGUImaxTokensOption" id='maxTokensContainer_280'>
@@ -914,14 +910,14 @@ const TextGeneratorGUI = () => {
             </div>
             <span className="textGeneratorGUI_copiedMessage" id="copiedMessage_gpt-3.5-turbo">Image URL Copied!</span>
           </div>
-          <div id="sizeContainer_gpt-3.5-turbo_none" className="textGeneratorGUIimageOutputSizeTitle">
+          <div id="sizeContainer_gpt-3.5-turbo_0" className="textGeneratorGUIimageOutputSizeTitle">
           No Character Limit
-            {/* <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_gpt-3.5-turbo_none">
-              <img src={image_URL} alt='' id='generatedImage_gpt-3.5-turbo_none' className='textGeneratorGUI_generatedImage' onClick={copyImageURL}/>
+            {/* <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_gpt-3.5-turbo_0">
+              <img src={image_URL} alt='' id='generatedImage_gpt-3.5-turbo_0' className='textGeneratorGUI_generatedImage' onClick={copyImageURL}/>
             </div> */}
-            <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-3.5-turbo_none' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
-              <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_gpt-3.5-turbo_none">
-                <img src={image_URL} alt='' id='generatedImage_gpt-3.5-turbo_none' className='textGeneratorGUI_generatedImage' onClick={copyImageURL}/>
+            <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-3.5-turbo_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+              <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_gpt-3.5-turbo_0">
+                <img src={image_URL} alt='' id='generatedImage_gpt-3.5-turbo_0' className='textGeneratorGUI_generatedImage' onClick={copyImageURL}/>
               </div>
             </div>
           </div>
@@ -933,11 +929,11 @@ const TextGeneratorGUI = () => {
               GPT 4:
             </div>
           </div>
-          <div id="sizeContainer_gpt-4_none" className="textGeneratorGUIimageOutputSizeTitle">
+          <div id="sizeContainer_gpt-4_0" className="textGeneratorGUIimageOutputSizeTitle">
           No Character Limit
             <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-3.5-turbo' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
-              <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_gpt-4_none">
-                <img src={image_URL} alt='' id='generatedImage_gpt-4_none' className='textGeneratorGUI_generatedImage' onClick={copyImageURL}/>
+              <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_gpt-4_0">
+                <img src={image_URL} alt='' id='generatedImage_gpt-4_0' className='textGeneratorGUI_generatedImage' onClick={copyImageURL}/>
               </div>
             </div>
           </div>
@@ -949,11 +945,11 @@ const TextGeneratorGUI = () => {
               GPT 4 Turbo:
             </div>
           </div>
-          <div id="sizeContainer_gpt-4-turbo_none" className="textGeneratorGUIimageOutputSizeTitle">
+          <div id="sizeContainer_gpt-4-turbo_0" className="textGeneratorGUIimageOutputSizeTitle">
           No Character Limit
             <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-3.5-turbo' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
-              <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_gpt-4-turbo_none">
-                <img src={image_URL} alt='' id='generatedImage_gpt-4-turbo_none' className='textGeneratorGUI_generatedImage' onClick={copyImageURL}/>
+              <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_gpt-4-turbo_0">
+                <img src={image_URL} alt='' id='generatedImage_gpt-4-turbo_0' className='textGeneratorGUI_generatedImage' onClick={copyImageURL}/>
               </div>
             </div>
           </div>
@@ -966,11 +962,11 @@ const TextGeneratorGUI = () => {
             </div>
             <span className="textGeneratorGUI_copiedMessage" id="copiedMessage_gpt-4o">Image URL Copied!</span>
           </div>
-          <div id="sizeContainer_gpt-4o_none" className="textGeneratorGUIimageOutputSizeTitle">
+          <div id="sizeContainer_gpt-4o_0" className="textGeneratorGUIimageOutputSizeTitle">
           No Character Limit
             <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-3.5-turbo' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
-              <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_gpt-4o_none">
-                <img src={image_URL} alt='' id='generatedImage_gpt-4o_none' className='textGeneratorGUI_generatedImage' onClick={copyImageURL}/>
+              <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_gpt-4o_0">
+                <img src={image_URL} alt='' id='generatedImage_gpt-4o_0' className='textGeneratorGUI_generatedImage' onClick={copyImageURL}/>
               </div>
             </div>
           </div>
@@ -983,11 +979,11 @@ const TextGeneratorGUI = () => {
             </div>
             <span className="textGeneratorGUI_copiedMessage" id="copiedMessage_gpt-4o-mini">Image URL Copied!</span>
           </div>
-          <div id="sizeContainer_gpt-4o-mini_none" className="textGeneratorGUIimageOutputSizeTitle">
+          <div id="sizeContainer_gpt-4o-mini_0" className="textGeneratorGUIimageOutputSizeTitle">
           No Character Limit
             <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-3.5-turbo' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
-              <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_gpt-4o-mini_none">
-                <img src={image_URL} alt='' id='generatedImage_gpt-4o-mini_none' className='textGeneratorGUI_generatedImage' onClick={copyImageURL}/>
+              <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_gpt-4o-mini_0">
+                <img src={image_URL} alt='' id='generatedImage_gpt-4o-mini_0' className='textGeneratorGUI_generatedImage' onClick={copyImageURL}/>
               </div>
             </div>
           </div>
@@ -1000,11 +996,11 @@ const TextGeneratorGUI = () => {
             </div>
             <span className="textGeneratorGUI_copiedMessage" id="copiedMessage_gpt-4o-realtime-preview">Image URL Copied!</span>
           </div>
-          <div id="sizeContainer_gpt-4o-realtime-preview_none" className="textGeneratorGUIimageOutputSizeTitle">
+          <div id="sizeContainer_gpt-4o-realtime-preview_0" className="textGeneratorGUIimageOutputSizeTitle">
           No Character Limit            
             <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-3.5-turbo' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
-              <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_gpt-4o-realtime-preview_none">
-                <img src={image_URL} alt='' id='generatedImage_gpt-4o-realtime-preview_none' className='textGeneratorGUI_generatedImage' onClick={copyImageURL}/>
+              <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_gpt-4o-realtime-preview_0">
+                <img src={image_URL} alt='' id='generatedImage_gpt-4o-realtime-preview_0' className='textGeneratorGUI_generatedImage' onClick={copyImageURL}/>
               </div>
             </div>
           </div>
@@ -1017,11 +1013,11 @@ const TextGeneratorGUI = () => {
             </div>
             <span className="textGeneratorGUI_copiedMessage" id="copiedMessage_o1-preview">Image URL Copied!</span>
           </div>
-          <div id="sizeContainer_o1-preview_none" className="textGeneratorGUIimageOutputSizeTitle">
+          <div id="sizeContainer_o1-preview_0" className="textGeneratorGUIimageOutputSizeTitle">
           No Character Limit
             <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-3.5-turbo' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
-              <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_o1-preview_none">
-                <img src={image_URL} alt='' id='generatedImage_o1-preview_none' className='textGeneratorGUI_generatedImage' onClick={copyImageURL}/>
+              <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_o1-preview_0">
+                <img src={image_URL} alt='' id='generatedImage_o1-preview_0' className='textGeneratorGUI_generatedImage' onClick={copyImageURL}/>
               </div>
             </div>
           </div>
@@ -1034,11 +1030,11 @@ const TextGeneratorGUI = () => {
             </div>
             <span className="textGeneratorGUI_copiedMessage" id="copiedMessage_o1-mini">Image URL Copied!</span>
           </div>
-          <div id="sizeContainer_o1-mini_none" className="textGeneratorGUIimageOutputSizeTitle">
+          <div id="sizeContainer_o1-mini_0" className="textGeneratorGUIimageOutputSizeTitle">
           No Character Limit
             <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-3.5-turbo' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
-              <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_o1-mini_none">
-                <img src={image_URL} alt='' id='generatedImage_o1-mini_none' className='textGeneratorGUI_generatedImage' onClick={copyImageURL}/>
+              <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_o1-mini_0">
+                <img src={image_URL} alt='' id='generatedImage_o1-mini_0' className='textGeneratorGUI_generatedImage' onClick={copyImageURL}/>
               </div>
             </div>
           </div>
