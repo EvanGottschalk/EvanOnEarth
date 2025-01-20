@@ -16,6 +16,7 @@ import generating_placeholder_3 from '../../image/generating/generating_3.webp';
 import loading_placeholder from '../../image/generating/image_loading_preview.webp';
 import generation_failed_placeholder from '../../image/generating/generation_failed.webp'
 import { all } from 'redux-saga/effects';
+import { custom } from 'zod';
 
 
 
@@ -39,6 +40,7 @@ const generating_placeholder_list = [
 ];
 
 const delay_gap = 100;
+
 const default_negative_prompt = "out of frame, lowres, text, error, cropped, worst quality, low quality, jpeg artifacts, ugly, duplicate, morbid, mutilated, extra fingers, mutated hands, poorly drawn hands, poorly drawn face, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra limbs, cloned face, disfigured, gross proportions, malformed limbs, missing arms, missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck, username, watermark, signature"
 const simplifier_prefix = "I NEED to test how the tool works with extremely simple prompts. DO NOT add any detail, just use it AS-IS:";
 
@@ -143,8 +145,9 @@ const TextGeneratorGUI = () => {
     console.log("negative_prompt", parameter_dict["negative_prompt"]);
   }
 
-  function handleModelChange(event) {
+  async function handleModelChange(event) {
     const selected_model = event.target.value;
+    const model_short_name = event.target.alt;
 
     console.log("handleModelChange() -> Selected Model:", selected_model);
     
@@ -152,20 +155,26 @@ const TextGeneratorGUI = () => {
     const description_element = document.getElementById('modelDescription');
     const link_element = document.getElementById('modelLink');
     const model_output_container = document.getElementById('modelOutputContainer_' + selected_model);
-    // const checkbox_element = document.getElementById(event.target.id);
-    if (event.target.checked) {
-      model_output_container.style.display = 'block';
-      title_element.innerHTML = `<u><b>` + selected_model + `</b></u>`;
-      description_element.innerHTML = model_dict[selected_model]['description'];
-      link_element.innerHTML = "Learn More ->";
-      link_element.href = model_dict[selected_model]['link'];
+
+    // If no models would be left selected, nothing changes
+    const selected_models = await getCheckedValues('model');
+    if (selected_models.length === 0) {
+      event.target.checked = true;
     } else {
-      model_output_container.style.display = 'none';
-      title_element.innerHTML = "";
-      description_element.innerHTML = "..."
-      link_element.innerHTML = "";
-      link_element.href = "";
-    };    
+      if (event.target.checked) {
+        model_output_container.style.display = 'block';
+        title_element.innerHTML = `<u><b>` + model_short_name + `</b></u>`;
+        description_element.innerHTML = model_dict[selected_model]['description'];
+        link_element.innerHTML = "Learn More ->";
+        link_element.href = model_dict[selected_model]['link'];
+      } else {
+        model_output_container.style.display = 'none';
+        title_element.innerHTML = "";
+        description_element.innerHTML = "..."
+        link_element.innerHTML = "";
+        link_element.href = "";
+      };
+    };
   };
 
   async function handleMaxTokensChange(event) {
@@ -192,6 +201,20 @@ const TextGeneratorGUI = () => {
           new_image_output_container.id = 'imageOutputContainer_' + model + '_' + selected_size;
 
           for (let j = 0; j < parameter_dict["quantity"]; j++) {
+            // Create the text element
+            const new_text_element = document.createElement('div');
+            // new_text_element.innerHTML = '';
+            if (j === 0) {
+              new_text_element.id = 'generatedText_' + model + '_' + selected_size;
+            } else {
+              new_text_element.id = 'generatedText_' + model + '_' + selected_size + '_' + j.toString();
+            };
+            new_text_element.className = 'textGeneratorGUI_generatedText';
+            if (!mobile) {
+              new_text_element.style.width = (100 / parameter_dict['quantity']).toString() + "%";
+            };
+
+            // Create the image element
             const new_image_element = document.createElement('img');
             new_image_element.src = default_image;
             new_image_element.alt = "Click to Copy URL";
@@ -206,7 +229,9 @@ const TextGeneratorGUI = () => {
               new_image_element.style.width = (100 / parameter_dict['quantity']).toString() + "%";
             };
 
-            new_image_output_container.appendChild(new_image_element);
+            // Combine the elements
+            new_text_element.appendChild(new_image_element);
+            new_image_output_container.appendChild(new_text_element);
           };
           new_size_container.appendChild(new_image_output_container);
           model_output_container.appendChild(new_size_container);
@@ -353,6 +378,13 @@ const TextGeneratorGUI = () => {
     } else if (element_ID === 'inferenceStepsEntry') {
       parameter_dict["num_inference_steps"] = new_value;
       console.log('num_inference_steps', parameter_dict["num_inference_steps"]);
+    } else if (element_ID.includes('custom')) {
+      const custom_input_ID = element_ID.split('maxTokensInput_')[1];
+      if (new_value) {
+        document.getElementById('maxTokensCheckbox_' + custom_input_ID).checked = true;
+      } else {
+        document.getElementById('maxTokensCheckbox_' + custom_input_ID).checked = false;
+      };
     };
   };
 
@@ -376,6 +408,7 @@ const TextGeneratorGUI = () => {
       pause_generation = false
       document.getElementById('pauseButton').value = "Pause";
       document.getElementById('generationTimeContainer').style.display = 'block';
+      document.getElementById('pauseButton').style.opacity = '1';
       await setGenerationTime(0);
 
       const checked_models = await getCheckedValues('model');
@@ -386,15 +419,17 @@ const TextGeneratorGUI = () => {
         parameter_dict["model"] = checked_models[i];
 
         for (let j = 0; j < checked_sizes.length; j++) {
-          parameter_dict["max_tokens"] = Number(checked_sizes[j]);
+          parameter_dict["max_tokens"] = checked_sizes[j];
 
           for (let output_ID = 0; output_ID < parameter_dict["quantity"]; output_ID++) {
             console.log('output_ID', output_ID);
-            image_URL = await handleTextGeneration(parameter_dict, output_ID);
-            console.log("image_URL:", image_URL);
+            generated_text = await handleTextGeneration(parameter_dict, output_ID);
+            console.log("generated_text:", generated_text);
           };
         };
       };
+      console.log('handleSubitClick() -> Text Generation Complete!');
+      document.getElementById('pauseButton').style.opacity = '0';
     };
   };
 
@@ -407,8 +442,25 @@ const TextGeneratorGUI = () => {
     console.log('output_ID:', output_ID);
     const model = parameter_dict["model"];
     console.log('Model Currently Generating:', model);
-    const size = parameter_dict["max_tokens"];
-    console.log('Size Currently Generating:', size);
+
+    // Handle custom length inputs
+    const size = parameter_dict['max_tokens'].toString();
+    if (parameter_dict['max_tokens'].includes('custom')) {
+      parameter_dict['max_tokens'] = document.getElementById('maxTokensInput_' + parameter_dict['max_tokens']).value; 
+    };
+    
+
+    // let size;
+    // const custom_input_element = document.querySelector('input[value="' + parameter_dict["max_tokens"].toString() + '"]');
+    // console.log('custom_input_element', custom_input_element);
+    // if (custom_input_element) {
+    //   size = document.getElementById(custom_input_element.id).value.toString();
+    // } else {
+    //   size = parameter_dict["max_tokens"];
+    // };
+    // console.log('Size Currently Generating:', parameter_dict["max_tokens"]);
+
+
 
     // const length = parameter_dict["width"].toString() + "x" + parameter_dict["height"].toString();
     // console.log('length Currently Generating:', length);
@@ -417,6 +469,7 @@ const TextGeneratorGUI = () => {
     var model_short_name = model_title_element.innerHTML;
     var text_element;
     if (output_ID === 0) {
+      console.log('text_element:', 'generatedText_' + model + '_' + size);
       text_element = document.getElementById('generatedText_' + model + '_' + size);
     } else {
       text_element = document.getElementById('generatedText_' + model + '_' + size + '_' + output_ID.toString());
@@ -429,6 +482,25 @@ const TextGeneratorGUI = () => {
       image_element = document.getElementById('generatedImage_' + model + '_' + size + '_' + output_ID.toString());
     };
 
+    // On the 2nd "Generate" click, the image elements are removed, so they must be added back
+    if (!image_element) {
+      text_element.innerHTML = '';
+
+      image_element = document.createElement('img');
+      image_element.src = generating_placeholder_0;
+      if (output_ID === 0) {
+        image_element.id = 'generatedImage_' + model + '_' + size;
+      } else {
+        image_element.id = 'generatedImage_' + model + '_' + size + '_' + output_ID.toString();
+      };
+      image_element.className = 'textGeneratorGUI_generatedImage';
+      if (!mobile) {
+        image_element.style.width = (100 / parameter_dict['quantity']).toString() + "%";
+      };
+
+      text_element.appendChild(image_element);
+    }
+
     model_title_element.innerHTML = model_short_name + " Generating";
     image_element.src = generating_placeholder_0;
     
@@ -436,7 +508,6 @@ const TextGeneratorGUI = () => {
     let text_generator_response, text_generator_promise, text_generator_result;
 
     text_generator_response = text_generator.generateText(parameter_dict); 
-    model_title_element.innerHTML = "Generating";
 
     // Loop
     var number_of_loops = 0;
@@ -452,7 +523,7 @@ const TextGeneratorGUI = () => {
           await setGenerationTime(generation_time);
         };
         if (loop_count > 3) {
-          model_title_element.innerHTML = "Generating";
+          model_title_element.innerHTML = model_short_name + " Generating";
           image_element.src = generating_placeholder_0;
           loop_count = 0;
           number_of_loops++;
@@ -472,8 +543,15 @@ const TextGeneratorGUI = () => {
           //   text_generator_result = result;
           // };
           if (typeof result === 'string') {
-            loop = false;
-            text_generator_result = result;
+            if (result === 'error') {
+              // image_element.src = generation_failed_placeholder;
+              loop = false;
+              image_element.src = generation_failed_placeholder
+            } else {
+              image_element.src = loading_placeholder;
+              loop = false;
+              text_generator_result = result;
+            };
           };
         });
         console.log('promise', text_generator_promise);
@@ -486,46 +564,16 @@ const TextGeneratorGUI = () => {
 
 
     generated_text = text_generator_result;
-    text_element.innerHTML = generated_text;
-    // text_title_element.innerHTML = "text: ";
+    if (generated_text) {
+      text_element.innerHTML = generated_text;
+    };
+    model_title_element.innerHTML = model_short_name;
   
     return(generated_text);
 
   };
 
 
-
-  // async function generateImage_DALLE(prompt, width=1024, height=1024, model="black-forest-labs/FLUX.1-dev") {
-  //   try {
-  //     const response = await fetch('https://alchm-backend.onrender.com/generate-image', {
-  //       method: 'POST',
-  //       headers: {
-  //           'Content-Type': 'application/json',
-  //         },
-  //       body: JSON.stringify({ prompt })
-  //     })
-  
-  //     if (!response.ok) {
-  //       throw new Error(`Server error: ${response.status}`);
-  //     }
-  
-  //     const data = await response.json()
-  
-  
-  
-  
-  //     console.log("DALL-E Response `data`", data);
-  //     console.log("DALL-E Response `data.imageUrl`", data.imageUrl);
-  //     // console.log("DALL-E Response `data.data.imageUrl`", data.data.imageUrl);
-  //     // console.log("DALL-E Response `data.data[0].imageUrl`", data.data[0].imageUrl);
-  //     return(data.imageUrl);
-  //   } catch (error) {
-  //       console.error('Error generating image:', error)
-  //   } finally {
-  //       console.log("Done generating image!")
-  //   }
-  
-  // }
 
   async function displayImage(image_element, new_image) {
     console.log('\nTextGeneratorGUI >>> RUNNING displayImage()');
@@ -630,7 +678,7 @@ const TextGeneratorGUI = () => {
             if (result === 'error') {
               // image_element.src = generation_failed_placeholder;
               loop = false;
-              text_generator_result = generation_failed_placeholder
+              image_element.src = generation_failed_placeholder
             } else {
               image_element.src = loading_placeholder;
               loop = false;
@@ -771,35 +819,39 @@ const TextGeneratorGUI = () => {
       </div>
       <div className='textGeneratorGUI_checklist' id='checklistModels' data-aos="fade-right" data-aos-delay={14 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
         <label className="textGeneratorGUImodelOption">
-          <input type="checkbox" value="gpt-3.5-turbo" onChange={handleModelChange} />
+          <input type="checkbox" alt="GPT 3.5 Turbo" value="gpt-3.5-turbo" onChange={handleModelChange} />
           GPT 3.5 Turbo
         </label>
         <label className="textGeneratorGUImodelOption">
-          <input type="checkbox" value="gpt-4" onChange={handleModelChange} />
+          <input type="checkbox" alt="GPT 4" value="gpt-4" onChange={handleModelChange} />
           GPT 4
         </label>
         <label className="textGeneratorGUImodelOption">
-          <input type="checkbox" value="gpt-4-turbo" onChange={handleModelChange} />
+          <input type="checkbox" alt="GPT 4 Turbo" value="gpt-4-turbo" onChange={handleModelChange} />
           GPT 4 Turbo
         </label>
         <label className="textGeneratorGUImodelOption">
-          <input type="checkbox" value="gpt-4o" onChange={handleModelChange} />
+          <input type="checkbox" alt="GPT 4o" value="gpt-4o" onChange={handleModelChange} />
           GPT 4o
         </label>
         <label className="textGeneratorGUImodelOption">
-          <input type="checkbox" value="gpt-4o-mini" onChange={handleModelChange} />
+          <input type="checkbox" alt="GPT 4o Mini" value="gpt-4o-mini" onChange={handleModelChange} />
           GPT 4o Mini
         </label>
-        <label className="textGeneratorGUImodelOption">
-          <input type="checkbox" value="gpt-4o-realtime-preview" onChange={handleModelChange} />
+        {/* <label className="textGeneratorGUImodelOption">
+          <input type="checkbox" alt="GPT 4o Realtime Preview" value="gpt-4o-realtime-preview" onChange={handleModelChange} />
           GPT 4o Realtime Preview
+        </label> */}
+        <label className="textGeneratorGUImodelOption">
+          <input type="checkbox" alt="o1" value="o1" onChange={handleModelChange} />
+          o1
         </label>
         <label className="textGeneratorGUImodelOption">
-          <input type="checkbox" value="o1-preview" onChange={handleModelChange} />
+          <input type="checkbox" alt="o1 Preview" value="o1-preview" onChange={handleModelChange} />
           o1 Preview
         </label>
         <label className="textGeneratorGUImodelOption">
-          <input type="checkbox" value="o1-mini" onChange={handleModelChange} />
+          <input type="checkbox" alt="o1 Mini" value="o1-mini" onChange={handleModelChange} />
           o1 Mini
         </label>
       </div>
@@ -808,7 +860,7 @@ const TextGeneratorGUI = () => {
           Model Description:
         </div>
       </div>
-      <div className='textGeneratorGUI_modelDescription' id='modelDescriptionTitle' data-aos="fade-right" data-aos-delay={16 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"><u><b>black-forest-labs/FLUX.1-dev</b></u></div>
+      <div className='textGeneratorGUI_modelDescription' id='modelDescriptionTitle' data-aos="fade-right" data-aos-delay={16 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"><u><b>GPT 3.5 Turbo</b></u></div>
       <div className='textGeneratorGUI_modelDescription' id='modelDescription' data-aos="fade-right" data-aos-delay={16 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
         GPT-3.5-turbo is optimized for general-purpose conversational applications and tasks requiring text generation, including question answering, summarization, language translation, and more. As the default model in OpenAI’s ChatGPT API, it’s specifically engineered for balanced performance, cost-effectiveness, and high-quality output, making it versatile and suitable for both commercial and experimental use.
       </div>
@@ -817,7 +869,7 @@ const TextGeneratorGUI = () => {
       </a>
       <div className='textGeneratorGUITextContainer'>
         <div className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={13 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
-          Maximum Character Length(s):
+          Maximum # of Words:
         </div>
       </div>
       <div className='textGeneratorGUI_checklist' id='checklistSizes' data-aos="fade-right" data-aos-delay={14 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
@@ -829,22 +881,34 @@ const TextGeneratorGUI = () => {
           <input type="checkbox" value="0" id='maxTokensCheckbox_0' onChange={handleMaxTokensChange} />
           None
         </label>
-        <label className="textGeneratorGUImaxTokensOption" id='maxTokensContainer_280'>
-          <input type="checkbox" value="280" id='maxTokensCheckbox_280' onChange={handleMaxTokensChange} />
-          280 (Twitter)
-        </label>        
+        <label className="textGeneratorGUImaxTokensOption" id='maxTokensContainer_50'>
+          <input type="checkbox" value="50" id='maxTokensCheckbox_50' onChange={handleMaxTokensChange} />
+          50
+        </label>
+        <label className="textGeneratorGUImaxTokensOption" id='maxTokensContainer_100'>
+          <input type="checkbox" value="100" id='maxTokensCheckbox_100' onChange={handleMaxTokensChange} />
+          100
+        </label>
+        <label className="textGeneratorGUImaxTokensOption" id='maxTokensContainer_200'>
+          <input type="checkbox" value="200" id='maxTokensCheckbox_200' onChange={handleMaxTokensChange} />
+          200
+        </label>
+        <label className="textGeneratorGUImaxTokensOption" id='maxTokensContainer_500'>
+          <input type="checkbox" value="500" id='maxTokensCheckbox_500' onChange={handleMaxTokensChange} />
+          500
+        </label>
         <label className="textGeneratorGUImaxTokensOption" id='maxTokensContainer_custom_1'>
-          <input type="checkbox" value="custom" id='maxTokensCheckbox_custom_1' onChange={handleMaxTokensChange}/>
+          <input type="checkbox" value="custom_1" id='maxTokensCheckbox_custom_1' onChange={handleMaxTokensChange}/>
           Custom Length 1:&nbsp;
           <input id='maxTokensInput_custom_1' className='textGeneratorGUIpromptEntry textGeneratorGUInumberEntry' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" placeholder="" onChange={handleDropdownChange} required/>
         </label>
         <label className="textGeneratorGUImaxTokensOption" id='maxTokensContainer_custom_2'>
-          <input type="checkbox" value="custom" id='maxTokensCheckbox_custom_2' onChange={handleMaxTokensChange}/>
+          <input type="checkbox" value="custom_2" id='maxTokensCheckbox_custom_2' onChange={handleMaxTokensChange}/>
           Custom Length 2:&nbsp;
           <input id='maxTokensInput_custom_2' className='textGeneratorGUIpromptEntry textGeneratorGUInumberEntry' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" placeholder="" onChange={handleDropdownChange} required/>
         </label>
         <label className="textGeneratorGUImaxTokensOption" id='maxTokensContainer_custom_3'>
-          <input type="checkbox" value="custom" id='maxTokensCheckbox_custom_3' onChange={handleMaxTokensChange}/>
+          <input type="checkbox" value="custom_3" id='maxTokensCheckbox_custom_3' onChange={handleMaxTokensChange}/>
           Custom Length 3:&nbsp;
           <input id='maxTokensInput_custom_3' className='textGeneratorGUIpromptEntry textGeneratorGUInumberEntry' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" placeholder="" onChange={handleDropdownChange} required/>
         </label>
@@ -875,9 +939,9 @@ const TextGeneratorGUI = () => {
           Generation Duration:
         </div>
         <input id='inferenceStepsEntry' className='textGeneratorGUIpromptEntry textGeneratorGUInumberEntry' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" placeholder="" onChange={handleDropdownChange} required/>
-        <input value="Generate Text" className="textGeneratorGUI_submitButton" id="generateTextButton" type="submit" data-aos="fade-right" data-aos-delay={17 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" onClick={handleSubmitClick}/>
+        <input value="Generate" className="textGeneratorGUI_submitButton" id="generateTextButton" type="submit" data-aos="fade-right" data-aos-delay={17 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" onClick={handleSubmitClick}/>
       </div>
-      <div className='textGeneratorGUITextContainer'>
+      {/* <div className='textGeneratorGUITextContainer'>
         <div id='textTitle' className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={18 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
           Generated Text:
         </div>
@@ -885,7 +949,7 @@ const TextGeneratorGUI = () => {
       <div className='textGeneratorGUI_modelDescription' id='textOutput' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">...</div>
       <div className='textGeneratorGUITextContainer'>
         <input value="Generate" className="textGeneratorGUI_submitButton" id="generateImageButton" type="submit" data-aos="fade-right" data-aos-delay={20 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" onClick={handleSubmitClick}/>
-      </div>
+      </div> */}
       <div className='banner_textGeneratorGUI'>
         <div className='banner_textGeneratorGUITitleContainer' data-aos="fade-in" data-aos-delay={delay_gap * 1} id='banner_textGeneratorGUITitleContainer'>
           <span className='banner_textGeneratorGUITitle' id="banner_textGeneratorGUITitleContainer" data-aos-delay={2 * delay_gap} data-aos="zoom-in">Text Outputs</span>
@@ -899,7 +963,7 @@ const TextGeneratorGUI = () => {
           </div>
           <input id='generationTime' className='textGeneratorGUIpromptEntry textGeneratorGUInumberDisplay' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" value="0:00" readOnly/>
         </div>
-        <input value="Pause" className="textGeneratorGUI_submitButton textGeneratorGUI_pauseButton" id="pauseButton" type="button" data-aos="fade-right" data-aos-delay={20 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" onClick={handleSubmitClick}/>
+        <input value="Pause" className="textGeneratorGUI_submitButton textGeneratorGUI_pauseButton" id="pauseButton" type="button" onClick={handleSubmitClick}/>
       </div>
       <div className="textGeneratorGUI_allOutputContainer" id="textGeneratorGUI_allOutputContainer">
         {/* gpt-3.5-turbo */}
@@ -908,7 +972,7 @@ const TextGeneratorGUI = () => {
             <div id='textTitle_gpt-3.5-turbo' className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={22 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
               GPT 3.5 Turbo:
             </div>
-            <span className="textGeneratorGUI_copiedMessage" id="copiedMessage_gpt-3.5-turbo">Image URL Copied!</span>
+            {/* <span className="textGeneratorGUI_copiedMessage" id="copiedMessage_gpt-3.5-turbo">Image URL Copied!</span> */}
           </div>
           <div id="sizeContainer_gpt-3.5-turbo_0" className="textGeneratorGUIimageOutputSizeTitle">
           No Character Limit
@@ -931,7 +995,7 @@ const TextGeneratorGUI = () => {
           </div>
           <div id="sizeContainer_gpt-4_0" className="textGeneratorGUIimageOutputSizeTitle">
           No Character Limit
-            <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-3.5-turbo' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+            <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-4_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
               <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_gpt-4_0">
                 <img src={image_URL} alt='' id='generatedImage_gpt-4_0' className='textGeneratorGUI_generatedImage' onClick={copyImageURL}/>
               </div>
@@ -947,7 +1011,7 @@ const TextGeneratorGUI = () => {
           </div>
           <div id="sizeContainer_gpt-4-turbo_0" className="textGeneratorGUIimageOutputSizeTitle">
           No Character Limit
-            <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-3.5-turbo' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+            <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-4-turbo_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
               <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_gpt-4-turbo_0">
                 <img src={image_URL} alt='' id='generatedImage_gpt-4-turbo_0' className='textGeneratorGUI_generatedImage' onClick={copyImageURL}/>
               </div>
@@ -964,7 +1028,7 @@ const TextGeneratorGUI = () => {
           </div>
           <div id="sizeContainer_gpt-4o_0" className="textGeneratorGUIimageOutputSizeTitle">
           No Character Limit
-            <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-3.5-turbo' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+            <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-4o_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
               <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_gpt-4o_0">
                 <img src={image_URL} alt='' id='generatedImage_gpt-4o_0' className='textGeneratorGUI_generatedImage' onClick={copyImageURL}/>
               </div>
@@ -977,11 +1041,10 @@ const TextGeneratorGUI = () => {
             <div id='textTitle_gpt-4o-mini' className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={22 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
               GPT 4o Mini:
             </div>
-            <span className="textGeneratorGUI_copiedMessage" id="copiedMessage_gpt-4o-mini">Image URL Copied!</span>
           </div>
           <div id="sizeContainer_gpt-4o-mini_0" className="textGeneratorGUIimageOutputSizeTitle">
           No Character Limit
-            <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-3.5-turbo' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+            <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-4o-mini_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
               <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_gpt-4o-mini_0">
                 <img src={image_URL} alt='' id='generatedImage_gpt-4o-mini_0' className='textGeneratorGUI_generatedImage' onClick={copyImageURL}/>
               </div>
@@ -998,9 +1061,26 @@ const TextGeneratorGUI = () => {
           </div>
           <div id="sizeContainer_gpt-4o-realtime-preview_0" className="textGeneratorGUIimageOutputSizeTitle">
           No Character Limit            
-            <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-3.5-turbo' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+            <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-4o-realtime-preview_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
               <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_gpt-4o-realtime-preview_0">
                 <img src={image_URL} alt='' id='generatedImage_gpt-4o-realtime-preview_0' className='textGeneratorGUI_generatedImage' onClick={copyImageURL}/>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* o1 */}
+        <div className='textGeneratorGUImodelOutputContainer' id="modelOutputContainer_o1" style={{display: "none"}}>
+          <div className="textGeneratorGUI_modelTitleContainer">
+            <div id='textTitle_o1' className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={22 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+              o1:
+            </div>
+            <span className="textGeneratorGUI_copiedMessage" id="copiedMessage_o1">Image URL Copied!</span>
+          </div>
+          <div id="sizeContainer_o1_0" className="textGeneratorGUIimageOutputSizeTitle">
+          No Character Limit
+            <div className='textGeneratorGUI_generatedText' id='generatedText_o1_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+              <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_o1_0">
+                <img src={image_URL} alt='' id='generatedImage_o1_0' className='textGeneratorGUI_generatedImage' onClick={copyImageURL}/>
               </div>
             </div>
           </div>
@@ -1015,7 +1095,7 @@ const TextGeneratorGUI = () => {
           </div>
           <div id="sizeContainer_o1-preview_0" className="textGeneratorGUIimageOutputSizeTitle">
           No Character Limit
-            <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-3.5-turbo' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+            <div className='textGeneratorGUI_generatedText' id='generatedText_o1-preview_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
               <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_o1-preview_0">
                 <img src={image_URL} alt='' id='generatedImage_o1-preview_0' className='textGeneratorGUI_generatedImage' onClick={copyImageURL}/>
               </div>
@@ -1032,7 +1112,7 @@ const TextGeneratorGUI = () => {
           </div>
           <div id="sizeContainer_o1-mini_0" className="textGeneratorGUIimageOutputSizeTitle">
           No Character Limit
-            <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-3.5-turbo' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+            <div className='textGeneratorGUI_generatedText' id='generatedText_o1-mini_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
               <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_o1-mini_0">
                 <img src={image_URL} alt='' id='generatedImage_o1-mini_0' className='textGeneratorGUI_generatedImage' onClick={copyImageURL}/>
               </div>

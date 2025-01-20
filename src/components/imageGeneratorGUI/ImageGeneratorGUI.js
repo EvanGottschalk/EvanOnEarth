@@ -142,7 +142,7 @@ const ImageGeneratorGUI = () => {
     console.log("negative_prompt", parameter_dict["negative_prompt"]);
   }
 
-  function handleModelChange(event) {
+  async function handleModelChange(event) {
     // parameter_dict["model"] = event.target.value;
     const selected_model = event.target.value;
 
@@ -154,20 +154,26 @@ const ImageGeneratorGUI = () => {
     const description_element = document.getElementById('modelDescription');
     const link_element = document.getElementById('modelLink');
     const model_output_container = document.getElementById('modelOutputContainer_' + selected_model);
-    // const checkbox_element = document.getElementById(event.target.id);
-    if (event.target.checked) {
-      model_output_container.style.display = 'block';
-      title_element.innerHTML = `<u><b>` + selected_model + `</b></u>`;
-      description_element.innerHTML = model_dict[selected_model]['description'];
-      link_element.innerHTML = "Learn More ->";
-      link_element.href = model_dict[selected_model]['link'];
+    
+    // If no models would be left selected, nothing changes
+    const selected_models = await getCheckedValues('model');
+    if (selected_models.length === 0) {
+      event.target.checked = true;
     } else {
-      model_output_container.style.display = 'none';
-      title_element.innerHTML = "";
-      description_element.innerHTML = "..."
-      link_element.innerHTML = "";
-      link_element.href = "";
-    };    
+      if (event.target.checked) {
+        model_output_container.style.display = 'block';
+        title_element.innerHTML = `<u><b>` + selected_model + `</b></u>`;
+        description_element.innerHTML = model_dict[selected_model]['description'];
+        link_element.innerHTML = "Learn More ->";
+        link_element.href = model_dict[selected_model]['link'];
+      } else {
+        model_output_container.style.display = 'none';
+        title_element.innerHTML = "";
+        description_element.innerHTML = "..."
+        link_element.innerHTML = "";
+        link_element.href = "";
+      };
+    };
   };
 
   async function handleSizeChange(event) {
