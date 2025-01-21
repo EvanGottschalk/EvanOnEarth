@@ -59,6 +59,11 @@
   width: 41px;
 }
 
+.textGeneratorGUIwordEntry {
+  height: 16px;
+  width: 123px;
+}
+
 .textGeneratorGUInumberDisplay {
   height: 16px;
   width: 41px;
@@ -166,7 +171,8 @@
   font-family: 'Arial';
   width: 100%;
   padding: .5% 1% .5% 1%;
-  margin: 0px 0px 0px 0px;
+  margin: 0% 0% 0% 0%;
+  overflow: hidden;
 }
 
 .textGeneratorGUI_modelLink {
@@ -192,9 +198,10 @@
   flex-direction: row;
 }
 
-.textGeneratorGUI_imageOutputContainer {
+.textGeneratorGUI_textOutputContainer {
   display: flex;
   flex-direction: row;
+  gap: 1%;
 }
 
 .textGeneratorGUI_copiedMessage {
@@ -262,7 +269,11 @@
   font-size: 14px;
 }
 
-
+.textGeneratorGUIhelperText {
+  color: #848484;
+  margin: 0% 0% 0% 1%;
+  font-size: 15px;
+}
 
 @media only screen and (max-width: 560px) {
   .textGeneratorGUI {
@@ -375,5 +386,9 @@
   .textGeneratorGUInumberDisplay {
     margin: 4% 0% 0% 2%;
     width: 48px;
+  }
+
+  .textGeneratorGUIwordEntry {
+    width: 40%;
   }
 }

@@ -5,7 +5,6 @@ import React, { useEffect, useState } from 'react';
 import Aos from "aos";
 import "aos/dist/aos.css";
 import image_generator from "../../scripts/GeneratorOperator";
-import text_generator from "./text_generator";
 
 import './imageGeneratorGUI.css'
 
@@ -16,7 +15,7 @@ import generating_placeholder_2 from '../../image/generating/generating_2.webp';
 import generating_placeholder_3 from '../../image/generating/generating_3.webp';
 import loading_placeholder from '../../image/generating/image_loading_preview.webp';
 import generation_failed_placeholder from '../../image/generating/generation_failed.webp'
-import { all } from 'redux-saga/effects';
+// import { all } from 'redux-saga/effects';
 
 
 
@@ -51,14 +50,6 @@ let parameter_dict = {"prompt": "",
                       "guidance_scale": "",
                       "num_inference_steps": "",
                       "model": ""};
-
-// let prompt = "";
-// let negative_prompt = "";
-// let quantity = 1;
-// let guidance_scale = 0;
-// let num_inference_steps = 0;
-// let model = "black-forest-labs/FLUX.1-dev";
-// let provider = "Livepeer";
 
 let image_URL = default_image;
 let generated_text = '...';
@@ -123,32 +114,31 @@ const ImageGeneratorGUI = () => {
   }
 
   function mouseOver(event) {
+    // console.log('\nImageGeneratorGUI >>> RUNNING mouseOver()');
     let element = document.getElementById(event.target.id);
     element.style.transform = 'scale(1.20)';
   }
   
   function mouseLeave(event) {
+    // console.log('\nImageGeneratorGUI >>> RUNNING mouseLeave()');
     let element = document.getElementById(event.target.id);
     element.style.transform = 'scale(1.0)';
   }
 
   function handlePromptChange(event) {
     parameter_dict["prompt"] = event.target.value;
-    console.log("prompt", parameter_dict["prompt"]);
+    console.log("\nhandlePromptChange() -> prompt:", parameter_dict["prompt"]);
   }
 
   function handleNegativePromptChange(event) {
     parameter_dict["negative_prompt"] = event.target.value;
-    console.log("negative_prompt", parameter_dict["negative_prompt"]);
+    console.log("\nhandleNegativePromptChange() -> negative_prompt:", parameter_dict["negative_prompt"]);
   }
 
   async function handleModelChange(event) {
-    // parameter_dict["model"] = event.target.value;
     const selected_model = event.target.value;
 
-    console.log("handleModelChange() -> Selected Model:", selected_model);
-    // console.log("document.getElementById('modelDescription').innerHTML", document.getElementById('modelDescription').innerHTML);
-    // console.log("document.getElementById(event.target.alt)", document.getElementById(event.target.alt));
+    console.log("\nhandleModelChange() -> Selected Model:", selected_model);
     
     const title_element = document.getElementById('modelDescriptionTitle');
     const description_element = document.getElementById('modelDescription');
@@ -178,7 +168,7 @@ const ImageGeneratorGUI = () => {
 
   async function handleSizeChange(event) {
     let selected_size = event.target.value;
-    console.log("handleSizeChange() -> Selected Size:", selected_size);
+    console.log("\nhandleSizeChange() -> Selected Size:", selected_size);
 
     // Sets the size to the default size if all size checkboxes are turned off
     const selected_sizes = await getCheckedValues('size');
@@ -228,66 +218,8 @@ const ImageGeneratorGUI = () => {
     };   
   };
 
-  // async function updateImageDisplay(new_value) {
-  //   const all_models = await getAllChecklistOptions('model');
-  //   const all_sizes = await getAllChecklistOptions('size');
-  //   const all_outputs_container = document.getElementById('imageGeneratorGUI_allOutputContainer');
-  //   // On desktop, stretches image output view beyond limits of UI while maintaining image size
-  //   if (!mobile) {
-  //     if (new_value > 3) {
-  //       all_outputs_container.style.width = (50 + (new_value - 3) * (50 / 3)).toString() + '%';
-  //       all_outputs_container.style.marginLeft = (-2 * (new_value - 3)).toString() + '%';
-  //     } else {
-  //       all_outputs_container.style.width = "50.5%";
-  //       all_outputs_container.style.marginLeft = "0%";
-  //     };
-  //   };
-  //   let image_container, model_name;
-  //   for (let i = 0; i < all_models.length; i++) {
-  //     model_name = all_models[i];
-  //     image_container = document.getElementById('imageOutputContainer_' + model_name);
-  //     for (let k = 0; k < all_sizes.length; k++) {
-  //       size = all_sizes[k];
-  //       // Adds new img elements if the quantity was increased
-  //       if (new_value > parameter_dict["quantity"]) {
-  //         for (let j = parameter_dict["quantity"]; j < new_value; j++) {
-  //           const new_image_element = document.createElement('img');
-  //           new_image_element.src = default_image;
-  //           new_image_element.alt = "Click to Copy URL";
-  //           new_image_element.id = 'generatedImage_' + model_name + '_' + j.toString();
-  //           new_image_element.className = 'imageGeneratorGUI_generatedImage';
-  //           new_image_element.onclick = copyImageURL;
-
-  //           image_container.appendChild(new_image_element);
-  //         }
-  //       // Removes extra img elements if the quantity is reduced
-  //       } else if (new_value < parameter_dict["quantity"]) {
-  //         for (let j = parameter_dict["quantity"] - (parameter_dict["quantity"] - new_value); j < parameter_dict["quantity"]; j++) {
-  //           const image_element = document.getElementById('generatedImage_' + model_name + '_' + j.toString());
-  //           image_element.remove();
-  //         };
-  //       };
-  //     // Sets the sizes of the sizes of the img elements to match the quantity
-  //     for (let i = 0; i < new_value; i++) {
-  //       let new_width = "100%";
-  //       if (!mobile) {
-  //         new_width = (100 / new_value).toString() + "%";
-  //       };
-        
-  //       // const new_width = (100 / new_value).toString() + "%";
-  //       let image_element;
-  //       if (i === 0) {
-  //         image_element = document.getElementById('generatedImage_' + model_name);
-  //       } else {
-  //         image_element = document.getElementById('generatedImage_' + model_name + '_' + i.toString());
-  //       };
-  //       image_element.style.width = new_width;
-  //     };
-  //   };
-  // };
-
   async function handleDropdownChange(event) {
-    console.log('\nImageGeneratorGUI >>> RUNNING handleDropdownChange()');
+    console.log('\nhandleDropdownChange() -> value:', event.target.value);
     const element_ID = event.target.id;
     const new_value = event.target.value;
     if (element_ID === "dropdownQuantity") {
@@ -407,141 +339,6 @@ const ImageGeneratorGUI = () => {
     };
   };
 
-  
-  // async function handleTextGeneration(prompt, model) {
-  //   console.log('\nImageGeneratorGUI >>> RUNNING handleTextGeneration()');
-  //   let text_output_element = document.getElementById('textOutput');
-  //   try {
-  //     const response = await fetch('https://alchm-backend.onrender.com/generate-text', {
-  //       method: 'POST',
-  //       headers: {
-  //           'Content-Type': 'application/json',
-  //         },
-  //       body: JSON.stringify({ prompt })
-  //     })
-  
-  //     if (!response.ok) {
-  //       throw new Error(`Server error: ${response.status}`);
-  //     }
-  
-  //     const data = await response.json()
-  
-  
-  //     console.log("DALL-E Response `data`", data);
-  //     // console.log("DALL-E Response `data.imageUrl`", data.imageUrl);
-  //     // console.log("DALL-E Response `data.data.imageUrl`", data.data.imageUrl);
-  //     // console.log("DALL-E Response `data.data[0].imageUrl`", data.data[0].imageUrl);
-  //     generated_text = data;
-
-  //     console.log('generated_text', generated_text);
-  //     console.log('generated_text[generated_text]', generated_text['generated_text']);
-
-  //     text_output_element.innerHTML = generated_text['generated_text'];
-
-  //     return(generated_text['generated_text']);
-      
-  //   } catch (error) {
-  //       console.error('Error generating text:', error)
-  //   } finally {
-  //       console.log("Done generating text!")
-  //   }
-
-    
-  // };
-
-  async function handleTextGeneration(prompt, model) {
-    console.log('\nImageGeneratorGUI >>> RUNNING handleTextGeneration()');
-    
-    let text_output_element = document.getElementById('textOutput');
-    // let text_title_element = document.getElementById('textTitle');
-  
-    text_output_element.innerHTML = "Generating";
-    // text_title_element.innerHTML = "Generated Text: Generating";
-  
-    let text_generator_response, text_generator_promise, text_generator_result;
-    text_generator_response = text_generator.generateText(prompt, "gpt-3.5-turbo", "OpenAI");
-    
-  
-    var loop_count = 1;
-    var loop = true;
-    console.log('len', text_generator_response.length);
-    console.log(text_generator_response);
-    while ( loop ) {
-      await pause(500);
-      if (loop_count > 3) {
-        text_output_element.innerHTML = "Generating";
-        loop_count = 0;
-      } else {
-        text_output_element.insertAdjacentText('beforeEnd', '.');
-      }
-      loop_count+=1;
-      console.log("Loop Count: ", loop_count);
-      console.log('len', text_generator_response.length);
-      console.log(text_generator_response);
-      text_generator_promise = text_generator_response.then((result) => {
-        console.log(result);
-        // if (Array.isArray(result)) {
-        //   loop = false;
-        //   text_generator_result = result;
-        // };
-        if (typeof result === 'string') {
-          loop = false;
-          text_generator_result = result;
-        };
-      });
-      console.log('promise', text_generator_promise);
-    };
-
-    console.log('text_generator_response', text_generator_response);
-    console.log('text_generator_response[generated_text]', text_generator_response['generated_text']);
-    // const text_URL = text_generator_result[0]['url'];
-
-    if (model === 'DALL-E') {
-      text_generator_result = text_generator_result['generated_text']
-    };
-
-
-    generated_text = text_generator_result;
-    text_output_element.innerHTML = generated_text;
-    // text_title_element.innerHTML = "text: ";
-  
-    return(generated_text);
-
-  };
-
-
-
-  // async function generateImage_DALLE(prompt, width=1024, height=1024, model="black-forest-labs/FLUX.1-dev") {
-  //   try {
-  //     const response = await fetch('https://alchm-backend.onrender.com/generate-image', {
-  //       method: 'POST',
-  //       headers: {
-  //           'Content-Type': 'application/json',
-  //         },
-  //       body: JSON.stringify({ prompt })
-  //     })
-  
-  //     if (!response.ok) {
-  //       throw new Error(`Server error: ${response.status}`);
-  //     }
-  
-  //     const data = await response.json()
-  
-  
-  
-  
-  //     console.log("DALL-E Response `data`", data);
-  //     console.log("DALL-E Response `data.imageUrl`", data.imageUrl);
-  //     // console.log("DALL-E Response `data.data.imageUrl`", data.data.imageUrl);
-  //     // console.log("DALL-E Response `data.data[0].imageUrl`", data.data[0].imageUrl);
-  //     return(data.imageUrl);
-  //   } catch (error) {
-  //       console.error('Error generating image:', error)
-  //   } finally {
-  //       console.log("Done generating image!")
-  //   }
-  
-  // }
 
   async function displayImage(image_element, new_image) {
     console.log('\nImageGeneratorGUI >>> RUNNING displayImage()');
@@ -551,8 +348,6 @@ const ImageGeneratorGUI = () => {
   };
 
   async function setGenerationTime(seconds) {
-    // console.log('\nImageGeneratorGUI >>> RUNNING setGenerationTime()');
-
     generation_time = seconds;
     const generation_time_element = document.getElementById('generationTime');
 
@@ -569,15 +364,13 @@ const ImageGeneratorGUI = () => {
   async function updateParameterDict() {
     console.log('\nImageGeneratorGUI >>> RUNNING updateParameterDict()');
     parameter_dict["quantity"] = document.getElementById("dropdownQuantity").value;
-    console.log('quantity', parameter_dict["quantity"]);
     parameter_dict["prompt"] = document.getElementById("promptEntry").value;
     parameter_dict["negative_prompt"] = document.getElementById("negativePromptEntry").value;
     parameter_dict["guidance_scale"] = document.getElementById("guidanceScaleEntry").value;
     parameter_dict["num_inference_steps"] = document.getElementById("inferenceStepsEntry").value;
+    console.log('parameter_dict:', parameter_dict);
     return(parameter_dict);
   };
-
-
 
   async function handleImageGeneration(parameter_dict, output_ID) {
     console.log('\nImageGeneratorGUI >>> RUNNING handleImageGeneration()');
@@ -628,14 +421,10 @@ const ImageGeneratorGUI = () => {
           image_element.src = generating_placeholder_list[loop_count];
         };
         loop_count+=1;
-        // console.log("loop_count", loop_count);
-        // console.log('image_generator_response.len', image_generator_response.length);
-        // console.log('image_generator_response', image_generator_response);
         image_generator_promise = image_generator_response.then((result) => {
           console.log("result:", result);
           if (typeof result === 'string') {
             if (result === 'error') {
-              // image_element.src = generation_failed_placeholder;
               loop = false;
               image_generator_result = generation_failed_placeholder
             } else {
@@ -654,7 +443,6 @@ const ImageGeneratorGUI = () => {
     await pause(100); // brief pause to assign new image URL, which comes right after displaying the loading placeholder
     image_URL = image_generator_result;
     image_title_element.innerHTML = image_short_name;
-    // image_element.src = image_URL;
     await displayImage(image_element, image_URL);
   
     return(image_URL);
@@ -705,13 +493,10 @@ const ImageGeneratorGUI = () => {
 
 
   function copyImageURL(event) {
-    console.log('\nImageGeneratorGUI >>> RUNNING copyImageURL()');
-
     let copied_image_URL = event.target.src;
-    console.log("Image URL:", copied_image_URL);
+    console.log("copyImageURL() -> Copied Image URL:", copied_image_URL);
 
     const image_element_ID = event.target.id.split('generatedImage_')[1];
-    // console.log('image_element_ID:', image_element_ID);
 
     let model_name;
     for (const model in model_dict) {
@@ -891,35 +676,28 @@ const ImageGeneratorGUI = () => {
           <option value="9">9</option>
           <option value="10">10</option> */}
         </select>
-        {/* <div className='imageGeneratorGUITitle' data-aos="fade-right" data-aos-delay={13 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
-          Image Width:
-        </div>
-        <select className='imageGeneratorGUIdropdownList' id='dropdownWidth' onChange={handleDropdownChange} data-aos="fade-right" data-aos-delay={14 * delay_gap}data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" style={{
-          textDecoration: 'none'}}>
-          <option value="64">64px</option>
-          <option value="128">128px</option>
-          <option value="256">256px</option>
-          <option value="512">512px</option>
-          <option value="1024">1024px</option>
-          <option value="2048">2048px</option>
-          <option value="Custom">Custom</option>
-        </select> */}
         <div className='imageGeneratorGUITitle' data-aos="fade-right" data-aos-delay={13 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
           Imaginitive Freedom:
         </div>
-        <input id='guidanceScaleEntry' className='imageGeneratorGUIpromptEntry imageGeneratorGUInumberEntry' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" placeholder="" onChange={handleDropdownChange} required/>
+        <div className="imageGeneratorGUIrow">
+          <input id='guidanceScaleEntry' className='imageGeneratorGUIpromptEntry imageGeneratorGUInumberEntry' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" placeholder="" onChange={handleDropdownChange} required/>
+          <div className='textGeneratorGUIhelperText'>(1 to 20)</div>
+        </div>
         <div className='imageGeneratorGUITitle' data-aos="fade-right" data-aos-delay={13 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
           Generation Duration:
         </div>
-        <input id='inferenceStepsEntry' className='imageGeneratorGUIpromptEntry imageGeneratorGUInumberEntry' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" placeholder="" onChange={handleDropdownChange} required/>
-        <input value="Generate Text" className="imageGeneratorGUI_submitButton" id="generateTextButton" type="submit" data-aos="fade-right" data-aos-delay={17 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" onClick={handleSubmitClick}/>
+        <div className="imageGeneratorGUIrow">
+          <input id='inferenceStepsEntry' className='imageGeneratorGUIpromptEntry imageGeneratorGUInumberEntry' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" placeholder="" onChange={handleDropdownChange} required/>
+          <div className='textGeneratorGUIhelperText'>(1 to 100)</div>
+        </div>
+        {/* <input value="Generate Text" className="imageGeneratorGUI_submitButton" id="generateTextButton" type="submit" data-aos="fade-right" data-aos-delay={17 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" onClick={handleSubmitClick}/> */}
       </div>
-      <div className='imageGeneratorGUITextContainer'>
+      {/* <div className='imageGeneratorGUITextContainer'>
         <div id='textTitle' className='imageGeneratorGUITitle' data-aos="fade-right" data-aos-delay={18 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
           Generated Text:
         </div>
       </div>
-      <div className='imageGeneratorGUI_modelDescription' id='textOutput' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">...</div>
+      <div className='imageGeneratorGUI_modelDescription' id='textOutput' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">...</div> */}
       <div className='imageGeneratorGUITextContainer'>
         <input value="Generate" className="imageGeneratorGUI_submitButton" id="generateImageButton" type="submit" data-aos="fade-right" data-aos-delay={20 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" onClick={handleSubmitClick}/>
       </div>

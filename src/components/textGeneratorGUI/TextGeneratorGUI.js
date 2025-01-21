@@ -15,8 +15,7 @@ import generating_placeholder_2 from '../../image/generating/generating_2.webp';
 import generating_placeholder_3 from '../../image/generating/generating_3.webp';
 import loading_placeholder from '../../image/generating/image_loading_preview.webp';
 import generation_failed_placeholder from '../../image/generating/generation_failed.webp'
-import { all } from 'redux-saga/effects';
-import { custom } from 'zod';
+// import { all } from 'redux-saga/effects';
 
 
 
@@ -47,22 +46,12 @@ const simplifier_prefix = "I NEED to test how the tool works with extremely simp
 let parameter_dict = {"prompt": "",
                       "negative_prompt": "",
                       "quantity": 1,
-                      "width": "",
-                      "height": "",
-                      "guidance_scale": "",
-                      "num_inference_steps": "",
+                      "logit_bias": {},
                       "model": ""};
-
-// let prompt = "";
-// let negative_prompt = "";
-// let quantity = 1;
-// let guidance_scale = 0;
-// let num_inference_steps = 0;
-// let model = "black-forest-labs/FLUX.1-dev";
-// let provider = "Livepeer";
 
 let image_URL = default_image;
 let generated_text = '...';
+const default_logit_bias = 25;
 
 let generation_time = 0;
 let pause_generation = false;
@@ -115,35 +104,41 @@ const TextGeneratorGUI = () => {
   document.addEventListener("DOMContentLoaded", () => {
     let checkbox = document.querySelector('input[value="gpt-3.5-turbo"]');
     checkbox.checked = true;
-    console.log('checkbox', checkbox);
     checkbox = document.querySelector('input[value="0"]');
     checkbox.checked = true; 
-    console.log('checkbox', checkbox);
   });
 
   function pause(time) {
     return new Promise(resolve => setTimeout(resolve, time));
-  }
+  };
 
   function mouseOver(event) {
     let element = document.getElementById(event.target.id);
     element.style.transform = 'scale(1.20)';
-  }
+  };
   
   function mouseLeave(event) {
     let element = document.getElementById(event.target.id);
     element.style.transform = 'scale(1.0)';
-  }
+  };
 
   function handlePromptChange(event) {
     parameter_dict["prompt"] = event.target.value;
-    console.log("prompt", parameter_dict["prompt"]);
-  }
+    console.log("\nhandlePromptChange() -> prompt:", parameter_dict["prompt"]);
+  };
 
-  function handleNegativePromptChange(event) {
-    parameter_dict["negative_prompt"] = event.target.value;
-    console.log("negative_prompt", parameter_dict["negative_prompt"]);
-  }
+  function handleInputFieldChange(event) {
+    console.log('\nTextGeneratorGUI >>> RUNNING handleInputFieldChange()');
+    
+    let parameter_name = event.target.id.split('inputField_')[1];
+    console.log('handleInputFieldChange() -> Changing ' + parameter_name + ' to ' + event.target.value);
+
+    if (parameter_name.includes('logit_bias')) { 
+      parameter_dict['logit_bias'][Number(parameter_name.split(':')[1])] = event.target.value
+    } else {
+      parameter_dict[parameter_name] = event.target.value;
+    };    
+  };
 
   async function handleModelChange(event) {
     const selected_model = event.target.value;
@@ -178,27 +173,58 @@ const TextGeneratorGUI = () => {
   };
 
   async function handleMaxTokensChange(event) {
-    let selected_size = event.target.value;
+    console.log('\nTextGeneratorGUI >>> RUNNING handleMaxTokensChange()');
+    let selected_size, checkbox_element, checked_value;
+    if (event.value) {
+      selected_size = event.value;
+      checkbox_element = event;
+      checked_value = event.checked;
+    } else {
+      selected_size = event.target.value;
+      checkbox_element = document.getElementById('maxTokensCheckbox_' + selected_size);
+      checked_value = event.target.checked;
+    };
+    
+    parameter_dict["max_tokens"] = selected_size;
+    let selected_size_value;
+    if (selected_size.includes('custom')) {
+      selected_size_value = document.getElementById('maxTokensInput_' + selected_size).value;
+    } else {
+      selected_size_value = selected_size;
+    };
+    if (selected_size_value === '0') {
+      selected_size_value = 'No Limit';
+    };
     console.log("handleMaxTokensChange() -> Selected Size:", selected_size);
+    console.log("handleMaxTokensChange() -> Selected Size VALUE:", selected_size_value);
+    
 
     // Sets the size to the default size if all size checkboxes are turned off
     const selected_sizes = await getCheckedValues('size');
     if (selected_sizes.length === 0) {
-      event.target.checked = true;
+      checkbox_element.checked = true;
     } else {
       const all_models = await getAllChecklistOptions('model');
 
       all_models.forEach((model) => {
         const model_output_container = document.getElementById('modelOutputContainer_' + model);
-        if (event.target.checked) {
+        if (checked_value) {
           const new_size_container = document.createElement('div');
           new_size_container.id = 'sizeContainer_' + model + '_' + selected_size;
-          new_size_container.className = 'textGeneratorGUIimageOutputSizeTitle';
-          new_size_container.innerHTML = selected_size;
+          
+          const new_title_element = document.createElement("span");
+          new_title_element.id = 'sizeContainerTitle_' + model + '_' + selected_size;
+          new_title_element.className = 'textGeneratorGUIimageOutputSizeTitle';
+          if (selected_size.includes('custom')) {
+            new_title_element.textContent = "Custom # of Words: " + selected_size_value.toString();
+          } else {
+            new_title_element.textContent = "# of Words: " + selected_size_value.toString();
+          };
+          new_size_container.appendChild(new_title_element);
 
-          const new_image_output_container = document.createElement('div');
-          new_image_output_container.className = 'textGeneratorGUI_imageOutputContainer';
-          new_image_output_container.id = 'imageOutputContainer_' + model + '_' + selected_size;
+          const new_text_output_container = document.createElement('div');
+          new_text_output_container.className = 'textGeneratorGUI_textOutputContainer';
+          new_text_output_container.id = 'textOutputContainer_' + model + '_' + selected_size;
 
           for (let j = 0; j < parameter_dict["quantity"]; j++) {
             // Create the text element
@@ -224,16 +250,16 @@ const TextGeneratorGUI = () => {
               new_image_element.id = 'generatedImage_' + model + '_' + selected_size + '_' + j.toString();
             };
             new_image_element.className = 'textGeneratorGUI_generatedImage';
-            new_image_element.onclick = copyImageURL;
             if (!mobile) {
-              new_image_element.style.width = (100 / parameter_dict['quantity']).toString() + "%";
+              // The first value, .40, comes from the CSS in textGeneratorGUI_generatedImage 
+              new_image_element.style.width = (.40 * (100 / parameter_dict['quantity'])).toString() + "%";
             };
 
             // Combine the elements
             new_text_element.appendChild(new_image_element);
-            new_image_output_container.appendChild(new_text_element);
+            new_text_output_container.appendChild(new_text_element);
           };
-          new_size_container.appendChild(new_image_output_container);
+          new_size_container.appendChild(new_text_output_container);
           model_output_container.appendChild(new_size_container);
         } else {
           const size_container_to_remove = document.getElementById('sizeContainer_' + model + '_' + selected_size);
@@ -245,63 +271,6 @@ const TextGeneratorGUI = () => {
     };   
   };
 
-  // async function updateImageDisplay(new_value) {
-  //   const all_models = await getAllChecklistOptions('model');
-  //   const all_sizes = await getAllChecklistOptions('size');
-  //   const all_outputs_container = document.getElementById('textGeneratorGUI_allOutputContainer');
-  //   // On desktop, stretches image output view beyond limits of UI while maintaining image size
-  //   if (!mobile) {
-  //     if (new_value > 3) {
-  //       all_outputs_container.style.width = (50 + (new_value - 3) * (50 / 3)).toString() + '%';
-  //       all_outputs_container.style.marginLeft = (-2 * (new_value - 3)).toString() + '%';
-  //     } else {
-  //       all_outputs_container.style.width = "50.5%";
-  //       all_outputs_container.style.marginLeft = "0%";
-  //     };
-  //   };
-  //   let image_container, model_name;
-  //   for (let i = 0; i < all_models.length; i++) {
-  //     model_name = all_models[i];
-  //     image_container = document.getElementById('imageOutputContainer_' + model_name);
-  //     for (let k = 0; k < all_sizes.length; k++) {
-  //       size = all_sizes[k];
-  //       // Adds new img elements if the quantity was increased
-  //       if (new_value > parameter_dict["quantity"]) {
-  //         for (let j = parameter_dict["quantity"]; j < new_value; j++) {
-  //           const new_image_element = document.createElement('img');
-  //           new_image_element.src = default_image;
-  //           new_image_element.alt = "Click to Copy URL";
-  //           new_image_element.id = 'generatedImage_' + model_name + '_' + j.toString();
-  //           new_image_element.className = 'textGeneratorGUI_generatedImage';
-  //           new_image_element.onclick = copyImageURL;
-
-  //           image_container.appendChild(new_image_element);
-  //         }
-  //       // Removes extra img elements if the quantity is reduced
-  //       } else if (new_value < parameter_dict["quantity"]) {
-  //         for (let j = parameter_dict["quantity"] - (parameter_dict["quantity"] - new_value); j < parameter_dict["quantity"]; j++) {
-  //           const image_element = document.getElementById('generatedImage_' + model_name + '_' + j.toString());
-  //           image_element.remove();
-  //         };
-  //       };
-  //     // Sets the sizes of the sizes of the img elements to match the quantity
-  //     for (let i = 0; i < new_value; i++) {
-  //       let new_width = "100%";
-  //       if (!mobile) {
-  //         new_width = (100 / new_value).toString() + "%";
-  //       };
-        
-  //       // const new_width = (100 / new_value).toString() + "%";
-  //       let image_element;
-  //       if (i === 0) {
-  //         image_element = document.getElementById('generatedImage_' + model_name);
-  //       } else {
-  //         image_element = document.getElementById('generatedImage_' + model_name + '_' + i.toString());
-  //       };
-  //       image_element.style.width = new_width;
-  //     };
-  //   };
-  // };
 
   async function handleDropdownChange(event) {
     console.log('\nTextGeneratorGUI >>> RUNNING handleDropdownChange()');
@@ -313,37 +282,43 @@ const TextGeneratorGUI = () => {
       const all_outputs_container = document.getElementById('textGeneratorGUI_allOutputContainer');
       // On desktop, stretches image output view beyond limits of UI while maintaining image size
       if (!mobile) {
-        if (new_value > 3) {
-          all_outputs_container.style.width = (50 + (new_value - 3) * (50 / 3)).toString() + '%';
-          all_outputs_container.style.marginLeft = (-2 * (new_value - 3)).toString() + '%';
+        let new_container_width;
+        if (new_value > 2) {
+          new_container_width = (50 + (new_value - 2) * (50 / 2));
+          new_container_width = Math.min(new_container_width, 96);
+          // all_outputs_container.style.marginLeft = (-2 * (new_value - 2)).toString() + '%';
         } else {
-          all_outputs_container.style.width = "50.5%";
-          all_outputs_container.style.marginLeft = "0%";
+          new_container_width = 50.5;
+          // all_outputs_container.style.marginLeft = "0%";
         };
+        all_outputs_container.style.width = new_container_width.toString() + "%";
       };
-      let image_container, model_name, size;
+      let text_container, model_name, size;
       for (let i = 0; i < all_models.length; i++) {
         model_name = all_models[i];
         for (let k = 0; k < all_sizes.length; k++) {
           size = all_sizes[k];
-          image_container = document.getElementById('imageOutputContainer_' + model_name + '_' + size.toString());
-          // Adds new img elements if the quantity was increased
+          text_container = document.getElementById('textOutputContainer_' + model_name + '_' + size.toString());
+          // Adds new text and image elements if the quantity was increased
           if (new_value > parameter_dict["quantity"]) {
             for (let j = parameter_dict["quantity"]; j < new_value; j++) {
+              const new_text_element = document.createElement('div');
+              new_text_element.id = 'generatedText_' + model_name + '_' + size.toString() + '_' + j.toString();
+              new_text_element.className = 'textGeneratorGUI_generatedText';
+
               const new_image_element = document.createElement('img');
               new_image_element.src = default_image;
-              new_image_element.alt = "Click to Copy URL";
               new_image_element.id = 'generatedImage_' + model_name + '_' + size.toString() + '_' + j.toString();
               new_image_element.className = 'textGeneratorGUI_generatedImage';
-              new_image_element.onclick = copyImageURL;
 
-              image_container.appendChild(new_image_element);
+              new_text_element.appendChild(new_image_element);
+              text_container.appendChild(new_text_element);
             };
           // Removes extra img elements if the quantity is reduced
           } else if (new_value < parameter_dict["quantity"]) {
             for (let j = parameter_dict["quantity"] - (parameter_dict["quantity"] - new_value); j < parameter_dict["quantity"]; j++) {
-              const image_element = document.getElementById('generatedImage_' + model_name + '_' + size.toString() + '_' + j.toString());
-              image_element.remove();
+              const text_element = document.getElementById('generatedText_' + model_name + '_' + size.toString() + '_' + j.toString());
+              text_element.remove();
             };
           };
           // Sets the sizes of the sizes of the img elements to match the quantity
@@ -354,36 +329,40 @@ const TextGeneratorGUI = () => {
             };
             
             // const new_width = (100 / new_value).toString() + "%";
-            let image_element;
+            let text_element;
             if (k === 0) {
-              image_element = document.getElementById('generatedImage_' + model_name + '_' + size);
-              image_element.style.width = new_width;
+              text_element = document.getElementById('generatedText_' + model_name + '_' + size);
+              text_element.style.width = new_width;
             } else {
-              image_element = document.getElementById('generatedImage_' + model_name + '_' + size + '_' + k.toString());
+              text_element = document.getElementById('generatedText_' + model_name + '_' + size + '_' + k.toString());
             };
-            if (image_element) {
-              image_element.style.width = new_width;
+            if (text_element) {
+              text_element.style.width = new_width;
             } else {
-              console.log('image_element not found');
-              console.log('generatedImage_' + model_name + '_' + size.toString() + '_' + k.toString());
+              console.log('text_element not found');
+              console.log('generatedText_' + model_name + '_' + size.toString() + '_' + k.toString());
             };
           };
         };
       };
 
       parameter_dict["quantity"] = new_value;
-    } else if (element_ID === 'guidanceScaleEntry') {
-      parameter_dict["guidance_scale"] = new_value;
-      console.log('guidance_scale', parameter_dict["guidance_scale"]);
-    } else if (element_ID === 'inferenceStepsEntry') {
-      parameter_dict["num_inference_steps"] = new_value;
-      console.log('num_inference_steps', parameter_dict["num_inference_steps"]);
     } else if (element_ID.includes('custom')) {
       const custom_input_ID = element_ID.split('maxTokensInput_')[1];
+      const checkbox_element = document.getElementById('maxTokensCheckbox_' + custom_input_ID);
       if (new_value) {
-        document.getElementById('maxTokensCheckbox_' + custom_input_ID).checked = true;
+        if (checkbox_element.checked) {
+          const checked_models = await getCheckedValues('model');
+          checked_models.forEach((model) => {
+            document.getElementById('sizeContainerTitle_' + model + '_' + custom_input_ID).textContent = 'Custom # of Words: ' + new_value;
+          });          
+        } else {
+          checkbox_element.checked = true;
+          await handleMaxTokensChange(checkbox_element);
+        }
       } else {
-        document.getElementById('maxTokensCheckbox_' + custom_input_ID).checked = false;
+        checkbox_element.checked = false;
+        await handleMaxTokensChange(checkbox_element);
       };
     };
   };
@@ -420,6 +399,13 @@ const TextGeneratorGUI = () => {
 
         for (let j = 0; j < checked_sizes.length; j++) {
           parameter_dict["max_tokens"] = checked_sizes[j];
+          console.log('parameter_dict["max_tokens"]', parameter_dict["max_tokens"]);
+          console.log("checked_sizes[j]", checked_sizes[j])
+          console.log(parameter_dict);
+          parameter_dict["max_tokens"] = checked_sizes[j];
+          console.log('parameter_dict["max_tokens"]', parameter_dict["max_tokens"]);
+          console.log("checked_sizes[j]", checked_sizes[j])
+          console.log(parameter_dict);
 
           for (let output_ID = 0; output_ID < parameter_dict["quantity"]; output_ID++) {
             console.log('output_ID', output_ID);
@@ -433,7 +419,6 @@ const TextGeneratorGUI = () => {
     };
   };
 
-  
 
   async function handleTextGeneration(parameter_dict, output_ID) {
     console.log('\nTextGeneratorGUI >>> RUNNING handleTextGeneration()');
@@ -444,26 +429,11 @@ const TextGeneratorGUI = () => {
     console.log('Model Currently Generating:', model);
 
     // Handle custom length inputs
-    const size = parameter_dict['max_tokens'].toString();
-    if (parameter_dict['max_tokens'].includes('custom')) {
-      parameter_dict['max_tokens'] = document.getElementById('maxTokensInput_' + parameter_dict['max_tokens']).value; 
+    const size = parameter_dict["max_tokens"].toString();
+    if (parameter_dict["max_tokens"].includes('custom')) {
+      parameter_dict["max_tokens"] = document.getElementById('maxTokensInput_' + parameter_dict["max_tokens"]).value; 
     };
-    
 
-    // let size;
-    // const custom_input_element = document.querySelector('input[value="' + parameter_dict["max_tokens"].toString() + '"]');
-    // console.log('custom_input_element', custom_input_element);
-    // if (custom_input_element) {
-    //   size = document.getElementById(custom_input_element.id).value.toString();
-    // } else {
-    //   size = parameter_dict["max_tokens"];
-    // };
-    // console.log('Size Currently Generating:', parameter_dict["max_tokens"]);
-
-
-
-    // const length = parameter_dict["width"].toString() + "x" + parameter_dict["height"].toString();
-    // console.log('length Currently Generating:', length);
     // Page element setup
     var model_title_element = document.getElementById('textTitle_' + parameter_dict["model"]);
     var model_short_name = model_title_element.innerHTML;
@@ -474,6 +444,7 @@ const TextGeneratorGUI = () => {
     } else {
       text_element = document.getElementById('generatedText_' + model + '_' + size + '_' + output_ID.toString());
     };
+    console.log('text_element', 'generatedText_' + model + '_' + size + '_' + output_ID.toString());
 
     var image_element;
     if (output_ID === 0) {
@@ -481,6 +452,7 @@ const TextGeneratorGUI = () => {
     } else {
       image_element = document.getElementById('generatedImage_' + model + '_' + size + '_' + output_ID.toString());
     };
+    console.log('image_element', 'generatedImage_' + model + '_' + size + '_' + output_ID.toString());
 
     // On the 2nd "Generate" click, the image elements are removed, so they must be added back
     if (!image_element) {
@@ -507,7 +479,10 @@ const TextGeneratorGUI = () => {
     // text generation
     let text_generator_response, text_generator_promise, text_generator_result;
 
-    text_generator_response = text_generator.generateText(parameter_dict); 
+    text_generator_response = text_generator.generateText(parameter_dict);
+    // BUG FIX - resetting the parameter_dict back to the text version of the size prevents errors when
+    //           the quantity is above 1 and a custom size is being generated
+    parameter_dict["max_tokens"] = size;
 
     // Loop
     var number_of_loops = 0;
@@ -538,10 +513,6 @@ const TextGeneratorGUI = () => {
         console.log(text_generator_response);
         text_generator_promise = text_generator_response.then((result) => {
           console.log(result);
-          // if (Array.isArray(result)) {
-          //   loop = false;
-          //   text_generator_result = result;
-          // };
           if (typeof result === 'string') {
             if (result === 'error') {
               // image_element.src = generation_failed_placeholder;
@@ -560,8 +531,6 @@ const TextGeneratorGUI = () => {
 
     console.log('text_generator_response', text_generator_response);
     console.log('text_generator_response[generated_text]', text_generator_response['generated_text']);
-    // const text_URL = text_generator_result[0]['url'];
-
 
     generated_text = text_generator_result;
     if (generated_text) {
@@ -570,9 +539,7 @@ const TextGeneratorGUI = () => {
     model_title_element.innerHTML = model_short_name;
   
     return(generated_text);
-
   };
-
 
 
   async function displayImage(image_element, new_image) {
@@ -583,8 +550,6 @@ const TextGeneratorGUI = () => {
   };
 
   async function setGenerationTime(seconds) {
-    // console.log('\nTextGeneratorGUI >>> RUNNING setGenerationTime()');
-
     generation_time = seconds;
     const generation_time_element = document.getElementById('generationTime');
 
@@ -601,105 +566,20 @@ const TextGeneratorGUI = () => {
   async function updateParameterDict() {
     console.log('\nTextGeneratorGUI >>> RUNNING updateParameterDict()');
     parameter_dict["quantity"] = document.getElementById("dropdownQuantity").value;
-    console.log('quantity', parameter_dict["quantity"]);
     parameter_dict["prompt"] = document.getElementById("promptEntry").value;
-    // parameter_dict["negative_prompt"] = document.getElementById("negativePromptEntry").value;
-    parameter_dict["guidance_scale"] = document.getElementById("guidanceScaleEntry").value;
-    parameter_dict["num_inference_steps"] = document.getElementById("inferenceStepsEntry").value;
-
-    // parameter_dict['teperature'] = document.getElementById("inferenceStepsEntry").value;
-    // parameter_dict['max_tokens'] = document.getElementById("inferenceStepsEntry").value;
-    // parameter_dict['top_p'] = document.getElementById("inferenceStepsEntry").value;
-    // parameter_dict['frequency_penalty'] = document.getElementById("inferenceStepsEntry").value;
-    // parameter_dict['presence_penalty'] = document.getElementById("inferenceStepsEntry").value;
-    // parameter_dict['stop'] = document.getElementById("inferenceStepsEntry").value;
+    parameter_dict['temperature'] = document.getElementById("inputField_temperature").value;
+    parameter_dict['top_p'] = document.getElementById("inputField_top_p").value;
+    parameter_dict['frequency_penalty'] = document.getElementById("inputField_frequency_penalty").value;
+    parameter_dict['presence_penalty'] = document.getElementById("inputField_presence_penalty").value;
+    parameter_dict['logit_bias'][default_logit_bias] = document.getElementById("inputField_logit_bias:" + default_logit_bias.toString()).value;
+    parameter_dict['logit_bias'][-default_logit_bias] = document.getElementById("inputField_logit_bias:-" + default_logit_bias.toString()).value;
+    parameter_dict['stop'] = document.getElementById("inputField_stop").value;
+    // parameter_dict["max_tokens"] = document.getElementById("inferenceStepsEntry").value;
     // parameter_dict['model'] = document.getElementById("inferenceStepsEntry").value;
     // parameter_dict['provider'] = document.getElementById("inferenceStepsEntry").value;
     return(parameter_dict);
   };
 
-
-
-  async function handleImageGeneration(parameter_dict, output_ID) {
-    console.log('\nTextGeneratorGUI >>> RUNNING handleTextGeneration()');
-    console.log('parameter_dict:', parameter_dict);
-    console.log('output_ID:', output_ID);
-    const model = parameter_dict["model"];
-    console.log('Model Currently Generating:', model);
-    const size = parameter_dict["width"].toString() + "x" + parameter_dict["height"].toString();
-    console.log('Size Currently Generating:', size);
-    // Page element setup
-    var image_title_element = document.getElementById('imageTitle_' + parameter_dict["model"]);
-    var image_short_name = image_title_element.innerHTML;
-    var image_element;
-    if (output_ID === 0) {
-      image_element = document.getElementById('generatedImage_' + model + '_' + size);
-    } else {
-      image_element = document.getElementById('generatedImage_' + model + '_' + size + '_' + output_ID.toString());
-    };
-    
-    image_title_element.innerHTML = image_short_name + " Generating";
-    image_element.src = generating_placeholder_0;
-    
-    // Image generation
-    let text_generator_response, text_generator_promise, text_generator_result;
-    text_generator_response = text_generator.generateImage(parameter_dict);
-
-    // Loop
-    var number_of_loops = 0;
-    var loop_count = 1;
-    var loop = true;
-    console.log('len', text_generator_response.length);
-    console.log(text_generator_response);
-    while ( loop ) {
-      await pause(500);
-      if (!pause_generation) {
-        if (loop_count % 2 === 0) {
-          generation_time += 1;
-          await setGenerationTime(generation_time);
-        };
-        if (loop_count > 3) {
-          image_title_element.innerHTML = image_short_name + " Generating";
-          image_element.src = generating_placeholder_0;
-          loop_count = 0;
-          number_of_loops++;
-          console.log('number_of_loops', number_of_loops);
-        } else {
-          image_title_element.insertAdjacentText('beforeEnd', '.');
-          image_element.src = generating_placeholder_list[loop_count];
-        };
-        loop_count+=1;
-        // console.log("loop_count", loop_count);
-        // console.log('text_generator_response.len', text_generator_response.length);
-        // console.log('text_generator_response', text_generator_response);
-        text_generator_promise = text_generator_response.then((result) => {
-          console.log("result:", result);
-          if (typeof result === 'string') {
-            if (result === 'error') {
-              // image_element.src = generation_failed_placeholder;
-              loop = false;
-              image_element.src = generation_failed_placeholder
-            } else {
-              image_element.src = loading_placeholder;
-              loop = false;
-              text_generator_result = result;
-            };
-          };
-        });
-      };
-    };
-
-    console.log('text_generator_response', text_generator_response);
-    console.log('text_generator_response[image_URL]', text_generator_response['image_URL']);
-
-    await pause(100); // brief pause to assign new image URL, which comes right after displaying the loading placeholder
-    image_URL = text_generator_result;
-    image_title_element.innerHTML = image_short_name;
-    // image_element.src = image_URL;
-    await displayImage(image_element, image_URL);
-  
-    return(image_URL);
-  }
 
   async function getAllChecklistOptions(parameter) {
     console.log('\nTextGeneratorGUI >>> RUNNING getAllChecklistOptions()');
@@ -743,42 +623,6 @@ const TextGeneratorGUI = () => {
     console.log("checked_items", checked_items);
     return(checked_items);
   };
-
-
-  function copyImageURL(event) {
-    console.log('\nTextGeneratorGUI >>> RUNNING copyImageURL()');
-
-    let copied_image_URL = event.target.src;
-    console.log("Image URL:", copied_image_URL);
-
-    const image_element_ID = event.target.id.split('generatedImage_')[1];
-    // console.log('image_element_ID:', image_element_ID);
-
-    let model_name;
-    for (const model in model_dict) {
-      if (image_element_ID.includes(model)) {
-        model_name = model;
-      };
-    };
-    
-    const copied_message_element = document.getElementById("copiedMessage_" + model_name);
-    copied_message_element.style.opacity = 1;
-    copied_message_element.style.transition = "none";
-
-    navigator.clipboard.writeText(copied_image_URL)
-    .then(() => {
-      console.log("URL copied to clipboard:", copied_image_URL);
-       // Keep the message visible for 2 seconds
-       setTimeout(() => {
-        copied_message_element.style.transition = "opacity 1s ease-in-out"; // Add fade-out transition
-        copied_message_element.style.opacity = 0; // Gradually fade out
-      }, 2000); // 2-second delay
-    })
-    .catch((err) => {
-      console.error("Failed to copy URL:", err);
-    });
-  };
-
 
 
 
@@ -932,13 +776,52 @@ const TextGeneratorGUI = () => {
           <option value="10">10</option> */}
         </select>
         <div className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={13 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
-          Imaginitive Freedom:
+          Creativity:
         </div>
-        <input id='guidanceScaleEntry' className='textGeneratorGUIpromptEntry textGeneratorGUInumberEntry' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" placeholder="" onChange={handleDropdownChange} required/>
+        <div className='textGeneratorGUIrow'>
+          <input id='inputField_temperature' className='textGeneratorGUIpromptEntry textGeneratorGUInumberEntry' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" placeholder="" onChange={handleInputFieldChange} required/>
+          <div className='textGeneratorGUIhelperText'>(0 to 2)</div>
+        </div>
         <div className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={13 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
-          Generation Duration:
+          Linguistic Freedom:
         </div>
-        <input id='inferenceStepsEntry' className='textGeneratorGUIpromptEntry textGeneratorGUInumberEntry' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" placeholder="" onChange={handleDropdownChange} required/>
+        <div className='textGeneratorGUIrow'>
+          <input id='inputField_top_p' className='textGeneratorGUIpromptEntry textGeneratorGUInumberEntry' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" placeholder="" onChange={handleInputFieldChange} required/>
+          <div className='textGeneratorGUIhelperText'>(0 to 1)</div>
+        </div>
+        <div className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={13 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+          Vocabulary Variety:
+        </div>
+        <div className='textGeneratorGUIrow'>
+          <input id='inputField_frequency_penalty' className='textGeneratorGUIpromptEntry textGeneratorGUInumberEntry' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" placeholder="" onChange={handleInputFieldChange} required/>
+          <div className='textGeneratorGUIhelperText'>(-2 to 2)</div>
+        </div>
+        <div className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={13 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+          Topic Variety:
+        </div>
+        <div className='textGeneratorGUIrow'>
+          <input id='inputField_presence_penalty' className='textGeneratorGUIpromptEntry textGeneratorGUInumberEntry' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" placeholder="" onChange={handleInputFieldChange} required/>
+          <div className='textGeneratorGUIhelperText'>(-2 to 2)</div>
+        </div>
+        <div className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={13 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+          Force Word:
+        </div>
+        <div className='textGeneratorGUIrow'>
+          <input id={'inputField_logit_bias:' + default_logit_bias.toString()} className='textGeneratorGUIpromptEntry textGeneratorGUIwordEntry' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" placeholder="" onChange={handleInputFieldChange} required/>
+        </div>
+        <div className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={13 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+          Avoid Word:
+        </div>
+        <div className='textGeneratorGUIrow'>
+          <input id={'inputField_logit_bias:-' + default_logit_bias.toString()} className='textGeneratorGUIpromptEntry textGeneratorGUIwordEntry' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" placeholder="" onChange={handleInputFieldChange} required/>
+        </div>
+        <div className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={13 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+          Cut-off Word:
+        </div>
+        <div className='textGeneratorGUIrow'>
+          <input id='inputField_stop' className='textGeneratorGUIpromptEntry textGeneratorGUIwordEntry' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" placeholder="" onChange={handleInputFieldChange} required/>
+          {/* <div className='textGeneratorGUIhelperText'>(-2 to 2)</div> */}
+        </div>
         <input value="Generate" className="textGeneratorGUI_submitButton" id="generateTextButton" type="submit" data-aos="fade-right" data-aos-delay={17 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" onClick={handleSubmitClick}/>
       </div>
       {/* <div className='textGeneratorGUITextContainer'>
@@ -974,14 +857,18 @@ const TextGeneratorGUI = () => {
             </div>
             {/* <span className="textGeneratorGUI_copiedMessage" id="copiedMessage_gpt-3.5-turbo">Image URL Copied!</span> */}
           </div>
-          <div id="sizeContainer_gpt-3.5-turbo_0" className="textGeneratorGUIimageOutputSizeTitle">
-          No Character Limit
+          <div id="sizeContainer_gpt-3.5-turbo_0">
+            <span className="textGeneratorGUIimageOutputSizeTitle" id ="sizeContainerTitle_gpt-3.5-turbo_0">
+              No Word Limit
+            </span>
             {/* <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_gpt-3.5-turbo_0">
-              <img src={image_URL} alt='' id='generatedImage_gpt-3.5-turbo_0' className='textGeneratorGUI_generatedImage' onClick={copyImageURL}/>
+              <img src={image_URL} alt='' id='generatedImage_gpt-3.5-turbo_0' className='textGeneratorGUI_generatedImage'/>
             </div> */}
-            <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-3.5-turbo_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
-              <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_gpt-3.5-turbo_0">
-                <img src={image_URL} alt='' id='generatedImage_gpt-3.5-turbo_0' className='textGeneratorGUI_generatedImage' onClick={copyImageURL}/>
+            <div className="textGeneratorGUI_textOutputContainer" id="textOutputContainer_gpt-3.5-turbo_0">
+              <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-3.5-turbo_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+                {/* <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_gpt-3.5-turbo_0"> */}
+                  <img src={image_URL} alt='' id='generatedImage_gpt-3.5-turbo_0' className='textGeneratorGUI_generatedImage'/>
+                {/* </div> */}
               </div>
             </div>
           </div>
@@ -993,11 +880,13 @@ const TextGeneratorGUI = () => {
               GPT 4:
             </div>
           </div>
-          <div id="sizeContainer_gpt-4_0" className="textGeneratorGUIimageOutputSizeTitle">
-          No Character Limit
-            <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-4_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
-              <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_gpt-4_0">
-                <img src={image_URL} alt='' id='generatedImage_gpt-4_0' className='textGeneratorGUI_generatedImage' onClick={copyImageURL}/>
+          <div id="sizeContainer_gpt-4_0">
+            <span className="textGeneratorGUIimageOutputSizeTitle" id ="sizeContainerTitle_gpt-4_0">
+              No Word Limit
+            </span>
+            <div className="textGeneratorGUI_textOutputContainer" id="textOutputContainer_gpt-4_0">
+              <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-4_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+                <img src={image_URL} alt='' id='generatedImage_gpt-4_0' className='textGeneratorGUI_generatedImage'/>
               </div>
             </div>
           </div>
@@ -1009,11 +898,13 @@ const TextGeneratorGUI = () => {
               GPT 4 Turbo:
             </div>
           </div>
-          <div id="sizeContainer_gpt-4-turbo_0" className="textGeneratorGUIimageOutputSizeTitle">
-          No Character Limit
-            <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-4-turbo_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
-              <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_gpt-4-turbo_0">
-                <img src={image_URL} alt='' id='generatedImage_gpt-4-turbo_0' className='textGeneratorGUI_generatedImage' onClick={copyImageURL}/>
+          <div id="sizeContainer_gpt-4-turbo_0">
+            <span className="textGeneratorGUIimageOutputSizeTitle" id ="sizeContainerTitle_gpt-4-turbo_0">
+              No Word Limit
+            </span>
+            <div className="textGeneratorGUI_textOutputContainer" id="textOutputContainer_gpt-4-turbo_0">
+              <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-4-turbo_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+                <img src={image_URL} alt='' id='generatedImage_gpt-4-turbo_0' className='textGeneratorGUI_generatedImage'/>
               </div>
             </div>
           </div>
@@ -1026,11 +917,13 @@ const TextGeneratorGUI = () => {
             </div>
             <span className="textGeneratorGUI_copiedMessage" id="copiedMessage_gpt-4o">Image URL Copied!</span>
           </div>
-          <div id="sizeContainer_gpt-4o_0" className="textGeneratorGUIimageOutputSizeTitle">
-          No Character Limit
-            <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-4o_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
-              <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_gpt-4o_0">
-                <img src={image_URL} alt='' id='generatedImage_gpt-4o_0' className='textGeneratorGUI_generatedImage' onClick={copyImageURL}/>
+          <div id="sizeContainer_gpt-4o_0">
+            <span className="textGeneratorGUIimageOutputSizeTitle" id ="sizeContainerTitle_gpt-4o_0">
+              No Word Limit
+            </span>
+            <div className="textGeneratorGUI_textOutputContainer" id="textOutputContainer_gpt-4o_0">
+              <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-4o_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+                <img src={image_URL} alt='' id='generatedImage_gpt-4o_0' className='textGeneratorGUI_generatedImage'/>
               </div>
             </div>
           </div>
@@ -1042,11 +935,13 @@ const TextGeneratorGUI = () => {
               GPT 4o Mini:
             </div>
           </div>
-          <div id="sizeContainer_gpt-4o-mini_0" className="textGeneratorGUIimageOutputSizeTitle">
-          No Character Limit
-            <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-4o-mini_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
-              <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_gpt-4o-mini_0">
-                <img src={image_URL} alt='' id='generatedImage_gpt-4o-mini_0' className='textGeneratorGUI_generatedImage' onClick={copyImageURL}/>
+          <div id="sizeContainer_gpt-4o-mini_0">
+            <span className="textGeneratorGUIimageOutputSizeTitle" id ="sizeContainerTitle_gpt-4o-mini_0">
+              No Word Limit
+            </span>
+            <div className="textGeneratorGUI_textOutputContainer" id="textOutputContainer_gpt-4o-mini_0">
+              <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-4o-mini_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">    
+                <img src={image_URL} alt='' id='generatedImage_gpt-4o-mini_0' className='textGeneratorGUI_generatedImage'/>
               </div>
             </div>
           </div>
@@ -1059,11 +954,13 @@ const TextGeneratorGUI = () => {
             </div>
             <span className="textGeneratorGUI_copiedMessage" id="copiedMessage_gpt-4o-realtime-preview">Image URL Copied!</span>
           </div>
-          <div id="sizeContainer_gpt-4o-realtime-preview_0" className="textGeneratorGUIimageOutputSizeTitle">
-          No Character Limit            
-            <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-4o-realtime-preview_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
-              <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_gpt-4o-realtime-preview_0">
-                <img src={image_URL} alt='' id='generatedImage_gpt-4o-realtime-preview_0' className='textGeneratorGUI_generatedImage' onClick={copyImageURL}/>
+          <div id="sizeContainer_gpt-4o-realtime-preview_0">
+            <span className="textGeneratorGUIimageOutputSizeTitle" id ="sizeContainerTitle_gpt-4o-realtime-preview_0">
+              No Word Limit
+            </span>
+            <div className="textGeneratorGUI_textOutputContainer" id="textOutputContainer_gpt-4o-realtime-preview_0">
+              <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-4o-realtime-preview_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+                <img src={image_URL} alt='' id='generatedImage_gpt-4o-realtime-preview_0' className='textGeneratorGUI_generatedImage'/>
               </div>
             </div>
           </div>
@@ -1076,11 +973,13 @@ const TextGeneratorGUI = () => {
             </div>
             <span className="textGeneratorGUI_copiedMessage" id="copiedMessage_o1">Image URL Copied!</span>
           </div>
-          <div id="sizeContainer_o1_0" className="textGeneratorGUIimageOutputSizeTitle">
-          No Character Limit
-            <div className='textGeneratorGUI_generatedText' id='generatedText_o1_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
-              <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_o1_0">
-                <img src={image_URL} alt='' id='generatedImage_o1_0' className='textGeneratorGUI_generatedImage' onClick={copyImageURL}/>
+          <div id="sizeContainer_o1_0">
+            <span className="textGeneratorGUIimageOutputSizeTitle" id ="sizeContainerTitle_o1_0">
+              No Word Limit
+            </span>
+            <div className="textGeneratorGUI_textOutputContainer" id="textOutputContainer_o1_0">
+              <div className='textGeneratorGUI_generatedText' id='generatedText_o1_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+                <img src={image_URL} alt='' id='generatedImage_o1_0' className='textGeneratorGUI_generatedImage'/>
               </div>
             </div>
           </div>
@@ -1093,11 +992,13 @@ const TextGeneratorGUI = () => {
             </div>
             <span className="textGeneratorGUI_copiedMessage" id="copiedMessage_o1-preview">Image URL Copied!</span>
           </div>
-          <div id="sizeContainer_o1-preview_0" className="textGeneratorGUIimageOutputSizeTitle">
-          No Character Limit
-            <div className='textGeneratorGUI_generatedText' id='generatedText_o1-preview_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
-              <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_o1-preview_0">
-                <img src={image_URL} alt='' id='generatedImage_o1-preview_0' className='textGeneratorGUI_generatedImage' onClick={copyImageURL}/>
+          <div id="sizeContainer_o1-preview_0">
+            <span className="textGeneratorGUIimageOutputSizeTitle" id ="sizeContainerTitle_o1-preview_0">
+              No Word Limit
+            </span>
+            <div className="textGeneratorGUI_textOutputContainer" id="textOutputContainer_o1-preview_0">  
+              <div className='textGeneratorGUI_generatedText' id='generatedText_o1-preview_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+                <img src={image_URL} alt='' id='generatedImage_o1-preview_0' className='textGeneratorGUI_generatedImage'/>
               </div>
             </div>
           </div>
@@ -1110,11 +1011,13 @@ const TextGeneratorGUI = () => {
             </div>
             <span className="textGeneratorGUI_copiedMessage" id="copiedMessage_o1-mini">Image URL Copied!</span>
           </div>
-          <div id="sizeContainer_o1-mini_0" className="textGeneratorGUIimageOutputSizeTitle">
-          No Character Limit
-            <div className='textGeneratorGUI_generatedText' id='generatedText_o1-mini_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
-              <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_o1-mini_0">
-                <img src={image_URL} alt='' id='generatedImage_o1-mini_0' className='textGeneratorGUI_generatedImage' onClick={copyImageURL}/>
+          <div id="sizeContainer_o1-mini_0">
+            <span className="textGeneratorGUIimageOutputSizeTitle" id ="sizeContainerTitle_o1-mini_0">
+              No Word Limit
+            </span>
+            <div className="textGeneratorGUI_textOutputContainer" id="textOutputContainer_o1-mini_0">  
+              <div className='textGeneratorGUI_generatedText' id='generatedText_o1-mini_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+                <img src={image_URL} alt='' id='generatedImage_o1-mini_0' className='textGeneratorGUI_generatedImage'/>
               </div>
             </div>
           </div>

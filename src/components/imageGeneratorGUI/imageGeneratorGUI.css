@@ -253,6 +253,11 @@
   font-size: 14px;
 }
 
+.imageGeneratorGUIhelperText {
+  color: #848484;
+  margin: 0% 0% 0% 1%;
+  font-size: 15px;
+}
 
 
 @media only screen and (max-width: 560px) {
