@@ -78,6 +78,23 @@ body {
   color: var(--color-main);
 }
 
+.rowContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.columnContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.centeringContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
 @media only screen and (max-width: 670px) {
   .componentSecond {
     margin: 0 20px;

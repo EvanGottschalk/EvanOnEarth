@@ -20,6 +20,31 @@ import './banner_textgenerator.css';
 const delay_gap = 300;
 // let mobile = window.innerWidth <= 600;
 
+const protocol = window.location.protocol; // Example: https:
+const hostname = window.location.hostname; // Example: google.com
+const port = window.location.port; // Example: :3000
+let root_URL = protocol + '//' + hostname;
+if (port) {
+  root_URL += ':' + port;
+};
+const page_pathname = window.location.href.split(root_URL)[1];
+console.log('page_pathname', page_pathname);
+const URL_conditions = {'/': {'subtitle': 'Write the perfect copy with customizable lengths',
+                              'title_URL': root_URL + page_pathname + '/textgenerator',
+                              'padding': "0% 0% 0% 0%",
+                              'target': '_self',
+                              'rel': ''},
+                        '/tools': {'subtitle': 'Write the perfect copy with customizable lengths',
+                                   'title_URL': root_URL + page_pathname + '/textgenerator',
+                                   'padding': "0% 0% 0% 0%",
+                                   'target': '_self',
+                                   'rel': ''},
+                        '/tools/textgenerator': {'subtitle': 'Write the perfect copy with customizable lengths',
+                                                  'title_URL': 'https://twitter.com/EvanOnEarth_eth',
+                                                  'padding': "0% 0% 0% 0%",
+                                                  'target': '_blank',
+                                                  'rel': 'noreferrer'}};
+
 //AppStart
 const Banner_TextTenerator = () => {
   const [bannerImage, setBannerImage] = useState(null);
@@ -107,9 +132,9 @@ const Banner_TextTenerator = () => {
   return (
     <div className='banner_textGeneratorContainer'>
       <div className='banner_textgenerator'>
-        <a className='banner_textGeneratorTitleContainer' data-aos="fade-in" data-aos-delay={delay_gap * 1} id='banner_textGeneratorTitleContainer' alt='@EvanOnEarth_`eth' href='https://twitter.com/EvanOnEarth_eth' onMouseOver={mouseover} onMouseLeave={mouseleave}>
+        <a className='banner_textGeneratorTitleContainer' data-aos="fade-in" data-aos-delay={delay_gap * 1} id='banner_textGeneratorTitleContainer' alt='@EvanOnEarth_`eth' href={URL_conditions[page_pathname]['title_URL']} rel={URL_conditions[page_pathname]['rel']} target={URL_conditions[page_pathname]['target']} onMouseOver={mouseover} onMouseLeave={mouseleave}>
           <span className='banner_textGeneratorTitle' id="textGeneratorTitle" data-aos-delay={2 * delay_gap} data-aos="zoom-in">AI Text Generator</span>
-          <span className='banner_textGeneratorSubTitle' id="textGeneratorSubtitle" data-aos="zoom-in" data-aos-delay={3 * delay_gap} target="_blank">@EvanOnEarth_eth</span>
+          <span className='banner_textGeneratorSubTitle' id="textGeneratorSubtitle" data-aos="zoom-in" data-aos-delay={3 * delay_gap} target="_blank">{URL_conditions[page_pathname]['subtitle']}</span>
         </a>
         <img data-aos="zoom-out" src={bannerImage} alt='AI Text Generator' id='banner_textGeneratorImage' className='banner_textgenerator' onMouseOver={mouseover} onMouseLeave={mouseleave} onClick={handleClick}/>
       </div>

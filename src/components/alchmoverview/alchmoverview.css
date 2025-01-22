@@ -1,0 +1,250 @@
+.alchmoverview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  padding: 2% 0% 10% 0%;
+  margin: 0% 0% 0% 0%;
+  overflow: hidden;
+}
+
+.alchmOverviewLeftContainer {
+  flex: 50%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  padding: 0% 3% 0% 0%;
+  flex-direction: column;
+}
+
+.alchmOverviewRightContainer {
+  flex: 50%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.alchmOverviewImageContainer {
+  padding-top: 5%;
+  width: 90%;
+}
+
+.alchmOverviewImage {
+  border-radius: 40px;
+  margin: 0% 0% -80% 0%;
+  padding: 0% 0% 0% 0%;
+  width: 80%;
+  align-items: right;
+  justify-content: right;
+  float: right;
+  z-index: 20;
+}
+
+.alchmOverviewVideo {
+  border-radius: 40px;
+  width: 100%;
+  align-items: right;
+  justify-content: right;
+  float: right;
+  z-index: 10;
+  /* border: solid;
+  border-width: 25px;
+  border-color: #000000; */
+}
+
+.alchmOverviewTextContainer {
+  width: 90%;
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
+  display: flex;
+  align-items: left;
+  text-align: left;
+  justify-content: left;
+  flex-direction: column;
+}
+
+.alchmOverviewText {
+  display: flex;
+  align-items: left;
+  text-align: left;
+  justify-content: left;
+  color: #000000;
+  /* background-color: black; */
+  font-size: 20px;
+  text-decoration: none;
+  width: 80%;
+  padding: 0% 5% 3% 5%;
+}
+
+.alchmOverviewLink {
+  display: flex;
+  align-items: left;
+  text-align: left;
+  justify-content: left;
+  color: #0016d7;
+  /* background-color: black; */
+  font-size: 20px;
+  text-decoration: none;
+  width: 80%;
+  padding: 0% 5% .5% 5%;
+}
+
+
+
+.alchmOverviewTitle {
+  font-size: 33px;
+  color: #000000;
+  display: flex;
+  align-items: left;
+  text-align: left;
+  justify-content: left;
+  width: 80%;
+  padding: 0% 5% 3% 5%;
+}
+
+.alchmOverviewTextBottom {
+  border-radius: 0px 0px 15px 15px;
+}
+
+.alchmOverviewHelperTextContainer {
+  align-self: center;     /* Center this specific element horizontally */
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  margin-left: 0%;
+}
+
+.alchmOverviewHelperText {
+  color: #000000;
+  /* background-color: #000000a0; */
+  margin: 0% 0% 0% 0%;
+  padding: 0% 3% 2% 3%;
+  white-space: nowrap;
+  border-radius: 6px;
+  font-size: 14px;
+  display: flex;
+}
+
+.alchmOverviewTitleContainer {
+  margin: 0% 0% 0% 0%;
+  padding: 0% 0% 0% 0%;
+}
+
+.alchmOverviewLogoImage {
+  width: 19%;
+  height: 19%;
+  margin: 2% 10% 0% 0%;
+  padding: 0% 0% 0% 0%;
+  display: inline-block;
+  cursor: pointer;
+}
+
+
+@media only screen and (max-width: 600px) {
+  .alchmoverview {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    max-width: 100%;
+    margin: 50% 0% 0% 0%;
+    padding: 0% 0% 0% 0%;
+  }
+
+  .alchmOverviewRightContainer {
+    padding: 0% 0% 0% 0%;
+    margin: 0% 0% 0% 0%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+
+  .alchmOverviewLeftContainer {
+    padding: 0% 0% 0% 0%;
+    margin: 0% 0% 0% 0%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .alchmOverviewTextContainer {
+    width: 85%;
+    padding: 0% 0% 0% 0%;
+    margin: 3% 0% 0% 0%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .alchmOverviewTitle {
+    font-size: 20px;
+    width: 100%;
+    padding: 0% 0% 0% 0%;
+    margin: 1% 0% 0% 0%;
+  }
+
+  .alchmOverviewText {
+    font-size: 15px;
+    width: 100%;
+    padding: 0% 5% 4% 5%;
+    margin: 0% 0% 0% 0%;
+    white-space: pre-line;
+  }
+
+  .alchmOverviewTextTop {
+    padding-top: 5%;
+  }
+
+  .alchmOverviewImageContainer {
+    padding: 0% 0% 0% 0%;
+    margin: 0% 0% 0% 0%;
+    width: 93%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .alchmOverviewVideo {
+    padding: 0% 0% 0% 0%;
+    margin: 0% 0% 0% 0%;
+    border-radius: 25px;
+  }
+
+  .alchmOverviewHelperTextContainer {
+    align-self: flex-end;
+    margin: 1% 8% 0% 0%;
+  }
+
+  .alchmOverviewHelperText {
+    margin: 0% 0% 0% 0%;
+    padding: 0% 6% 4% 6%;
+    font-size: 12px;
+  }
+
+  .alchmOverviewTitleContainer {
+    width: 100%;
+    padding: 0% 0% 3% 0%;
+    margin: 0% 0% 0% 0%;
+  }
+
+  .alchmOverviewLogoImage {
+    width: 19%;
+    height: 19%;
+    margin: 0 5% 0% 0%;
+    padding: 0% 0% 0% 0%;
+  }
+
+  .alchmOverviewLink {
+    padding: 0% 0% 0% 0%;
+    margin: 0% 0% 0% 0%;
+    width: 100%;
+    font-size: 15px;
+  }
+}
