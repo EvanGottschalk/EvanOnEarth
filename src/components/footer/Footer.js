@@ -3,8 +3,20 @@ import React from 'react';
 
 import './footer.css'
 
-const Footer = () => {
+let screen_filled = false;
 
+const Footer = () => {
+  document.addEventListener("DOMContentLoaded", () => {
+    const footer = document.getElementById("footer"); // Select the footer element
+    if (footer && !screen_filled) {
+      const footerBottomY = document.documentElement.scrollHeight / 3;  // Get the bottom position
+      console.log("Footer bottom y-coordinate:", footerBottomY);
+      footer.style.paddingTop = footerBottomY.toString() + 'px';
+      screen_filled = true;
+    } else {
+      console.error("Footer element not found!");
+    }
+  });
 
   function mouseOver(event) {
     let element = document.getElementById(event.target.id);
@@ -18,7 +30,7 @@ const Footer = () => {
   
 
   return (
-    <div className='footer'>
+    <div className='footer' id='footer'>
       <div className='creatorAttributionContainer'>
         <div className='creatorAttributionTextContainer footerTextContainer'>
           <div className='creatorAttributionText'>Site created by </div><a id='creatorAttributionLink' className='creatorAttributionLink' href="https://twitter.com/EvanOnEarth_eth" onMouseOver={mouseOver} onMouseLeave={mouseLeave}>@EvanOnEarth_eth</a>

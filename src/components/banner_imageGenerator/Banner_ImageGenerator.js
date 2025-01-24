@@ -30,8 +30,8 @@ if (port) {
 const page_pathname = window.location.href.split(root_URL)[1];
 console.log('page_pathname', page_pathname);
 const URL_conditions = {'/': {'subtitle': 'Create dozens of images with 1 click',
-                              'title_URL': root_URL + page_pathname + '/imagegenerator',
-                              'padding': "5% 0% 3% 0%",
+                              'title_URL': root_URL + page_pathname + 'tools/imagegenerator',
+                              'padding': "3% 0% 3% 0%",
                               'target': '_self',
                               'rel': ''},
                         '/tools': {'subtitle': 'Create dozens of images with 1 click',
@@ -76,11 +76,11 @@ const Banner_ImageGenerator = () => {
 
   function mouseover(event) {
     const element_ID = event.target.id;
-    const title_container = document.getElementById("banner_imageGeneratorTitleContainer");
+    const title_container = document.getElementById("imageGeneratorTitleContainer");
     if (element_ID === "banner_imageGeneratorImage") {
       title_container.style.opacity = '0';
       updateBannerTitle('default');
-    } else if (element_ID === "banner_imageGeneratorTitleContainer") {
+    } else if (element_ID === "imageGeneratorTitleContainer" || element_ID === "imageGeneratorTitle") {
       title_container.style.opacity = '1';
       updateBannerTitle('inverted');
     };
@@ -89,24 +89,24 @@ const Banner_ImageGenerator = () => {
   function mouseleave(event) {
     const element_ID = event.target.id;
     if (element_ID === "banner_imageGeneratorImage") {
-      document.getElementById("banner_imageGeneratorTitleContainer").style.opacity = '1';
-    } else if (element_ID === "banner_imageGeneratorImageTitleContainer") {
-      document.getElementById("banner_imageGeneratorTitleContainer").style.opacity = '1';
+      document.getElementById("imageGeneratorTitleContainer").style.opacity = '1';
+    } else if (element_ID === "banner_imageGeneratorImageTitleContainer" || element_ID === "imageGeneratorTitle") {
+      document.getElementById("imageGeneratorTitleContainer").style.opacity = '1';
       updateBannerTitle('default');
     };
   };
 
   function handleClick(event) {
-    console.log(document.getElementById("banner_imageGeneratorTitleContainer").style.opacity);
-    if (document.getElementById("banner_imageGeneratorTitleContainer").style.opacity < 1) {
-      document.getElementById("banner_imageGeneratorTitleContainer").style.opacity = 1;
+    console.log(document.getElementById("imageGeneratorTitleContainer").style.opacity);
+    if (document.getElementById("imageGeneratorTitleContainer").style.opacity < 1) {
+      document.getElementById("imageGeneratorTitleContainer").style.opacity = 1;
     } else {
-      document.getElementById("banner_imageGeneratorTitleContainer").style.opacity = 0;
+      document.getElementById("imageGeneratorTitleContainer").style.opacity = 0;
     };
   };
 
   async function updateBannerTitle(state) {
-    const title_container = document.getElementById("banner_imageGeneratorTitleContainer");
+    const title_container = document.getElementById("imageGeneratorTitleContainer");
     if (state === 'default') {
       title_container.style.borderColor = '#ffffff';
       title_container.style.backgroundColor = '#000000';
@@ -132,7 +132,7 @@ const Banner_ImageGenerator = () => {
   return (
     <div className='banner_imageGeneratorContainer' style={{padding: URL_conditions[page_pathname]['padding']}}>
       <div className='banner_imagegenerator'>
-        <a className='banner_imageGeneratorTitleContainer' data-aos="fade-in" data-aos-delay={delay_gap * 1} id='banner_imageGeneratorTitleContainer' alt='@EvanOnEarth_`eth' href={URL_conditions[page_pathname]['title_URL']} rel={URL_conditions[page_pathname]['rel']} target={URL_conditions[page_pathname]['target']} onMouseOver={mouseover} onMouseLeave={mouseleave}>
+        <a className='banner_imageGeneratorTitleContainer' id='imageGeneratorTitleContainer' data-aos="fade-in" data-aos-delay={delay_gap * 1} alt='@EvanOnEarth_`eth' href={URL_conditions[page_pathname]['title_URL']} rel={URL_conditions[page_pathname]['rel']} target={URL_conditions[page_pathname]['target']} onMouseOver={mouseover} onMouseLeave={mouseleave}>
           <span className='banner_imageGeneratorTitle' id="imageGeneratorTitle" data-aos-delay={2 * delay_gap} data-aos="zoom-in">AI Image Generator</span>
           <span className='banner_imageGeneratorSubTitle' id="imageGeneratorSubtitle" data-aos="zoom-in" data-aos-delay={3 * delay_gap} target="_blank">{URL_conditions[page_pathname]['subtitle']}</span>
         </a>

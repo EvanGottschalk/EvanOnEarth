@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import Navbar from './components/navbar/Navbar';
+import Background from './components/background/Background';
 import Main from './pages/main/Main';
 import Footer from './components/footer/Footer';
 import Consultation from './pages/consultation/Consultation'
 import ImageGenerator from './pages/imagegenerator/ImageGenerator'
 import TextGenerator from './pages/textgenerator/TextGenerator'
-import ToolsPage from './pages/toolspage/ToolsPage'
+import Tools from './pages/tools/Tools'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 //import FloaterPage from './pages/floater/FloaterPage';
@@ -27,11 +28,11 @@ const App = () => {
                                                   user_avatar_URI, setAvatarURI_Context }}>
                <BrowserRouter>
                     <Navbar />
-                    {/*/<Background />*/}
+                    {/* <Background /> */}
                     <Routes>
                          <Route exact path="/" element={<Main />} />
                          <Route exact path="/consultation" element={<Consultation />} />
-                         <Route exact path="/tools" element={<ToolsPage />} />
+                         <Route exact path="/tools" element={<Tools />} />
                          <Route exact path="/tools/imagegenerator" element={<ImageGenerator />} />
                          <Route exact path="/tools/textgenerator" element={<TextGenerator />} />
                     </Routes>

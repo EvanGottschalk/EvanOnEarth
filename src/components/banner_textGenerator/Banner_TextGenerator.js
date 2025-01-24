@@ -30,7 +30,7 @@ if (port) {
 const page_pathname = window.location.href.split(root_URL)[1];
 console.log('page_pathname', page_pathname);
 const URL_conditions = {'/': {'subtitle': 'Write the perfect copy with customizable lengths',
-                              'title_URL': root_URL + page_pathname + '/textgenerator',
+                              'title_URL': root_URL + page_pathname + 'tools/textgenerator',
                               'padding': "0% 0% 0% 0%",
                               'target': '_self',
                               'rel': ''},
@@ -76,11 +76,11 @@ const Banner_TextTenerator = () => {
 
   function mouseover(event) {
     const element_ID = event.target.id;
-    const title_container = document.getElementById("banner_textGeneratorTitleContainer");
+    const title_container = document.getElementById("textGeneratorTitleContainer");
     if (element_ID === "banner_textGeneratorImage") {
       title_container.style.opacity = '0';
       updateBannerTitle('default');
-    } else if (element_ID === "banner_textGeneratorTitleContainer") {
+    } else if (element_ID === "textGeneratorTitleContainer" || element_ID === "textGeneratorTitle") {
       title_container.style.opacity = '1';
       updateBannerTitle('inverted');
     };
@@ -89,24 +89,24 @@ const Banner_TextTenerator = () => {
   function mouseleave(event) {
     const element_ID = event.target.id;
     if (element_ID === "banner_textGeneratorImage") {
-      document.getElementById("banner_textGeneratorTitleContainer").style.opacity = '1';
-    } else if (element_ID === "banner_textGeneratorImageTitleContainer") {
-      document.getElementById("banner_textGeneratorTitleContainer").style.opacity = '1';
+      document.getElementById("textGeneratorTitleContainer").style.opacity = '1';
+    } else if (element_ID === "banner_textGeneratorImageTitleContainer" || element_ID === "textGeneratorTitle") {
+      document.getElementById("textGeneratorTitleContainer").style.opacity = '1';
       updateBannerTitle('default');
     };
   };
 
   function handleClick(event) {
-    console.log(document.getElementById("banner_textGeneratorTitleContainer").style.opacity);
-    if (document.getElementById("banner_textGeneratorTitleContainer").style.opacity < 1) {
-      document.getElementById("banner_textGeneratorTitleContainer").style.opacity = 1;
+    console.log(document.getElementById("textGeneratorTitleContainer").style.opacity);
+    if (document.getElementById("textGeneratorTitleContainer").style.opacity < 1) {
+      document.getElementById("textGeneratorTitleContainer").style.opacity = 1;
     } else {
-      document.getElementById("banner_textGeneratorTitleContainer").style.opacity = 0;
+      document.getElementById("textGeneratorTitleContainer").style.opacity = 0;
     };
   };
 
   async function updateBannerTitle(state) {
-    const title_container = document.getElementById("banner_textGeneratorTitleContainer");
+    const title_container = document.getElementById("textGeneratorTitleContainer");
     if (state === 'default') {
       title_container.style.borderColor = '#ffffff';
       title_container.style.backgroundColor = '#000000';
@@ -132,7 +132,7 @@ const Banner_TextTenerator = () => {
   return (
     <div className='banner_textGeneratorContainer'>
       <div className='banner_textgenerator'>
-        <a className='banner_textGeneratorTitleContainer' data-aos="fade-in" data-aos-delay={delay_gap * 1} id='banner_textGeneratorTitleContainer' alt='@EvanOnEarth_`eth' href={URL_conditions[page_pathname]['title_URL']} rel={URL_conditions[page_pathname]['rel']} target={URL_conditions[page_pathname]['target']} onMouseOver={mouseover} onMouseLeave={mouseleave}>
+        <a className='banner_textGeneratorTitleContainer' id='textGeneratorTitleContainer' data-aos="fade-in" data-aos-delay={delay_gap * 1} alt='@EvanOnEarth_`eth' href={URL_conditions[page_pathname]['title_URL']} rel={URL_conditions[page_pathname]['rel']} target={URL_conditions[page_pathname]['target']} onMouseOver={mouseover} onMouseLeave={mouseleave}>
           <span className='banner_textGeneratorTitle' id="textGeneratorTitle" data-aos-delay={2 * delay_gap} data-aos="zoom-in">AI Text Generator</span>
           <span className='banner_textGeneratorSubTitle' id="textGeneratorSubtitle" data-aos="zoom-in" data-aos-delay={3 * delay_gap} target="_blank">{URL_conditions[page_pathname]['subtitle']}</span>
         </a>

@@ -121,20 +121,32 @@ return (
           </a>
         </div>
       </div>
-      <div className='navbarCenter'>
-        {/* <a className='navbarCenterButtonContainer' data-aos="fade-down-right" href={window.location['origin']} id="navbarCenterButton1" onMouseOver={mouseover} onMouseLeave={mouseleave}>
-          <span className='navbarCenterButton' data-aos="fade-down" style={tools_page ? {color: "#ffffff"} : {color: "#000000"}} id="navbarCenterButton1" onMouseOver={mouseover} onMouseLeave={mouseleave} >Home</span>
-        </a> */}
-        <a className='navbarCenterButtonContainer' data-aos="fade-down-right" href={window.location['origin'] + '/tools/imagegenerator'} id="navbarCenterButton2" onMouseOver={mouseover} onMouseLeave={mouseleave}>
-          <span className='navbarCenterButton' data-aos="fade-down" style={tools_page ? {color: "#ffffff"} : {color: "#000000"}} id="navbarCenterButton2" onMouseOver={mouseover} onMouseLeave={mouseleave} >AI Image Generator</span>
-        </a>
-        <a className='navbarCenterButtonContainer' data-aos="fade-down" href={window.location['origin'] + '/tools/textgenerator'} id="navbarCenterButton3" onMouseOver={mouseover} onMouseLeave={mouseleave}>
-          <span className='navbarCenterButton' data-aos="fade-down" style={tools_page ? {color: "#ffffff"} : {color: "#000000"}} id="navbarCenterButton3" onMouseOver={mouseover} onMouseLeave={mouseleave} >AI Text Generator</span>
-        </a>
-        <a className='navbarCenterButtonContainer' data-aos="fade-down-left" href={window.location['origin'] + "/consultation"} id="navbarCenterButton1" onMouseOver={mouseover} onMouseLeave={mouseleave}>
-          <span className='navbarCenterButton' data-aos="fade-down" style={tools_page ? {color: "#ffffff"} : {color: "#000000"}} id="navbarCenterButton1" onMouseOver={mouseover} onMouseLeave={mouseleave} >Consultation</span>
-        </a>
-      </div>
+        <div className='navbarCenter'>
+          {mobile ? (
+            <div/>
+          ) : (
+            <a className='navbarCenterButtonContainer' data-aos="fade-down-right" href={window.location['origin'] + '/tools/imagegenerator'} id="navbarCenterButton2" onMouseOver={mouseover} onMouseLeave={mouseleave}>
+              <span className='navbarCenterButton' data-aos="fade-down" style={tools_page ? {color: "#ffffff"} : {color: "#000000"}} id="navbarCenterButton2" onMouseOver={mouseover} onMouseLeave={mouseleave} >AI Image Generator</span>
+            </a>
+          )}
+          {mobile ? (
+            // 1 Mobile Button
+            <a className='navbarCenterButtonContainer' data-aos="fade-down" href={window.location['origin'] + '/tools'} id="navbarCenterButtonMobile" onMouseOver={mouseover} onMouseLeave={mouseleave}>
+              <span className='navbarCenterButton' data-aos="fade-down" style={tools_page ? {color: "#ffffff"} : {color: "#000000"}} id="navbarCenterButtonMobile" onMouseOver={mouseover} onMouseLeave={mouseleave} >AI Tools</span>
+            </a>
+          ) : (
+            <a className='navbarCenterButtonContainer' data-aos="fade-down" href={window.location['origin'] + '/tools/textgenerator'} id="navbarCenterButton3" onMouseOver={mouseover} onMouseLeave={mouseleave}>
+              <span className='navbarCenterButton' data-aos="fade-down" style={tools_page ? {color: "#ffffff"} : {color: "#000000"}} id="navbarCenterButton3" onMouseOver={mouseover} onMouseLeave={mouseleave} >AI Text Generator</span>
+            </a>
+          )}
+          {mobile ? (
+            <div/>
+          ) : (
+            <a className='navbarCenterButtonContainer' data-aos="fade-down-left" href={window.location['origin'] + "/consultation"} id="navbarCenterButton1" onMouseOver={mouseover} onMouseLeave={mouseleave}>
+              <span className='navbarCenterButton' data-aos="fade-down" style={tools_page ? {color: "#ffffff"} : {color: "#000000"}} id="navbarCenterButton1" onMouseOver={mouseover} onMouseLeave={mouseleave} >Consultation</span>
+            </a>
+          )}
+        </div>
       <div className='navbarRight'>
         <div className='navbarSocialsContainer'>
           <div className='navbarIconContainer'>

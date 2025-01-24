@@ -4,6 +4,7 @@ import Banner from '../../components/banner/Banner'
 import About from '../../components/about/About'
 import Services from '../../components/services/Services'
 import AlchmOverview from '../../components/alchmoverview/AlchmOverview'
+import Tools from '../../pages/tools/Tools'
 //import FAQ from '../../components/faq/FAQ'
 
 
@@ -16,6 +17,7 @@ const Main = () => {
       <Banner />
       <About />
       <AlchmOverview />
+      <Tools />
       <Services />
     </div>
   )
