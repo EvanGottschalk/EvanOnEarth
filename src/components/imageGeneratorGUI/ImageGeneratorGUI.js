@@ -52,7 +52,6 @@ let parameter_dict = {"prompt": "",
                       "model": ""};
 
 let image_URL = default_image;
-let generated_text = '...';
 
 let generation_time = 0;
 let pause_generation = false;
@@ -83,8 +82,7 @@ const model_dict = {"black-forest-labs/FLUX.1-dev": {"description": "FLUX.1 defi
                     "DALL-E": {"description": "Text-to-image generation powered by OpenAI and ChatGPT.",
                                                      "link": "https://openai.com/index/dall-e-3/"}};
 
-//AppStart                                                     
-const ImageGeneratorGUI = () => {
+
 
 
 
@@ -96,6 +94,9 @@ const ImageGeneratorGUI = () => {
 
 //--------------------------------------------------------------------------------------------------
 //# Functions
+
+//AppStart                                                     
+const ImageGeneratorGUI = () => {
 
   useEffect(() => {
     Aos.init({ duration: 2000 });
@@ -540,28 +541,41 @@ const ImageGeneratorGUI = () => {
 
   return (
     <div className='imageGeneratorGUI' id="anchorElement">
-      <div className='imageGeneratorGUITextContainer imageGeneratorGUIpromptContainer'>
-        <div className='imageGeneratorGUITitle' data-aos="fade-right" data-aos-delay={11 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+      <div className='imageGeneratorGUItextContainer imageGeneratorGUIpromptContainer'>
+        <div className='imageGeneratorGUITitle' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+          data-aos-delay={10 * delay_gap} data-aos="fade-right">
           Enter Prompt:
         </div>
-        <input value={mobile ? "Copy Simplifier" : "Copy Simplifier Prefix"} className="imageGeneratorGUI_submitButton imageGeneratorGUIfloatRightButton" id="copySimplifierPrefixButton" type="button" data-aos="fade-right" data-aos-delay={20 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" onClick={handleSubmitClick}/>
+        <input className="imageGeneratorGUI_submitButton imageGeneratorGUIfloatRightButton" id="copySimplifierPrefixButton" type="button" onClick={handleSubmitClick} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+          data-aos-delay={10 * delay_gap} data-aos="fade-left"
+          value={mobile ? "Copy Simplifier" : "Copy Simplifier Prefix"}
+        />
       </div>
-      <textarea id='promptEntry' className='imageGeneratorGUIpromptEntry' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"  onChange={handlePromptChange}
+      <textarea className='imageGeneratorGUIpromptEntry' id='promptEntry' onChange={handlePromptChange} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+        data-aos-delay={11 * delay_gap} data-aos="zoom-in"
         placeholder="Your prompt here..." required/>
-      <div className='imageGeneratorGUITextContainer imageGeneratorGUIpromptContainer'>
-        <div className='imageGeneratorGUITitle imageGeneratorGUIcopyNegativePromptTitle' data-aos="fade-right" data-aos-delay={11 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+      <div className='imageGeneratorGUItextContainer imageGeneratorGUIpromptContainer'>
+        <div className='imageGeneratorGUITitle imageGeneratorGUIcopyNegativePromptTitle' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+          data-aos-delay={12 * delay_gap} data-aos="fade-right">
           Negative Prompt:
         </div>
-        <input value={mobile ? "Copy Default" : "Copy Default Negative Prompt"} className="imageGeneratorGUI_submitButton imageGeneratorGUIfloatRightButton" id="copyNegativePromptButton" type="button" data-aos="fade-right" data-aos-delay={20 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" onClick={handleSubmitClick}/>
+        <input className="imageGeneratorGUI_submitButton imageGeneratorGUIfloatRightButton" id="copyNegativePromptButton" type="button" onClick={handleSubmitClick} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+          data-aos-delay={12 * delay_gap} data-aos="fade-left"
+          value={mobile ? "Copy Default" : "Copy Default Negative Prompt"}
+        />
       </div>
-      <textarea id='negativePromptEntry' className='imageGeneratorGUIpromptEntry imageGeneratorGUInegativePromptEntry' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" onChange={handleNegativePromptChange}
-        placeholder={"Your negative prompt here..."} required/>
-      <div className='imageGeneratorGUITextContainer'>
-        <div className='imageGeneratorGUITitle' data-aos="fade-right" data-aos-delay={13 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+      <textarea className='imageGeneratorGUIpromptEntry imageGeneratorGUInegativePromptEntry' id='negativePromptEntry' onChange={handleNegativePromptChange} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+        data-aos-delay={13 * delay_gap} data-aos="zoom-in"
+        placeholder={"Your negative prompt here..."} required
+      />
+      <div className='imageGeneratorGUItextContainer'>
+        <div className='imageGeneratorGUITitle' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+          data-aos-delay={14 * delay_gap} data-aos="fade-right">
           Select Model(s):
         </div>
       </div>
-      <div className='imageGeneratorGUI_checklist' id='checklistModels' data-aos="fade-right" data-aos-delay={14 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+      <div className='imageGeneratorGUI_checklist' id='checklistModels' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+        data-aos-delay={15 * delay_gap} data-aos="zoom-in">
         <label className="imageGeneratorGUImodelOption">
           <input type="checkbox" value="black-forest-labs/FLUX.1-dev" onChange={handleModelChange} />
           black-forest-labs/FLUX.1-dev
@@ -603,24 +617,32 @@ const ImageGeneratorGUI = () => {
           DALL-E 2
         </label> */}
       </div>
-      <div className='imageGeneratorGUITextContainer'>
-        <div className='imageGeneratorGUITitle' data-aos="fade-right" data-aos-delay={15 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+      <div className='imageGeneratorGUItextContainer'>
+        <div className='imageGeneratorGUITitle' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+          data-aos-delay={16 * delay_gap} data-aos="fade-right">
           Model Description:
         </div>
       </div>
-      <div className='imageGeneratorGUI_modelDescription' id='modelDescriptionTitle' data-aos="fade-right" data-aos-delay={16 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"><u><b>black-forest-labs/FLUX.1-dev</b></u></div>
-      <div className='imageGeneratorGUI_modelDescription' id='modelDescription' data-aos="fade-right" data-aos-delay={16 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
-        FLUX.1 defines the new state-of-the-art in image synthesis. Our models set new standards in their respective model class. FLUX.1 [pro] and [dev] surpass popular  models like Midjourney v6.0, DALL·E 3 (HD) and SD3-Ultra in each of the following aspects: Visual Quality, Prompt Following, Size/Aspect Variability, Typography and Output Diversity. FLUX.1 [schnell] is the most advanced few-step model to date, outperforming not even its in-class competitors but also strong non-distilled models like Midjourney v6.0 and DALL·E 3 (HD) .  Our models are specifically finetuned to preserve the entire output diversity from pretraining.
+      <div className="imageGeneratorGUItextContainer" data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+        data-aos-delay={17 * delay_gap} data-aos="zoom-in">
+        <div className='imageGeneratorGUI_modelDescription' id='modelDescriptionTitle'>
+          <u><b>black-forest-labs/FLUX.1-dev</b></u>
+        </div>
+        <div className='imageGeneratorGUI_modelDescription' id='modelDescription'>
+          FLUX.1 defines the new state-of-the-art in image synthesis. Our models set new standards in their respective model class. FLUX.1 [pro] and [dev] surpass popular  models like Midjourney v6.0, DALL·E 3 (HD) and SD3-Ultra in each of the following aspects: Visual Quality, Prompt Following, Size/Aspect Variability, Typography and Output Diversity. FLUX.1 [schnell] is the most advanced few-step model to date, outperforming not even its in-class competitors but also strong non-distilled models like Midjourney v6.0 and DALL·E 3 (HD) .  Our models are specifically finetuned to preserve the entire output diversity from pretraining.
+        </div>
+        <a href="https://blackforestlabs.ai/announcing-black-forest-labs/" target='_blank' rel="noreferrer" className='imageGeneratorGUI_modelLink' id='modelLink'>
+          <u>Learn More -></u>
+        </a>
       </div>
-      <a href="https://blackforestlabs.ai/announcing-black-forest-labs/" target='_blank' rel="noreferrer" className='imageGeneratorGUI_modelLink' id='modelLink' data-aos="fade-right" data-aos-delay={16 * delay_gap}data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" >
-        <u>Learn More -></u>
-      </a>
-      <div className='imageGeneratorGUITextContainer'>
-        <div className='imageGeneratorGUITitle' data-aos="fade-right" data-aos-delay={13 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+      <div className='imageGeneratorGUItextContainer'>
+        <div className='imageGeneratorGUITitle' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+          data-aos-delay={18 * delay_gap} data-aos="fade-right">
           Select Size(s):
         </div>
       </div>
-      <div className='imageGeneratorGUI_checklist' id='checklistSizes' data-aos="fade-right" data-aos-delay={14 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+      <div className='imageGeneratorGUI_checklist' id='checklistSizes' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+        data-aos-delay={19 * delay_gap} data-aos="zoom-in">
         <label className="imageGeneratorGUIsizeOption">
           <input type="checkbox" value="256x256" onChange={handleSizeChange} />
           256x256
@@ -658,12 +680,13 @@ const ImageGeneratorGUI = () => {
           Custom (coming soon!)
         </label>
       </div>
-      <div className='imageGeneratorGUITextContainer'>
-      <div className='imageGeneratorGUITitle' data-aos="fade-right" data-aos-delay={13 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+      <div className='imageGeneratorGUItextContainer'>
+        <div className='imageGeneratorGUITitle' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+          data-aos-delay={20 * delay_gap} data-aos="fade-right">
           # of Ouputs (per model):
         </div>
-        <select className='imageGeneratorGUIdropdownList' id='dropdownQuantity' onChange={handleDropdownChange} data-aos="fade-right" data-aos-delay={14 * delay_gap}data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" style={{
-          textDecoration: 'none'}}>
+        <select className='imageGeneratorGUIdropdownList' id='dropdownQuantity' onChange={handleDropdownChange} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+          data-aos-delay={21 * delay_gap} data-aos="fade-right">
           {/* <option value="0?">0?</option> */}
           <option value="1">1</option>
           <option value="2">2</option>
@@ -676,58 +699,81 @@ const ImageGeneratorGUI = () => {
           <option value="9">9</option>
           <option value="10">10</option> */}
         </select>
-        <div className='imageGeneratorGUITitle' data-aos="fade-right" data-aos-delay={13 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+        <div className='imageGeneratorGUITitle' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+          data-aos-delay={22 * delay_gap} data-aos="fade-right">
           Imaginitive Freedom:
         </div>
         <div className="imageGeneratorGUIrow">
-          <input id='guidanceScaleEntry' className='imageGeneratorGUIpromptEntry imageGeneratorGUInumberEntry' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" placeholder="" onChange={handleDropdownChange} required/>
-          <div className='textGeneratorGUIhelperText'>(1 to 20)</div>
+          <input className='imageGeneratorGUIpromptEntry imageGeneratorGUInumberEntry' id='guidanceScaleEntry' onChange={handleDropdownChange} required data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+            data-aos-delay={23 * delay_gap} data-aos="fade-right"
+            placeholder="" />
+          <div className='textGeneratorGUIhelperText' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+            data-aos-delay={23 * delay_gap} data-aos="fade-left">
+            (1 to 20)
+          </div>
         </div>
-        <div className='imageGeneratorGUITitle' data-aos="fade-right" data-aos-delay={13 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+        <div className='imageGeneratorGUITitle' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+          data-aos-delay={24 * delay_gap} data-aos="fade-right">
           Generation Duration:
         </div>
         <div className="imageGeneratorGUIrow">
-          <input id='inferenceStepsEntry' className='imageGeneratorGUIpromptEntry imageGeneratorGUInumberEntry' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" placeholder="" onChange={handleDropdownChange} required/>
-          <div className='textGeneratorGUIhelperText'>(1 to 100)</div>
+          <input className='imageGeneratorGUIpromptEntry imageGeneratorGUInumberEntry' id='inferenceStepsEntry' onChange={handleDropdownChange} required data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+            data-aos-delay={25 * delay_gap} data-aos="fade-right"
+            placeholder="" />
+          <div className='textGeneratorGUIhelperText' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+            data-aos-delay={25 * delay_gap} data-aos="fade-left">
+            (1 to 100)</div>
         </div>
         {/* <input value="Generate Text" className="imageGeneratorGUI_submitButton" id="generateTextButton" type="submit" data-aos="fade-right" data-aos-delay={17 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" onClick={handleSubmitClick}/> */}
       </div>
-      {/* <div className='imageGeneratorGUITextContainer'>
+      {/* <div className='imageGeneratorGUItextContainer'>
         <div id='textTitle' className='imageGeneratorGUITitle' data-aos="fade-right" data-aos-delay={18 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
           Generated Text:
         </div>
       </div>
       <div className='imageGeneratorGUI_modelDescription' id='textOutput' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">...</div> */}
-      <div className='imageGeneratorGUITextContainer'>
-        <input value="Generate" className="imageGeneratorGUI_submitButton" id="generateImageButton" type="submit" data-aos="fade-right" data-aos-delay={20 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" onClick={handleSubmitClick}/>
+      <div className='imageGeneratorGUItextContainer'>
+        <input className="imageGeneratorGUI_submitButton" id="generateImageButton" type="submit" onClick={handleSubmitClick} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+          data-aos-delay={26 * delay_gap} data-aos="fade-right"
+          value="Generate"
+        />
       </div>
-      <div className='banner_imageGeneratorGUI'>
-        <div className='banner_imageGeneratorGUITitleContainer' data-aos="fade-in" data-aos-delay={delay_gap * 1} id='banner_imageGeneratorGUITitleContainer'>
-          <span className='banner_imageGeneratorGUITitle' id="banner_imageGeneratorGUITitleContainer" data-aos-delay={2 * delay_gap} data-aos="zoom-in">Image Outputs</span>
+      <div className='banner_imageGeneratorGUI' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+        data-aos-delay={27 * delay_gap} data-aos="zoom-out">
+        <div className='banner_imageGeneratorGUITitleContainer' id='banner_imageGeneratorGUITitleContainer' >
+          <span className='banner_imageGeneratorGUITitle' id="banner_imageGeneratorGUITitleContainer" data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+            data-aos-delay={27 * delay_gap} data-aos="zoom-in">
+            Image Outputs
+          </span>
           {/* <span className='banner_imageGeneratorGUISubTitle' id="banner_imageGeneratorGUITitleContainer" data-aos="zoom-in" data-aos-delay={3 * delay_gap} target="_blank">@EvanOnEarth_eth</span> */}
         </div>
       </div>
       <div className='imageGeneratorGUIgenerationTimeContainer ' id='generationTimeContainer'>
         <div className='imageGeneratorGUIrow'>
-          <div className='imageGeneratorGUITitle' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+          <div className='imageGeneratorGUITitle'>
             Generation Time:
           </div>
-          <input id='generationTime' className='imageGeneratorGUIpromptEntry imageGeneratorGUInumberDisplay' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" value="0:00" readOnly/>
+          <input id='generationTime' className='imageGeneratorGUIpromptEntry imageGeneratorGUInumberDisplay' value="0:00" readOnly/>
         </div>
-        <input value="Pause" className="imageGeneratorGUI_submitButton imageGeneratorGUI_pauseButton" id="pauseButton" type="button" data-aos="fade-right" data-aos-delay={20 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" onClick={handleSubmitClick}/>
+        <input value="Pause" className="imageGeneratorGUI_submitButton imageGeneratorGUI_pauseButton" id="pauseButton" type="button" onClick={handleSubmitClick}/>
       </div>
       <div className="imageGeneratorGUI_allOutputContainer" id="imageGeneratorGUI_allOutputContainer">
         <div className='imageGeneratorGUImodelOutputContainer' id="modelOutputContainer_black-forest-labs/FLUX.1-dev">
           <div className="imageGeneratorGUI_modelTitleContainer">
-            <div id='imageTitle_black-forest-labs/FLUX.1-dev' className='imageGeneratorGUITitle' data-aos="fade-right" data-aos-delay={22 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+            <div id='imageTitle_black-forest-labs/FLUX.1-dev' className='imageGeneratorGUITitle' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+              data-aos-delay={28 * delay_gap} data-aos="fade-right">
               black-forest:
             </div>
-            <span className="imageGeneratorGUI_copiedMessage" id="copiedMessage_black-forest-labs/FLUX.1-dev">Image URL Copied!</span>
+            <span className="imageGeneratorGUI_copiedMessage" id="copiedMessage_black-forest-labs/FLUX.1-dev">
+              Image URL Copied!
+            </span>
           </div>
-          <div id="sizeContainer_black-forest-labs/FLUX.1-dev_256x256" className="imageGeneratorGUIimageOutputSizeTitle">
-          256x256
+          <div className="imageGeneratorGUIimageOutputSizeTitle" id="sizeContainer_black-forest-labs/FLUX.1-dev_256x256" data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+            data-aos-delay={29 * delay_gap} data-aos="fade-right">
+            256x256
             <div className="imageGeneratorGUI_imageOutputContainer" id="imageOutputContainer_black-forest-labs/FLUX.1-dev_256x256">
-              <img src={image_URL} alt='' id='generatedImage_black-forest-labs/FLUX.1-dev_256x256' className='imageGeneratorGUI_generatedImage' onClick={copyImageURL}/>
+              <img src={image_URL} alt='' id='generatedImage_black-forest-labs/FLUX.1-dev_256x256' className='imageGeneratorGUI_generatedImage' onClick={copyImageURL} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+                data-aos-delay={30 * delay_gap} data-aos="fade-right"/>
             </div>
           </div>
           {/* <div id="sizeContainer_black-forest-labs/FLUX.1-dev_512x512" className="imageGeneratorGUIimageOutputSizeTitle">512x512
@@ -738,7 +784,7 @@ const ImageGeneratorGUI = () => {
         </div>
         <div className='imageGeneratorGUImodelOutputContainer' id="modelOutputContainer_ByteDance/SDXL-Lightning" style={{display: "none"}}>
           <div className="imageGeneratorGUI_modelTitleContainer">
-            <div id='imageTitle_ByteDance/SDXL-Lightning' className='imageGeneratorGUITitle' data-aos="fade-right" data-aos-delay={22 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+            <div id='imageTitle_ByteDance/SDXL-Lightning' className='imageGeneratorGUITitle' data-aos="fade-right">
               ByteDance:
             </div>
             <span className="imageGeneratorGUI_copiedMessage" id="copiedMessage_ByteDance/SDXL-Lightning">Image URL Copied!</span>
@@ -752,7 +798,7 @@ const ImageGeneratorGUI = () => {
         </div>
         <div className='imageGeneratorGUImodelOutputContainer' id="modelOutputContainer_SG161222/RealVisXL_V4.0" style={{display: "none"}}>
           <div className="imageGeneratorGUI_modelTitleContainer">
-            <div id='imageTitle_SG161222/RealVisXL_V4.0' className='imageGeneratorGUITitle' data-aos="fade-right" data-aos-delay={22 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+            <div id='imageTitle_SG161222/RealVisXL_V4.0' className='imageGeneratorGUITitle' data-aos="fade-right">
               SG161222:
             </div>
             <span className="imageGeneratorGUI_copiedMessage" id="copiedMessage_SG161222/RealVisXL_V4.0">Image URL Copied!</span>
@@ -766,7 +812,7 @@ const ImageGeneratorGUI = () => {
         </div>
         <div className='imageGeneratorGUImodelOutputContainer' id="modelOutputContainer_SG161222/RealVisXL_V4.0_Lightning" style={{display: "none"}}>
           <div className="imageGeneratorGUI_modelTitleContainer">
-            <div id='imageTitle_SG161222/RealVisXL_V4.0_Lightning' className='imageGeneratorGUITitle' data-aos="fade-right" data-aos-delay={22 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+            <div id='imageTitle_SG161222/RealVisXL_V4.0_Lightning' className='imageGeneratorGUITitle' data-aos="fade-right">
               SG161222_Lightning:
             </div>
             <span className="imageGeneratorGUI_copiedMessage" id="copiedMessage_SG161222/RealVisXL_V4.0_Lightning">Image URL Copied!</span>
@@ -780,7 +826,7 @@ const ImageGeneratorGUI = () => {
         </div>
         <div className='imageGeneratorGUImodelOutputContainer' id="modelOutputContainer_DALL-E" style={{display: "none"}}>
           <div className="imageGeneratorGUI_modelTitleContainer">
-            <div id='imageTitle_DALL-E' className='imageGeneratorGUITitle' data-aos="fade-right" data-aos-delay={22 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+            <div id='imageTitle_DALL-E' className='imageGeneratorGUITitle' data-aos="fade-right">
               DALL-E:
             </div>
             <span className="imageGeneratorGUI_copiedMessage" id="copiedMessage_DALL-E">Image URL Copied!</span>

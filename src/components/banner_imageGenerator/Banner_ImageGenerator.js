@@ -56,7 +56,7 @@ const Banner_ImageGenerator = () => {
 //# Functions
 
   useEffect(() => {
-    AOS.init({ duration: 1000 });
+    AOS.init({ duration: 2000 });
 
     // Generate a random number between 1 and the total number of images
     const randomNumber = Math.floor(Math.random() * totalImages) + 1;

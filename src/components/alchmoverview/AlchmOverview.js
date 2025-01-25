@@ -83,7 +83,7 @@ const AlchmOverview = () => {
           link_elements[index].style.transition = 'transform 1.3s ease-in-out';
         });
       };
-    }, 1000);  // Match to AOS duration
+    }, 2000);  // Match to AOS duration
   }, []);
   
   
