@@ -20,22 +20,15 @@ import './banner_imagegenerator.css';
 const delay_gap = 300;
 // let mobile = window.innerWidth <= 600;
 
-const protocol = window.location.protocol; // Example: https:
-const hostname = window.location.hostname; // Example: google.com
-const port = window.location.port; // Example: :3000
-let root_URL = protocol + '//' + hostname;
-if (port) {
-  root_URL += ':' + port;
-};
-const page_pathname = window.location.href.split(root_URL)[1];
-console.log('page_pathname', page_pathname);
+const page_origin = window.location.origin; // Example: https://evanonearth.xyz
+const page_pathname = window.location.pathname; // Example: /tools
 const URL_conditions = {'/': {'subtitle': 'Create dozens of images with 1 click',
-                              'title_URL': root_URL + page_pathname + 'tools/imagegenerator',
+                              'title_URL': page_origin + '/tools/imagegenerator',
                               'padding': "3% 0% 3% 0%",
                               'target': '_self',
                               'rel': ''},
                         '/tools': {'subtitle': 'Create dozens of images with 1 click',
-                                   'title_URL': root_URL + page_pathname + '/imagegenerator',
+                                   'title_URL': page_origin + '/tools/imagegenerator',
                                    'padding': "5% 0% 3% 0%",
                                    'target': '_self',
                                    'rel': ''},

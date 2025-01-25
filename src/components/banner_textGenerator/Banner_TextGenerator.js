@@ -20,22 +20,15 @@ import './banner_textgenerator.css';
 const delay_gap = 300;
 // let mobile = window.innerWidth <= 600;
 
-const protocol = window.location.protocol; // Example: https:
-const hostname = window.location.hostname; // Example: google.com
-const port = window.location.port; // Example: :3000
-let root_URL = protocol + '//' + hostname;
-if (port) {
-  root_URL += ':' + port;
-};
-const page_pathname = window.location.href.split(root_URL)[1];
-console.log('page_pathname', page_pathname);
+const page_origin = window.location.origin; // Example: https://evanonearth.xyz
+const page_pathname = window.location.pathname; // Example: /tools
 const URL_conditions = {'/': {'subtitle': 'Write the perfect copy with customizable lengths',
-                              'title_URL': root_URL + page_pathname + 'tools/textgenerator',
+                              'title_URL': page_origin + '/tools/textgenerator',
                               'padding': "0% 0% 0% 0%",
                               'target': '_self',
                               'rel': ''},
                         '/tools': {'subtitle': 'Write the perfect copy with customizable lengths',
-                                   'title_URL': root_URL + page_pathname + '/textgenerator',
+                                   'title_URL': page_origin + '/tools/textgenerator',
                                    'padding': "0% 0% 0% 0%",
                                    'target': '_self',
                                    'rel': ''},

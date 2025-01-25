@@ -20,17 +20,10 @@ import './banner_tools.css';
 const delay_gap = 300;
 let mobile = window.innerWidth <= 600;
 
-const protocol = window.location.protocol; // Example: https:
-const hostname = window.location.hostname; // Example: google.com
-const port = window.location.port; // Example: :3000
-let root_URL = protocol + '//' + hostname;
-if (port) {
-  root_URL += ':' + port;
-};
-const page_pathname = window.location.href.split(root_URL)[1];
-console.log('page_pathname', page_pathname);
+const page_origin = window.location.origin; // Example: https://evanonearth.xyz
+const page_pathname = window.location.pathname; // Example: /tools
 let URL_conditions = {'/': {'subtitle': 'Write the perfect copy with customizable lengths',
-                              'title_URL': root_URL + page_pathname + 'tools',
+                              'title_URL': page_origin + '/tools',
                               'padding': "4% 0% 0% 0%",
                               'target': '_self',
                               'rel': ''},
@@ -69,7 +62,7 @@ const Banner_Tools = () => {
 //# Functions
 
   useEffect(() => {
-    AOS.init({ duration: 1000 });
+    AOS.init({ duration: 2000 });
 
   //   // Generate a random number between 1 and the total number of images
   //   const randomNumber = Math.floor(Math.random() * totalImages) + 1;

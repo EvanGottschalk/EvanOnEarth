@@ -53,28 +53,27 @@
   text-decoration: underline;
 }
 
+.aboutSubtitle {
+  color: #bbbbbb;
+}
+
 .aboutLink {
   width: 45%;
+  color: #7CE2F9;
+  text-decoration: none;
 }
 
-.aboutLink:hover {
-  -webkit-transform: scale(1.10);
-  -moz-transform: scale(1.10);
-  -o-transform: scale(1.10);
-  transform: scale(1.10);
+.aboutLinkContainer {
+  width: 21%;
 }
 
-.aboutLink:active {
-  -webkit-transform: scale(1.15);
-  -moz-transform: scale(1.15);
-  -o-transform: scale(1.15);
-  transform: scale(1.15);
-}
+
 
 @media only screen and (max-width: 560px) {
   .aboutBoxIMG {
     width: 100%;
   }
+
   .about {
     display: flex;
     align-items: center;
@@ -119,4 +118,7 @@
     width: 100%;
   }
 
+  .aboutLinkContainer {
+    width: 40%;
+  }
 }

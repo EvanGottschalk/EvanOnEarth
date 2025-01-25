@@ -5,17 +5,21 @@ import './footer.css'
 
 let screen_filled = false;
 
+const page_origin = window.location.origin; // Example: https://evanonearth.xyz
+const page_pathname = window.location.pathname; // Example: /tools
+const URL_conditions = {'/tools': {'padding': "0% 0% 0% 0%"}};
+
 const Footer = () => {
   document.addEventListener("DOMContentLoaded", () => {
-    const footer = document.getElementById("footer"); // Select the footer element
-    if (footer && !screen_filled) {
-      const footerBottomY = document.documentElement.scrollHeight / 3;  // Get the bottom position
-      console.log("Footer bottom y-coordinate:", footerBottomY);
-      footer.style.paddingTop = footerBottomY.toString() + 'px';
-      screen_filled = true;
-    } else {
-      console.error("Footer element not found!");
-    }
+    if (URL_conditions[page_pathname]) {
+      const footer = document.getElementById("footer");
+      if (footer && !screen_filled) {
+        const screen_height = document.documentElement.scrollHeight;
+        console.log("screen_height", screen_height);
+        footer.style.paddingTop = (screen_height - 420).toString() + 'px';
+        screen_filled = true;
+      };
+    };
   });
 
   function mouseOver(event) {
@@ -28,7 +32,7 @@ const Footer = () => {
     element.style.color = '#929292';
   }
   
-
+  console.log("window.location", window.location);
   return (
     <div className='footer' id='footer'>
       <div className='creatorAttributionContainer'>
