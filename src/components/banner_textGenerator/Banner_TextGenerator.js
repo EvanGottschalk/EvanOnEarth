@@ -24,7 +24,7 @@ const page_origin = window.location.origin; // Example: https://evanonearth.xyz
 const page_pathname = window.location.pathname; // Example: /tools
 const URL_conditions = {'/': {'subtitle': 'Write the perfect copy with customizable lengths',
                               'title_URL': page_origin + '/tools/textgenerator',
-                              'padding': "0% 0% 0% 0%",
+                              'padding': "0% 0% 8% 0%",
                               'target': '_self',
                               'rel': ''},
                         '/tools': {'subtitle': 'Write the perfect copy with customizable lengths',
@@ -123,7 +123,7 @@ const Banner_TextTenerator = () => {
 //--------------------------------------------------------------------------------------------------
 //# HTML
   return (
-    <div className='banner_textGeneratorContainer'>
+    <div className='banner_textGeneratorContainer' style={{padding: URL_conditions[page_pathname]['padding']}}>
       <div className='banner_textgenerator'>
         <a className='banner_textGeneratorTitleContainer' id='textGeneratorTitleContainer' data-aos="fade-in" data-aos-delay={delay_gap * 1} alt='@EvanOnEarth_`eth' href={URL_conditions[page_pathname]['title_URL']} rel={URL_conditions[page_pathname]['rel']} target={URL_conditions[page_pathname]['target']} onMouseOver={mouseover} onMouseLeave={mouseleave}>
           <span className='banner_textGeneratorTitle' id="textGeneratorTitle" data-aos-delay={2 * delay_gap} data-aos="zoom-in">AI Text Generator</span>

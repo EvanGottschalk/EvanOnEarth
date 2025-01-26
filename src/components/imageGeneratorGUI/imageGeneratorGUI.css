@@ -66,12 +66,6 @@
   margin: 3% 0% 0% 3%;
 }
 
-.imageGeneratorGUI_selectList {
-  padding: 0px 0px 1px 0px;
-  width: 40%;
-  font-size: 16px;
-  margin: 0px 6px 0px 0px;
-}
 
 
 
@@ -82,7 +76,7 @@
   margin: 0px 6px 0px 0px;
 }
 
-.imageGeneratorGUI_checklist {
+.imageGeneratorGUIcheckList {
   flex-direction: column;
   display: flex;
   color: #000000;
@@ -95,12 +89,16 @@
   font-family: 'Arial';
 }
 
+.imageGeneratorGUIsizeOption {
+  cursor: pointer;
+}
+
 .imageGeneratorGUImodelOption {
   cursor: pointer;
 }
 
 
-.imageGeneratorGUI_submitButton {
+.imageGeneratorGUIsubmitButton {
   width: 180px;
   font-size: 18px;
   margin-top: 2%;
@@ -114,7 +112,7 @@
   display: none;
 }
 
-.imageGeneratorGUI_pauseButton {
+.imageGeneratorGUIpauseButton {
   width: 100px;
 }
 
@@ -136,7 +134,7 @@
 
 
 
-.imageGeneratorGUI_generatedImage {
+.imageGeneratorGUIgeneratedImage {
   width: 100%;
   padding: 0px 0px 0px 0px;
   margin: 0px 10px 10px 0px;
@@ -150,7 +148,7 @@
 }
 
 
-.imageGeneratorGUI_modelDescription {
+.imageGeneratorGUImodelDescription {
   background-color: #ffffff;
   font-size: 15px;
   color: #000000;
@@ -159,7 +157,7 @@
   margin: 0px 0px 0px 0px;
 }
 
-.imageGeneratorGUI_modelLink {
+.imageGeneratorGUImodelLink {
   background-color: #ffffff;
   font-size: 15px;
   text-decoration: underline;
@@ -170,23 +168,23 @@
 }
 
 
-.imageGeneratorGUI_allOutputContainer {
+.imageGeneratorGUIallOutputContainer {
   width: 50.5%;
   align-items: center;
   justify-content: center;
 }
 
-.imageGeneratorGUI_modelTitleContainer {
+.imageGeneratorGUImodelTitleContainer {
   display: flex;
   flex-direction: row;
 }
 
-.imageGeneratorGUI_imageOutputContainer {
+.imageGeneratorGUIimageOutputContainer {
   display: flex;
   flex-direction: row;
 }
 
-.imageGeneratorGUI_copiedMessage {
+.imageGeneratorGUIcopiedMessage {
   color: #ffffff;
   text-align: center;
   align-items: center;
@@ -195,7 +193,7 @@
   opacity: 0;
 }
 
-.banner_imageGeneratorGUIContainer {
+.imageGeneratorGUIbannerContainer {
   object-fit: cover;
   align-items: center;
   justify-content: center;
@@ -208,7 +206,7 @@
   overflow: hidden;
 }
 
-.banner_imageGeneratorGUI {
+.imageGeneratorGUIbanner {
   width: 100%;
   margin: 5% 0% 1% 0%;
   object-fit: cover;
@@ -221,7 +219,7 @@
   border-color: #ffffff;
 }
 
-.banner_imageGeneratorGUITitleContainer {
+.imageGeneratorGUIbannerTitleContainer {
   z-index: 10;
   color: #ffffff;
   background-color: #000000;
@@ -232,11 +230,11 @@
   align-items: center;
 }
 
-.banner_imageGeneratorGUITitle {
+.imageGeneratorGUIbannerTitle {
   font-size: 35px;
 }
 
-.banner_imageGeneratorGUISubTitle {
+.imageGeneratorGUIbannerSubTitle {
   font-size: 13px;
   color: #848484;
 }
@@ -293,40 +291,40 @@
     margin: 0% 0% 0% 0%;
   }
 
-  .imageGeneratorGUI_modelDescription {
+  .imageGeneratorGUImodelDescription {
     width: 88%;
     margin: 0% 0% 0% 0%;
     padding-bottom: 5%;
   }
 
-  .imageGeneratorGUI_modelLink {
+  .imageGeneratorGUImodelLink {
     width: 88%;
     margin: 0% 0% 0% 0%;
   }
 
-  .imageGeneratorGUI_selectList {
+  .imageGeneratorGUIselectList {
     width: 100%;
   }
 
-  .imageGeneratorGUI_checklist {
+  .imageGeneratorGUIcheckList {
     width: 90%;
   }
 
-  .imageGeneratorGUI_submitButton {
+  .imageGeneratorGUIsubmitButton {
     margin-top: 3%;
   }
 
-  .banner_imageGeneratorGUI {
+  .imageGeneratorGUIbanner {
     width: 150%;
   }
 
-  .banner_imageGeneratorGUIContainer {
+  .imageGeneratorGUIbannerContainer {
     max-width: 100vw;
     margin: 0% 0% 0% 0%;
     padding: 0% 0% 0% 0%;
   }
 
-  .banner_imageGeneratorGUITitleContainer {
+  .imageGeneratorGUIbannerTitleContainer {
     border-radius: 10px;
     border-width: 2px;
     padding: 1% 3% 2.5% 3%;
@@ -336,15 +334,15 @@
     align-items: center;
   }
 
-  .imageGeneratorGUI_allOutputContainer {
+  .imageGeneratorGUIallOutputContainer {
     width: 90%;
   }
   
-  .banner_imageGeneratorGUITitle {
+  .imageGeneratorGUIbannerTitle {
     font-size: 25px;
   }
   
-  .banner_imageGeneratorGUISubTitle {
+  .imageGeneratorGUIbannerSubTitle {
     font-size: 10px;
   }
 
@@ -358,7 +356,7 @@
     width: 48px;
   }
 
-  .imageGeneratorGUI_imageOutputContainer {
+  .imageGeneratorGUIimageOutputContainer {
     flex-direction: column;
   }
 

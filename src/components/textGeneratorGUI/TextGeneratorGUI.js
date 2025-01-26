@@ -38,7 +38,7 @@ const generating_placeholder_list = [
   generating_placeholder_3
 ];
 
-const delay_gap = 100;
+const delay_gap = 50;
 
 const default_negative_prompt = "out of frame, lowres, text, error, cropped, worst quality, low quality, jpeg artifacts, ugly, duplicate, morbid, mutilated, extra fingers, mutated hands, poorly drawn hands, poorly drawn face, mutation, deformed, blurry, dehydrated, bad anatomy, bad proportions, extra limbs, cloned face, disfigured, gross proportions, malformed limbs, missing arms, missing legs, extra arms, extra legs, fused fingers, too many fingers, long neck, username, watermark, signature"
 const simplifier_prefix = "I NEED to test how the tool works with extremely simple prompts. DO NOT add any detail, just use it AS-IS:";
@@ -82,9 +82,6 @@ const model_dict = {"gpt-3.5-turbo": {"description": "GPT-3.5-turbo is optimized
                     "o1-mini": {"description": "o1-mini is a streamlined variant of o1-preview, designed to provide quick, structured responses with reduced processing demands. While it retains o1’s focus on logical reasoning and problem-solving, o1-mini prioritizes efficiency and speed, making it suitable for lightweight applications where rapid, analytical responses are required but without the depth and detail of o1-preview. It’s a good fit for technical applications that need basic analysis, structured output, or coding assistance at a faster pace.",
                                                      "link": "https://platform.openai.com/docs/models#o1"}};
 
-//AppStart                                                     
-const TextGeneratorGUI = () => {
-
 
 
 
@@ -95,6 +92,9 @@ const TextGeneratorGUI = () => {
 
 //--------------------------------------------------------------------------------------------------
 //# Functions
+
+//AppStart                                                     
+const TextGeneratorGUI = () => {
 
   useEffect(() => {
     Aos.init({ duration: 2000 });
@@ -641,12 +641,14 @@ const TextGeneratorGUI = () => {
   return (
     <div className='textGeneratorGUI' id="anchorElement">
       <div className='textGeneratorGUITextContainer textGeneratorGUIpromptContainer'>
-        <div className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={11 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+        <div className='textGeneratorGUITitle' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+          data-aos-delay={11 * delay_gap} data-aos="fade-right">
           Enter Prompt:
         </div>
         {/* <input value={mobile ? "Copy Simplifier" : "Copy Simplifier Prefix"} className="textGeneratorGUI_submitButton textGeneratorGUIfloatRightButton" id="copySimplifierPrefixButton" type="button" data-aos="fade-right" data-aos-delay={20 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" onClick={handleSubmitClick}/> */}
       </div>
-      <textarea id='promptEntry' className='textGeneratorGUIpromptEntry' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"  onChange={handlePromptChange}
+      <textarea className='textGeneratorGUIpromptEntry' id='promptEntry' onChange={handlePromptChange} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+        data-aos-delay={12 * delay_gap} data-aos="zoom-in"
         placeholder="Your prompt here..." required/>
       {/* <div className='textGeneratorGUITextContainer textGeneratorGUIpromptContainer'>
         <div className='textGeneratorGUITitle textGeneratorGUIcopyNegativePromptTitle' data-aos="fade-right" data-aos-delay={11 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
@@ -657,11 +659,13 @@ const TextGeneratorGUI = () => {
       <textarea id='negativePromptEntry' className='textGeneratorGUIpromptEntry textGeneratorGUInegativePromptEntry' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" onChange={handleNegativePromptChange}
         placeholder={"Your negative prompt here..."} required/> */}
       <div className='textGeneratorGUITextContainer'>
-        <div className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={13 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+        <div className='textGeneratorGUITitle' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+          data-aos-delay={13 * delay_gap} data-aos="fade-right">
           Select Model(s):
         </div>
       </div>
-      <div className='textGeneratorGUI_checklist' id='checklistModels' data-aos="fade-right" data-aos-delay={14 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+      <div className='textGeneratorGUI_checklist' id='checklistModels' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+        data-aos-delay={14 * delay_gap} data-aos="zoom-in">
         <label className="textGeneratorGUImodelOption">
           <input type="checkbox" alt="GPT 3.5 Turbo" value="gpt-3.5-turbo" onChange={handleModelChange} />
           GPT 3.5 Turbo
@@ -700,29 +704,37 @@ const TextGeneratorGUI = () => {
         </label>
       </div>
       <div className='textGeneratorGUITextContainer'>
-        <div className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={15 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+        <div className='textGeneratorGUITitle' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+          data-aos-delay={15 * delay_gap} data-aos="fade-right">
           Model Description:
         </div>
       </div>
-      <div className='textGeneratorGUI_modelDescription' id='modelDescriptionTitle' data-aos="fade-right" data-aos-delay={16 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"><u><b>GPT 3.5 Turbo</b></u></div>
-      <div className='textGeneratorGUI_modelDescription' id='modelDescription' data-aos="fade-right" data-aos-delay={16 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
-        GPT-3.5-turbo is optimized for general-purpose conversational applications and tasks requiring text generation, including question answering, summarization, language translation, and more. As the default model in OpenAI’s ChatGPT API, it’s specifically engineered for balanced performance, cost-effectiveness, and high-quality output, making it versatile and suitable for both commercial and experimental use.
+      <div className="textGeneratorGUITextContainer" data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+        data-aos-delay={17 * delay_gap} data-aos="zoom-in">
+        <div className='textGeneratorGUI_modelDescription' id='modelDescriptionTitle'>
+          <u><b>GPT 3.5 Turbo</b></u>
+        </div>
+        <div className='textGeneratorGUI_modelDescription' id='modelDescription'>
+          GPT-3.5-turbo is optimized for general-purpose conversational applications and tasks requiring text generation, including question answering, summarization, language translation, and more. As the default model in OpenAI’s ChatGPT API, it’s specifically engineered for balanced performance, cost-effectiveness, and high-quality output, making it versatile and suitable for both commercial and experimental use.
+        </div>
+        <a href="https://platform.openai.com/docs/models#gpt-3-5-turbo" target='_blank' rel="noreferrer" className='textGeneratorGUI_modelLink' id='modelLink'>
+          <u>Learn More -></u>
+        </a>
       </div>
-      <a href="https://platform.openai.com/docs/models#gpt-3-5-turbo" target='_blank' rel="noreferrer" className='textGeneratorGUI_modelLink' id='modelLink' data-aos="fade-right" data-aos-delay={16 * delay_gap}data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" >
-        <u>Learn More -></u>
-      </a>
       <div className='textGeneratorGUITextContainer'>
-        <div className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={13 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+        <div className='textGeneratorGUITitle' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+          data-aos-delay={18 * delay_gap} data-aos="fade-right">
           Maximum # of Words:
         </div>
       </div>
-      <div className='textGeneratorGUI_checklist' id='checklistSizes' data-aos="fade-right" data-aos-delay={14 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+      <div className='textGeneratorGUI_checklist' id='checklistSizes' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+        data-aos-delay={19 * delay_gap} data-aos="zoom-in">
         {/* <label className="textGeneratorGUIsizeOption">
           <input type="checkbox" value="256x256" onChange={handleMaxTokensChange} />
           256x256
         </label> */}
         <label className="textGeneratorGUImaxTokensOption" id='maxTokensContainer_0'>
-          <input type="checkbox" value="0" id='maxTokensCheckbox_0' onChange={handleMaxTokensChange} />
+          <input type="checkbox" value="0" id='maxTokensCheckbox_0' onChange={handleMaxTokensChange}/>
           None
         </label>
         <label className="textGeneratorGUImaxTokensOption" id='maxTokensContainer_50'>
@@ -744,25 +756,26 @@ const TextGeneratorGUI = () => {
         <label className="textGeneratorGUImaxTokensOption" id='maxTokensContainer_custom_1'>
           <input type="checkbox" value="custom_1" id='maxTokensCheckbox_custom_1' onChange={handleMaxTokensChange}/>
           Custom Length 1:&nbsp;
-          <input id='maxTokensInput_custom_1' className='textGeneratorGUIpromptEntry textGeneratorGUInumberEntry' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" placeholder="" onChange={handleDropdownChange} required/>
+          <input id='maxTokensInput_custom_1' className='textGeneratorGUIpromptEntry textGeneratorGUInumberEntry' placeholder="" onChange={handleDropdownChange} required/>
         </label>
         <label className="textGeneratorGUImaxTokensOption" id='maxTokensContainer_custom_2'>
           <input type="checkbox" value="custom_2" id='maxTokensCheckbox_custom_2' onChange={handleMaxTokensChange}/>
           Custom Length 2:&nbsp;
-          <input id='maxTokensInput_custom_2' className='textGeneratorGUIpromptEntry textGeneratorGUInumberEntry' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" placeholder="" onChange={handleDropdownChange} required/>
+          <input id='maxTokensInput_custom_2' className='textGeneratorGUIpromptEntry textGeneratorGUInumberEntry' placeholder="" onChange={handleDropdownChange} required/>
         </label>
         <label className="textGeneratorGUImaxTokensOption" id='maxTokensContainer_custom_3'>
           <input type="checkbox" value="custom_3" id='maxTokensCheckbox_custom_3' onChange={handleMaxTokensChange}/>
           Custom Length 3:&nbsp;
-          <input id='maxTokensInput_custom_3' className='textGeneratorGUIpromptEntry textGeneratorGUInumberEntry' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" placeholder="" onChange={handleDropdownChange} required/>
+          <input id='maxTokensInput_custom_3' className='textGeneratorGUIpromptEntry textGeneratorGUInumberEntry' placeholder="" onChange={handleDropdownChange} required/>
         </label>
       </div>
       <div className='textGeneratorGUITextContainer'>
-      <div className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={13 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+        <div className='textGeneratorGUITitle' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+          data-aos-delay={20 * delay_gap} data-aos="fade-right">
           # of Ouputs (per model):
         </div>
-        <select className='textGeneratorGUIdropdownList' id='dropdownQuantity' onChange={handleDropdownChange} data-aos="fade-right" data-aos-delay={14 * delay_gap}data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" style={{
-          textDecoration: 'none'}}>
+        <select className='textGeneratorGUIdropdownList' id='dropdownQuantity' onChange={handleDropdownChange} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+          data-aos-delay={21 * delay_gap}data-aos="fade-right">
           {/* <option value="0?">0?</option> */}
           <option value="1">1</option>
           <option value="2">2</option>
@@ -775,54 +788,97 @@ const TextGeneratorGUI = () => {
           <option value="9">9</option>
           <option value="10">10</option> */}
         </select>
-        <div className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={13 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+        <div className='textGeneratorGUITitle' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+          data-aos-delay={22 * delay_gap} data-aos="fade-right">
           Creativity:
         </div>
         <div className='textGeneratorGUIrow'>
-          <input id='inputField_temperature' className='textGeneratorGUIpromptEntry textGeneratorGUInumberEntry' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" placeholder="" onChange={handleInputFieldChange} required/>
-          <div className='textGeneratorGUIhelperText'>(0 to 2)</div>
+          <input className='textGeneratorGUIpromptEntry textGeneratorGUInumberEntry' id='inputField_temperature' onChange={handleInputFieldChange} required data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+            data-aos-delay={23 * delay_gap} data-aos="fade-right"
+            placeholder=""
+          />
+          <div className='textGeneratorGUIhelperText' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+            data-aos-delay={23 * delay_gap} data-aos="fade-left">
+            (0 to 2)
+          </div>
         </div>
-        <div className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={13 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+        <div className='textGeneratorGUITitle' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+          data-aos-delay={24 * delay_gap} data-aos="fade-right">
           Linguistic Freedom:
         </div>
         <div className='textGeneratorGUIrow'>
-          <input id='inputField_top_p' className='textGeneratorGUIpromptEntry textGeneratorGUInumberEntry' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" placeholder="" onChange={handleInputFieldChange} required/>
-          <div className='textGeneratorGUIhelperText'>(0 to 1)</div>
+          <input className='textGeneratorGUIpromptEntry textGeneratorGUInumberEntry' id='inputField_top_p' onChange={handleInputFieldChange} required data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+            data-aos-delay={25 * delay_gap} data-aos="fade-right"
+            placeholder=""
+          />
+          <div className='textGeneratorGUIhelperText' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+            data-aos-delay={25 * delay_gap} data-aos="fade-left">
+            (0 to 1)
+          </div>
         </div>
-        <div className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={13 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+        <div className='textGeneratorGUITitle' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+          data-aos-delay={26 * delay_gap} data-aos="fade-right">
           Vocabulary Variety:
         </div>
         <div className='textGeneratorGUIrow'>
-          <input id='inputField_frequency_penalty' className='textGeneratorGUIpromptEntry textGeneratorGUInumberEntry' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" placeholder="" onChange={handleInputFieldChange} required/>
-          <div className='textGeneratorGUIhelperText'>(-2 to 2)</div>
+          <input className='textGeneratorGUIpromptEntry textGeneratorGUInumberEntry' id='inputField_frequency_penalty' onChange={handleInputFieldChange} required data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+            data-aos-delay={27 * delay_gap} data-aos="fade-right"
+            placeholder=""
+          />
+          <div className='textGeneratorGUIhelperText' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+            data-aos-delay={27 * delay_gap} data-aos="fade-left">
+            (-2 to 2)
+          </div>
         </div>
-        <div className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={13 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+        <div className='textGeneratorGUITitle' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+          data-aos-delay={28 * delay_gap} data-aos="fade-right">
           Topic Variety:
         </div>
         <div className='textGeneratorGUIrow'>
-          <input id='inputField_presence_penalty' className='textGeneratorGUIpromptEntry textGeneratorGUInumberEntry' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" placeholder="" onChange={handleInputFieldChange} required/>
-          <div className='textGeneratorGUIhelperText'>(-2 to 2)</div>
+          <input className='textGeneratorGUIpromptEntry textGeneratorGUInumberEntry' id='inputField_presence_penalty' onChange={handleInputFieldChange} required data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+            data-aos-delay={29 * delay_gap} data-aos="fade-right"
+            placeholder=""
+          />
+          <div className='textGeneratorGUIhelperText' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+            data-aos-delay={29 * delay_gap} data-aos="fade-left">
+            (-2 to 2)
+          </div>
         </div>
-        <div className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={13 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+        <div className='textGeneratorGUITitle' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+          data-aos-delay={30 * delay_gap} data-aos="fade-right">
           Force Word:
         </div>
         <div className='textGeneratorGUIrow'>
-          <input id={'inputField_logit_bias:' + default_logit_bias.toString()} className='textGeneratorGUIpromptEntry textGeneratorGUIwordEntry' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" placeholder="" onChange={handleInputFieldChange} required/>
+          <input className='textGeneratorGUIpromptEntry textGeneratorGUIwordEntry' id={'inputField_logit_bias:' + default_logit_bias.toString()} onChange={handleInputFieldChange} required data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+            placeholder=""
+            data-aos-delay={31 * delay_gap} data-aos="fade-right"
+          />
         </div>
-        <div className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={13 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+        <div className='textGeneratorGUITitle' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+          data-aos-delay={32 * delay_gap} data-aos="fade-right">
           Avoid Word:
         </div>
         <div className='textGeneratorGUIrow'>
-          <input id={'inputField_logit_bias:-' + default_logit_bias.toString()} className='textGeneratorGUIpromptEntry textGeneratorGUIwordEntry' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" placeholder="" onChange={handleInputFieldChange} required/>
+          <input className='textGeneratorGUIpromptEntry textGeneratorGUIwordEntry' id={'inputField_logit_bias:-' + default_logit_bias.toString()} onChange={handleInputFieldChange} required data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+            placeholder=""
+            data-aos-delay={33 * delay_gap} data-aos="fade-right"
+          />
         </div>
-        <div className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={13 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+        <div className='textGeneratorGUITitle' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+          data-aos-delay={34 * delay_gap} data-aos="fade-right">
           Cut-off Word:
         </div>
         <div className='textGeneratorGUIrow'>
-          <input id='inputField_stop' className='textGeneratorGUIpromptEntry textGeneratorGUIwordEntry' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" placeholder="" onChange={handleInputFieldChange} required/>
+          <input className='textGeneratorGUIpromptEntry textGeneratorGUIwordEntry' id='inputField_stop' onChange={handleInputFieldChange} required data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+            data-aos-delay={35 * delay_gap} data-aos="fade-right"
+            placeholder=""
+          />
           {/* <div className='textGeneratorGUIhelperText'>(-2 to 2)</div> */}
         </div>
-        <input value="Generate" className="textGeneratorGUI_submitButton" id="generateTextButton" type="submit" data-aos="fade-right" data-aos-delay={17 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" onClick={handleSubmitClick}/>
+        <input className="textGeneratorGUI_submitButton" id="generateTextButton" type="submit" onClick={handleSubmitClick} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+          data-aos-delay={36 * delay_gap} data-aos="fade-right"
+          value="Generate"
+        />
       </div>
       {/* <div className='textGeneratorGUITextContainer'>
         <div id='textTitle' className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={18 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
@@ -833,41 +889,51 @@ const TextGeneratorGUI = () => {
       <div className='textGeneratorGUITextContainer'>
         <input value="Generate" className="textGeneratorGUI_submitButton" id="generateImageButton" type="submit" data-aos="fade-right" data-aos-delay={20 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" onClick={handleSubmitClick}/>
       </div> */}
-      <div className='banner_textGeneratorGUI'>
-        <div className='banner_textGeneratorGUITitleContainer' data-aos="fade-in" data-aos-delay={delay_gap * 1} id='banner_textGeneratorGUITitleContainer'>
-          <span className='banner_textGeneratorGUITitle' id="banner_textGeneratorGUITitleContainer" data-aos-delay={2 * delay_gap} data-aos="zoom-in">Text Outputs</span>
+      <div className='banner_textGeneratorGUI' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+        data-aos-delay={37 * delay_gap} data-aos="zoom-out">
+        <div className='banner_textGeneratorGUITitleContainer' id='banner_textGeneratorGUITitleContainer'>
+          <span className='banner_textGeneratorGUITitle' id="banner_textGeneratorGUITitleContainer" data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+            data-aos-delay={38 * delay_gap} data-aos="zoom-in">
+            Text Outputs
+          </span>
           {/* <span className='banner_textGeneratorGUISubTitle' id="banner_textGeneratorGUITitleContainer" data-aos="zoom-in" data-aos-delay={3 * delay_gap} target="_blank">@EvanOnEarth_eth</span> */}
         </div>
       </div>
       <div className='textGeneratorGUIgenerationTimeContainer ' id='generationTimeContainer'>
         <div className='textGeneratorGUIrow'>
-          <div className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+          <div className='textGeneratorGUITitle'>
             Generation Time:
           </div>
-          <input id='generationTime' className='textGeneratorGUIpromptEntry textGeneratorGUInumberDisplay' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" value="0:00" readOnly/>
+          <input className='textGeneratorGUIpromptEntry textGeneratorGUInumberDisplay' id='generationTime' value="0:00" readOnly/>
         </div>
-        <input value="Pause" className="textGeneratorGUI_submitButton textGeneratorGUI_pauseButton" id="pauseButton" type="button" onClick={handleSubmitClick}/>
+        <input className="textGeneratorGUI_submitButton textGeneratorGUI_pauseButton" value="Pause" id="pauseButton" type="button" onClick={handleSubmitClick}/>
       </div>
       <div className="textGeneratorGUI_allOutputContainer" id="textGeneratorGUI_allOutputContainer">
         {/* gpt-3.5-turbo */}
         <div className='textGeneratorGUImodelOutputContainer' id="modelOutputContainer_gpt-3.5-turbo">
           <div className="textGeneratorGUI_modelTitleContainer">
-            <div id='textTitle_gpt-3.5-turbo' className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={22 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+            <div className='textGeneratorGUITitle' id='textTitle_gpt-3.5-turbo' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+              data-aos-delay={39 * delay_gap} data-aos="fade-right">
               GPT 3.5 Turbo:
             </div>
             {/* <span className="textGeneratorGUI_copiedMessage" id="copiedMessage_gpt-3.5-turbo">Image URL Copied!</span> */}
           </div>
           <div id="sizeContainer_gpt-3.5-turbo_0">
-            <span className="textGeneratorGUIimageOutputSizeTitle" id ="sizeContainerTitle_gpt-3.5-turbo_0">
+            <div className="textGeneratorGUIimageOutputSizeTitle" id ="sizeContainerTitle_gpt-3.5-turbo_0" data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+              data-aos-delay={40 * delay_gap} data-aos="fade-right">
               No Word Limit
-            </span>
+            </div>
             {/* <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_gpt-3.5-turbo_0">
               <img src={image_URL} alt='' id='generatedImage_gpt-3.5-turbo_0' className='textGeneratorGUI_generatedImage'/>
             </div> */}
             <div className="textGeneratorGUI_textOutputContainer" id="textOutputContainer_gpt-3.5-turbo_0">
-              <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-3.5-turbo_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+              <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-3.5-turbo_0' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+              data-aos-delay={41 * delay_gap} data-aos="zoom-in">
                 {/* <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_gpt-3.5-turbo_0"> */}
-                  <img src={image_URL} alt='' id='generatedImage_gpt-3.5-turbo_0' className='textGeneratorGUI_generatedImage'/>
+                  <img className='textGeneratorGUI_generatedImage' id='generatedImage_gpt-3.5-turbo_0' alt='' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+                    data-aos-delay={42 * delay_gap} data-aos="zoom-in"
+                    src={image_URL}
+                  />
                 {/* </div> */}
               </div>
             </div>
