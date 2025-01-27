@@ -267,6 +267,7 @@
 }
 
 
+
 @media only screen and (max-width: 560px) {
   .imageGeneratorGUI {
     display: flex;
@@ -388,5 +389,9 @@
 
   .imageGeneratorGUIcopiedMessage {
     margin: 4% 0% 0% 3%;
+  }
+
+  .imageGeneratorGUIcopyButton {
+    padding: 4px 0px 2px 0px !important;
   }
 }

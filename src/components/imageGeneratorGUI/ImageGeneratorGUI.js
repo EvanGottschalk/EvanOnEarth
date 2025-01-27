@@ -566,7 +566,7 @@ const ImageGeneratorGUI = () => {
           data-aos-delay={12 * delay_gap} data-aos="fade-right">
           Negative Prompt:
         </div>
-        <div className="imageGeneratorGUIsubmitButton imageGeneratorGUIfloatRightButton" id="copyNegativePromptButton" onMouseDown={handleMouseUp} onMouseUp={handleSubmitClick} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_ImageGeneratorGUI"
+        <div className="imageGeneratorGUIsubmitButton imageGeneratorGUIfloatRightButton imageGeneratorGUIcopyButton" id="copyNegativePromptButton" onMouseDown={handleMouseUp} onMouseUp={handleSubmitClick} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_ImageGeneratorGUI"
           data-aos-delay={12 * delay_gap} data-aos="fade-left">
           {mobile ? "Copy Default" : "Copy Default Negative Prompt"}
         </div>
