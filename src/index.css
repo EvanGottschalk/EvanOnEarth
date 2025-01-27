@@ -111,9 +111,9 @@ body {
 
 .justifyRightContainer {
   display: flex;
-  justify-content: right;
-  align-items: right;
-  text-align: right;
+  justify-content: right !important;
+  align-items: right !important;
+  text-align: right !important;
 }
 
 @media only screen and (max-width: 670px) {

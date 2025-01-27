@@ -103,11 +103,12 @@
   font-size: 18px;
   margin-top: 2%;
   margin-bottom: 2%;
-  padding: 2px 0px 2px 0px;
+  padding: 2px 0px 2px 0px !important;
   font-family: "Arial";
   color: #000000;
   background-color: #dbdbdb;
   text-align: center;
+  align-items: center;
   border-radius: 3px;
   box-shadow: inset 0px 0px 3px rgba(0, 0, 0, 1);
   cursor: default;
@@ -320,9 +321,14 @@
     width: 90%;
   }
 
+  .imageGeneratorGUIsubmitButtonContainer {
+    
+  }
+
   .imageGeneratorGUIsubmitButton {
     margin-top: 2%;
-    font-size: 15px;
+    font-size: 14px;
+    width: 120px !important;
   }
 
   .imageGeneratorGUIbanner {
