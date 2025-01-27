@@ -22,17 +22,17 @@ const delay_gap = 300;
 
 const page_origin = window.location.origin; // Example: https://evanonearth.xyz
 const page_pathname = window.location.pathname; // Example: /tools
-const URL_conditions = {'/': {'subtitle': 'Write the perfect copy with customizable lengths',
+const URL_conditions = {'/': {'subtitle': 'Quickly generate the perfect copy',
                               'title_URL': page_origin + '/tools/textgenerator',
                               'padding': "0% 0% 8% 0%",
                               'target': '_self',
                               'rel': ''},
-                        '/tools': {'subtitle': 'Write the perfect copy with customizable lengths',
+                        '/tools': {'subtitle': 'Quickly generate the perfect copy',
                                    'title_URL': page_origin + '/tools/textgenerator',
                                    'padding': "0% 0% 0% 0%",
                                    'target': '_self',
                                    'rel': ''},
-                        '/tools/textgenerator': {'subtitle': 'Write the perfect copy with customizable lengths',
+                        '/tools/textgenerator': {'subtitle': 'Quickly generate the perfect copy',
                                                   'title_URL': 'https://twitter.com/EvanOnEarth_eth',
                                                   'padding': "0% 0% 0% 0%",
                                                   'target': '_blank',

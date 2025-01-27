@@ -321,7 +321,8 @@
   }
 
   .imageGeneratorGUIsubmitButton {
-    margin-top: 3%;
+    margin-top: 2%;
+    font-size: 15px;
   }
 
   .imageGeneratorGUIbanner {
