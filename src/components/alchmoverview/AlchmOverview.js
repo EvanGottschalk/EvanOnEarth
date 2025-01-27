@@ -167,64 +167,67 @@ const AlchmOverview = () => {
 
 
 
+
+
+
 //--------------------------------------------------------------------------------------------------
 //# HTML
 
   return (
-    <div className='alchmoverview' id="anchorElement">
+    <div className='alchmoverview' id="anchorElement_AlchmOverview">
       {!contentLoaded ? (
         <p>Loading...</p>
       ) : (
-      <div className="alchmoverview" id="anchorElement">
+    <div className="alchmoverview" id="anchorElement_AlchmOverview">
       <div className='alchmOverviewLeftContainer'>
         <div className='alchmOverviewImageContainer' id='alchmOverviewImageContainer'>
           {/* <img data-aos="flip-left" src={alchmoverview_image} alt='' className='alchmOverviewImage' id='alchmOverviewImage' onMouseOver={mouseOver} onMouseLeave={mouseLeave}/> */}
-          <video data-aos="flip-left" data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" src={alchmoverview_video} alt='' className='alchmOverviewVideo' id='alchmOverviewVideo' onMouseOver={mouseOver} onMouseLeave={mouseLeave} onClick={handleClick}
+          <video data-aos="flip-left" data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_AlchmOverview" src={alchmoverview_video} alt='' className='alchmOverviewVideo' id='alchmOverviewVideo' onMouseOver={mouseOver} onMouseLeave={mouseLeave} onClick={handleClick}
           muted playsInline poster={alchmoverview_image} preload="metadata"/>
         </div>
         <div className='alchmOverviewHelperTextContainer'> 
           {mobile ? (
-            <div className='alchmOverviewHelperText' id='alchmOverviewHelperText' data-aos="fade-left" data-aos-delay={10 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">↑ Tap to Discover</div>
+            <div className='alchmOverviewHelperText' id='alchmOverviewHelperText' data-aos="fade-left" data-aos-delay={10 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_AlchmOverview">↑ Tap to Discover</div>
           ) : (
-            <div className='alchmOverviewHelperText' id='alchmOverviewHelperText' data-aos="fade-right" data-aos-delay={10 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">↑ Mouse over to Discover</div>
+            <div className='alchmOverviewHelperText' id='alchmOverviewHelperText' data-aos="fade-right" data-aos-delay={10 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_AlchmOverview">↑ Mouse over to Discover</div>
           )}
         </div>
       </div>
       <div className='alchmOverviewRightContainer'>
         <div className='alchmOverviewTextContainer'>
           <div className="alchmOverviewTitleContainer rowContainer">
-            <div className='alchmOverviewTitle columnContainer' data-aos="fade-down" data-aos-delay={1 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+            <div className='alchmOverviewTitle columnContainer' data-aos="fade-down" data-aos-delay={1 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_AlchmOverview">
               <div>Upcoming Project:</div>
               <div><u>Alchm</u></div>
             </div>
-            <img className='alchmOverviewLogoImage' id='alchmLogoImage' src={alchm_logo_image} data-aos="fade-down-left" data-aos-delay={2 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" onMouseOver={mouseOver} onMouseLeave={mouseLeave} onClick={handleClick} alt="Alchm"/>
+            <img className='alchmOverviewLogoImage' id='alchmLogoImage' src={alchm_logo_image} data-aos="fade-down-left" data-aos-delay={2 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_AlchmOverview" onMouseOver={mouseOver} onMouseLeave={mouseLeave} onClick={handleClick} alt="Alchm"/>
           </div>
-          <div  className='alchmOverviewText' data-aos="fade-down" data-aos-delay={3 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+          <div  className='alchmOverviewText' data-aos="fade-down" data-aos-delay={3 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_AlchmOverview">
             • Get insights on your goals, your diet, your relationships, and more using AI.
           </div>
-          <div  className='alchmOverviewText' data-aos="fade-down-left" data-aos-delay={4 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+          <div  className='alchmOverviewText' data-aos="fade-down-left" data-aos-delay={4 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_AlchmOverview">
             • Forge your unique Alchm Avatar.
           </div>
-          <div  className='alchmOverviewText' data-aos="fade-left" data-aos-delay={5 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+          <div  className='alchmOverviewText' data-aos="fade-left" data-aos-delay={5 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_AlchmOverview">
             • Explore the stars and earn rewards.
           </div>
-          <div  className='alchmOverviewText' data-aos="fade-up-left" data-aos-delay={6 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+          <div  className='alchmOverviewText' data-aos="fade-up-left" data-aos-delay={6 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_AlchmOverview">
             • Own your data. Own your identity.
           </div>
-          <div  className='alchmOverviewText' data-aos="fade-up" data-aos-delay={7 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+          <div  className='alchmOverviewText' data-aos="fade-up" data-aos-delay={7 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_AlchmOverview">
             • Discover your Alchemy.
           </div>
-          <a className='alchmOverviewLink' id='alchmSiteLink' data-aos="fade-left" data-aos-delay={8 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" href="https://evanon.earth/alchm" target="_blank" rel="noreferrer" onMouseOver={mouseOver} onMouseLeave={mouseLeave}>
+          <a className='alchmOverviewLink' id='alchmSiteLink' data-aos="fade-left" data-aos-delay={8 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_AlchmOverview" href="https://evanon.earth/alchm" target="_blank" rel="noreferrer" onMouseOver={mouseOver} onMouseLeave={mouseLeave}>
             Explore Alchm ->
           </a>
-          <a className='alchmOverviewLink' id='alchmSignupLink' data-aos="fade-left" data-aos-delay={9 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" href="https://evanon.earth/alchmsignup" target="_blank" rel="noreferrer" onMouseOver={mouseOver} onMouseLeave={mouseLeave}>
+          <a className='alchmOverviewLink' id='alchmSignupLink' data-aos="fade-left" data-aos-delay={9 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_AlchmOverview" href="https://evanon.earth/alchmsignup" target="_blank" rel="noreferrer" onMouseOver={mouseOver} onMouseLeave={mouseLeave}>
             Get Early Access ->
           </a>
         </div>
       </div>
-      </div>
-    )}
     </div>
+    )}
+  </div>
   )
 }
 

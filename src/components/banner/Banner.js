@@ -8,9 +8,9 @@ const Banner = () => {
   
 
   return (
-    <div className='bannerContainer'>
-      <div className='banner'>
-        <img data-aos="fade-left" src={home_banner} alt='' className='banner' />
+    <div className='banner'>
+      <div className='bannerContainer'>
+        <img data-aos="fade-left" src={home_banner} alt='' className='bannerImage' />
       </div>
     </div>
   )
