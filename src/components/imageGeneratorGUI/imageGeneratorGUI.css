@@ -363,7 +363,7 @@
   }
 
   .imageGeneratorGUIfloatRightButton {
-    margin: 13px 0px 6px 0px !important;
+    margin: 13px 0px 7px 0px !important;
   }
 
   .imageGeneratorGUInumberEntry {
@@ -390,5 +390,6 @@
   .imageGeneratorGUIgenerateButton {
     font-size: 17px;
     width: 150px;
+    margin-top: 15px;
   }
 }
