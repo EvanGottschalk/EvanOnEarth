@@ -740,7 +740,7 @@ const ImageGeneratorGUI = () => {
       </div>
       <div className='imageGeneratorGUImodelDescription' id='textOutput' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_ImageGeneratorGUI">...</div> */}
       <div className='imageGeneratorGUItextContainer imageGeneratorGUIsubmitButtonContainer'>
-        <div className="imageGeneratorGUIsubmitButton" id="generateImageButton" onMouseDown={handleMouseUp} onMouseUp={handleSubmitClick} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_ImageGeneratorGUI"
+        <div className="imageGeneratorGUIsubmitButton imageGeneratorGUIgenerateButton" id="generateImageButton" onMouseDown={handleMouseUp} onMouseUp={handleSubmitClick} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_ImageGeneratorGUI"
           data-aos-delay={26 * delay_gap} data-aos="fade-right">
           Generate
         </div>

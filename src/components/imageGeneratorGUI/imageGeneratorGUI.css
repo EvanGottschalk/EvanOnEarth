@@ -304,13 +304,13 @@
   }
 
   .imageGeneratorGUImodelDescription {
-    width: 88%;
+    width: 98%;
     margin: 0% 0% 0% 0%;
     padding-bottom: 5%;
   }
 
   .imageGeneratorGUImodelLink {
-    width: 88%;
+    width: 98%;
     margin: 0% 0% 0% 0%;
   }
 
@@ -322,14 +322,12 @@
     width: 90%;
   }
 
-  .imageGeneratorGUIsubmitButtonContainer {
-    
-  }
+
 
   .imageGeneratorGUIsubmitButton {
     margin-top: 2%;
     font-size: 14px;
-    width: 120px !important;
+    width: 120px;
   }
 
   .imageGeneratorGUIbanner {
@@ -366,8 +364,7 @@
 
   .imageGeneratorGUIfloatRightButton {
     margin: 4.5% 0% 1% 0%;
-    padding: 0% 0% 0% 0%;
-    width: 150px;
+    padding: 4px 0px 2px 0px;
   }
 
   .imageGeneratorGUInumberEntry {
@@ -391,7 +388,8 @@
     margin: 3% 0% 0% 3%;
   }
 
-  .imageGeneratorGUIcopyButton {
-    padding: 4px 0px 2px 0px !important;
+  .imageGeneratorGUIgenerateButton {
+    font-size: 17px;
+    width: 150px;
   }
 }
