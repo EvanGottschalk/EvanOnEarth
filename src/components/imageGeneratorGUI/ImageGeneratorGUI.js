@@ -338,6 +338,8 @@ const ImageGeneratorGUI = () => {
           };
         };
       };
+      console.log('handleSubitClick() -> Image Generation Complete!');
+      document.getElementById('pauseButton').style.opacity = '0';
     };
   };
 
