@@ -1,7 +1,18 @@
+//--------------------------------------------------------------------------------------------------
+//# Imports
+
 import React from 'react'; 
 
-
 import './footer.css'
+
+
+
+
+
+
+
+//--------------------------------------------------------------------------------------------------
+//# Variables
 
 let screen_filled = false;
 
@@ -9,6 +20,18 @@ const page_origin = window.location.origin; // Example: https://evanonearth.xyz
 const page_pathname = window.location.pathname; // Example: /tools
 const URL_conditions = {'/tools': {'padding': "0% 0% 0% 0%"}};
 
+
+
+
+
+
+
+
+
+//--------------------------------------------------------------------------------------------------
+//# Functions
+
+//AppStart
 const Footer = () => {
   document.addEventListener("DOMContentLoaded", () => {
     if (URL_conditions[page_pathname]) {
@@ -31,7 +54,17 @@ const Footer = () => {
     let element = document.getElementById(event.target.id);
     element.style.color = '#929292';
   }
-  
+
+
+
+
+
+
+
+
+//--------------------------------------------------------------------------------------------------
+//# HTML
+
   console.log("window.location", window.location);
   return (
     <div className='footer' id='footer'>
@@ -42,7 +75,7 @@ const Footer = () => {
       </div>
       <div className='footerContainer'>
         <div className='footerTextContainer'>
-          <marquee>Pop quiz, hot shot! What's the first blockchain ever created? (hint: it's not bitcoin) . . . . . . . . . . . . . . . . . . . . Did you know? Over 99% of NFT data is not stored on a blockchain! . . . . . . . . . . . . . . . . . . . .  Pop quiz, hot shot! What's the first country to recognize $BTC as legal tender? (hint: it's not El Salvador) . . . . . . . . . . . . . . . . . . . . Did you know? Ordinals allow for the Bitcoin blockchain to run ANY code, including AI models like ChatGPT, OS's like Windows 11, iOS, PS5 and beyond . . . . . . . . . . . . . . . . . . . . Pop quiz, hot shot! What's the first blockchain ever created? (hint: it's not bitcoin) . . . . . . . . . . . . . . . . . . . . Did you know? Over 99% of NFT data is not stored on a blockchain! . . . . . . . . . . . . . . . . . . . .  Pop quiz, hot shot! What's the first country to recognize $BTC as a national currency? (hint: it's not El Salvador) . . . . . . . . . . . . . . . . . . . . Did you know? Ordinals allow for the Bitcoin blockchain to run ANY code, including AI models like ChatGPT, OS's like Windows 11, iOS, PS5 and beyond . . . . . . . . . . . . . . . . . . . .</marquee>
+          <marquee>Pop quiz, hot shot! What's the first blockchain ever created? (hint: it's not Bitcoin) . . . . . . . . . . . . . . . . . . . . Did you know? Most NFT data is not stored on blockchain! . . . . . . . . . . . . . . . . . . . . Get airdrops, whitelist and early access to my next web3 project: <a style={{color: "var(--color-main)"}} href="https://evanon.earth/alchmsignup" target="_blank" rel="noreferrer">Alchm Whitelist Signup</a> . . . . . . . . . . . . . . . . . . . .  Did you know? Using Ordinals, operating systems like Windows and iOS can run on Bitcoin . . . . . . . . . . . . . . . . . . . . </marquee>
         </div>
       </div>
       

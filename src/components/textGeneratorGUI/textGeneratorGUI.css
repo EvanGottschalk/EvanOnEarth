@@ -71,7 +71,7 @@
   margin: 3% 0% 0% 3%;
 }
 
-.textGeneratorGUI_selectList {
+.textGeneratorGUIselectList {
   padding: 0px 0px 1px 0px;
   width: 40%;
   font-size: 16px;
@@ -87,7 +87,7 @@
   margin: 0px 6px 0px 0px;
 }
 
-.textGeneratorGUI_checklist {
+.textGeneratorGUIchecklist {
   flex-direction: column;
   display: flex;
   color: #000000;
@@ -105,7 +105,7 @@
 }
 
 
-.textGeneratorGUI_submitButton {
+.textGeneratorGUIsubmitButton {
   width: 180px;
   font-size: 18px;
   margin-top: 2%;
@@ -119,7 +119,7 @@
   display: none;
 }
 
-.textGeneratorGUI_pauseButton {
+.textGeneratorGUIpauseButton {
   width: 100px;
 }
 
@@ -141,7 +141,7 @@
 
 
 
-.textGeneratorGUI_generatedImage {
+.textGeneratorGUIgeneratedImage {
   width: 40%;
   padding: 2% 30% 2% 30%;
   margin: 0px 0px 0px 0px;
@@ -154,7 +154,7 @@
 }
 
 
-.textGeneratorGUI_modelDescription {
+.textGeneratorGUImodelDescription {
   background-color: #ffffff;
   font-size: 15px;
   color: #000000;
@@ -163,7 +163,7 @@
   margin: 0px 0px 0px 0px;
 }
 
-.textGeneratorGUI_generatedText {
+.textGeneratorGUIgeneratedText {
   background-color: #ffffff;
   font-size: 15px;
   color: #000000;
@@ -174,7 +174,7 @@
   overflow: hidden;
 }
 
-.textGeneratorGUI_modelLink {
+.textGeneratorGUImodelLink {
   background-color: #ffffff;
   font-size: 15px;
   text-decoration: underline;
@@ -185,24 +185,24 @@
 }
 
 
-.textGeneratorGUI_allOutputContainer {
+.textGeneratorGUIallOutputContainer {
   width: 50.5%;
   align-items: center;
   justify-content: center;
 }
 
-.textGeneratorGUI_modelTitleContainer {
+.textGeneratorGUImodelTitleContainer {
   display: flex;
   flex-direction: row;
 }
 
-.textGeneratorGUI_textOutputContainer {
+.textGeneratorGUItextOutputContainer {
   display: flex;
   flex-direction: row;
   gap: 1%;
 }
 
-.textGeneratorGUI_copiedMessage {
+.textGeneratorGUIcopiedMessage {
   color: #ffffff;
   text-align: center;
   align-items: center;
@@ -308,26 +308,26 @@
     margin: 0% 0% 0% 0%;
   }
 
-  .textGeneratorGUI_modelDescription {
+  .textGeneratorGUImodelDescription {
     width: 88%;
     margin: 0% 0% 0% 0%;
     padding-bottom: 5%;
   }
 
-  .textGeneratorGUI_modelLink {
+  .textGeneratorGUImodelLink {
     width: 88%;
     margin: 0% 0% 0% 0%;
   }
 
-  .textGeneratorGUI_selectList {
+  .textGeneratorGUIselectList {
     width: 100%;
   }
 
-  .textGeneratorGUI_checklist {
+  .textGeneratorGUIchecklist {
     width: 90%;
   }
 
-  .textGeneratorGUI_submitButton {
+  .textGeneratorGUIsubmitButton {
     margin-top: 3%;
   }
 
@@ -351,7 +351,7 @@
     align-items: center;
   }
 
-  .textGeneratorGUI_allOutputContainer {
+  .textGeneratorGUIallOutputContainer {
     width: 90%;
   }
   
@@ -371,10 +371,6 @@
 
   .textGeneratorGUInumberEntry {
     width: 48px;
-  }
-
-  .textGeneratorGUI_imageOutputContainer {
-    flex-direction: column;
   }
 
   .textGeneratorGUIdropdownList {

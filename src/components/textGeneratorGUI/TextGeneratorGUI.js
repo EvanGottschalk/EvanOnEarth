@@ -223,7 +223,7 @@ const TextGeneratorGUI = () => {
           new_size_container.appendChild(new_title_element);
 
           const new_text_output_container = document.createElement('div');
-          new_text_output_container.className = 'textGeneratorGUI_textOutputContainer';
+          new_text_output_container.className = 'textGeneratorGUItextOutputContainer';
           new_text_output_container.id = 'textOutputContainer_' + model + '_' + selected_size;
 
           for (let j = 0; j < parameter_dict["quantity"]; j++) {
@@ -235,7 +235,7 @@ const TextGeneratorGUI = () => {
             } else {
               new_text_element.id = 'generatedText_' + model + '_' + selected_size + '_' + j.toString();
             };
-            new_text_element.className = 'textGeneratorGUI_generatedText';
+            new_text_element.className = 'textGeneratorGUIgeneratedText';
             if (!mobile) {
               new_text_element.style.width = (100 / parameter_dict['quantity']).toString() + "%";
             };
@@ -249,9 +249,9 @@ const TextGeneratorGUI = () => {
             } else {
               new_image_element.id = 'generatedImage_' + model + '_' + selected_size + '_' + j.toString();
             };
-            new_image_element.className = 'textGeneratorGUI_generatedImage';
+            new_image_element.className = 'textGeneratorGUIgeneratedImage';
             if (!mobile) {
-              // The first value, .40, comes from the CSS in textGeneratorGUI_generatedImage 
+              // The first value, .40, comes from the CSS in textGeneratorGUIgeneratedImage 
               new_image_element.style.width = (.40 * (100 / parameter_dict['quantity'])).toString() + "%";
             };
 
@@ -279,7 +279,7 @@ const TextGeneratorGUI = () => {
     if (element_ID === "dropdownQuantity") {
       const all_models = await getAllChecklistOptions('model');
       const all_sizes = await getCheckedValues('size');
-      const all_outputs_container = document.getElementById('textGeneratorGUI_allOutputContainer');
+      const all_outputs_container = document.getElementById('textGeneratorGUIallOutputContainer');
       // On desktop, stretches image output view beyond limits of UI while maintaining image size
       if (!mobile) {
         let new_container_width;
@@ -304,12 +304,12 @@ const TextGeneratorGUI = () => {
             for (let j = parameter_dict["quantity"]; j < new_value; j++) {
               const new_text_element = document.createElement('div');
               new_text_element.id = 'generatedText_' + model_name + '_' + size.toString() + '_' + j.toString();
-              new_text_element.className = 'textGeneratorGUI_generatedText';
+              new_text_element.className = 'textGeneratorGUIgeneratedText';
 
               const new_image_element = document.createElement('img');
               new_image_element.src = default_image;
               new_image_element.id = 'generatedImage_' + model_name + '_' + size.toString() + '_' + j.toString();
-              new_image_element.className = 'textGeneratorGUI_generatedImage';
+              new_image_element.className = 'textGeneratorGUIgeneratedImage';
 
               new_text_element.appendChild(new_image_element);
               text_container.appendChild(new_text_element);
@@ -465,7 +465,7 @@ const TextGeneratorGUI = () => {
       } else {
         image_element.id = 'generatedImage_' + model + '_' + size + '_' + output_ID.toString();
       };
-      image_element.className = 'textGeneratorGUI_generatedImage';
+      image_element.className = 'textGeneratorGUIgeneratedImage';
       if (!mobile) {
         image_element.style.width = (100 / parameter_dict['quantity']).toString() + "%";
       };
@@ -645,7 +645,7 @@ const TextGeneratorGUI = () => {
           data-aos-delay={11 * delay_gap} data-aos="fade-right">
           Enter Prompt:
         </div>
-        {/* <input value={mobile ? "Copy Simplifier" : "Copy Simplifier Prefix"} className="textGeneratorGUI_submitButton textGeneratorGUIfloatRightButton" id="copySimplifierPrefixButton" type="button" data-aos="fade-right" data-aos-delay={20 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" onClick={handleSubmitClick}/> */}
+        {/* <input value={mobile ? "Copy Simplifier" : "Copy Simplifier Prefix"} className="textGeneratorGUIsubmitButton textGeneratorGUIfloatRightButton" id="copySimplifierPrefixButton" type="button" data-aos="fade-right" data-aos-delay={20 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" onClick={handleSubmitClick}/> */}
       </div>
       <textarea className='textGeneratorGUIpromptEntry' id='promptEntry' onChange={handlePromptChange} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
         data-aos-delay={12 * delay_gap} data-aos="zoom-in"
@@ -654,7 +654,7 @@ const TextGeneratorGUI = () => {
         <div className='textGeneratorGUITitle textGeneratorGUIcopyNegativePromptTitle' data-aos="fade-right" data-aos-delay={11 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
           Negative Prompt:
         </div>
-        <input value={mobile ? "Copy Default" : "Copy Default Negative Prompt"} className="textGeneratorGUI_submitButton textGeneratorGUIfloatRightButton" id="copyNegativePromptButton" type="button" data-aos="fade-right" data-aos-delay={20 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" onClick={handleSubmitClick}/>
+        <input value={mobile ? "Copy Default" : "Copy Default Negative Prompt"} className="textGeneratorGUIsubmitButton textGeneratorGUIfloatRightButton" id="copyNegativePromptButton" type="button" data-aos="fade-right" data-aos-delay={20 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" onClick={handleSubmitClick}/>
       </div>
       <textarea id='negativePromptEntry' className='textGeneratorGUIpromptEntry textGeneratorGUInegativePromptEntry' data-aos="fade-right" data-aos-delay={12 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" onChange={handleNegativePromptChange}
         placeholder={"Your negative prompt here..."} required/> */}
@@ -664,7 +664,7 @@ const TextGeneratorGUI = () => {
           Select Model(s):
         </div>
       </div>
-      <div className='textGeneratorGUI_checklist' id='checklistModels' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+      <div className='textGeneratorGUIchecklist' id='checklistModels' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
         data-aos-delay={14 * delay_gap} data-aos="zoom-in">
         <label className="textGeneratorGUImodelOption">
           <input type="checkbox" alt="GPT 3.5 Turbo" value="gpt-3.5-turbo" onChange={handleModelChange} />
@@ -711,13 +711,13 @@ const TextGeneratorGUI = () => {
       </div>
       <div className="textGeneratorGUITextContainer" data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
         data-aos-delay={17 * delay_gap} data-aos="zoom-in">
-        <div className='textGeneratorGUI_modelDescription' id='modelDescriptionTitle'>
+        <div className='textGeneratorGUImodelDescription' id='modelDescriptionTitle'>
           <u><b>GPT 3.5 Turbo</b></u>
         </div>
-        <div className='textGeneratorGUI_modelDescription' id='modelDescription'>
+        <div className='textGeneratorGUImodelDescription' id='modelDescription'>
           GPT-3.5-turbo is optimized for general-purpose conversational applications and tasks requiring text generation, including question answering, summarization, language translation, and more. As the default model in OpenAI’s ChatGPT API, it’s specifically engineered for balanced performance, cost-effectiveness, and high-quality output, making it versatile and suitable for both commercial and experimental use.
         </div>
-        <a href="https://platform.openai.com/docs/models#gpt-3-5-turbo" target='_blank' rel="noreferrer" className='textGeneratorGUI_modelLink' id='modelLink'>
+        <a href="https://platform.openai.com/docs/models#gpt-3-5-turbo" target='_blank' rel="noreferrer" className='textGeneratorGUImodelLink' id='modelLink'>
           <u>Learn More -></u>
         </a>
       </div>
@@ -727,7 +727,7 @@ const TextGeneratorGUI = () => {
           Maximum # of Words:
         </div>
       </div>
-      <div className='textGeneratorGUI_checklist' id='checklistSizes' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+      <div className='textGeneratorGUIchecklist' id='checklistSizes' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
         data-aos-delay={19 * delay_gap} data-aos="zoom-in">
         {/* <label className="textGeneratorGUIsizeOption">
           <input type="checkbox" value="256x256" onChange={handleMaxTokensChange} />
@@ -875,7 +875,7 @@ const TextGeneratorGUI = () => {
           />
           {/* <div className='textGeneratorGUIhelperText'>(-2 to 2)</div> */}
         </div>
-        <input className="textGeneratorGUI_submitButton" id="generateTextButton" type="submit" onClick={handleSubmitClick} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+        <input className="textGeneratorGUIsubmitButton" id="generateTextButton" type="submit" onClick={handleSubmitClick} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
           data-aos-delay={36 * delay_gap} data-aos="fade-right"
           value="Generate"
         />
@@ -885,9 +885,9 @@ const TextGeneratorGUI = () => {
           Generated Text:
         </div>
       </div>
-      <div className='textGeneratorGUI_modelDescription' id='textOutput' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">...</div>
+      <div className='textGeneratorGUImodelDescription' id='textOutput' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">...</div>
       <div className='textGeneratorGUITextContainer'>
-        <input value="Generate" className="textGeneratorGUI_submitButton" id="generateImageButton" type="submit" data-aos="fade-right" data-aos-delay={20 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" onClick={handleSubmitClick}/>
+        <input value="Generate" className="textGeneratorGUIsubmitButton" id="generateImageButton" type="submit" data-aos="fade-right" data-aos-delay={20 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement" onClick={handleSubmitClick}/>
       </div> */}
       <div className='banner_textGeneratorGUI' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
         data-aos-delay={37 * delay_gap} data-aos="zoom-out">
@@ -906,31 +906,27 @@ const TextGeneratorGUI = () => {
           </div>
           <input className='textGeneratorGUIpromptEntry textGeneratorGUInumberDisplay' id='generationTime' value="0:00" readOnly/>
         </div>
-        <input className="textGeneratorGUI_submitButton textGeneratorGUI_pauseButton" value="Pause" id="pauseButton" type="button" onClick={handleSubmitClick}/>
+        <input className="textGeneratorGUIsubmitButton textGeneratorGUIpauseButton" value="Pause" id="pauseButton" type="button" onClick={handleSubmitClick}/>
       </div>
-      <div className="textGeneratorGUI_allOutputContainer" id="textGeneratorGUI_allOutputContainer">
+      <div className="textGeneratorGUIallOutputContainer" id="textGeneratorGUIallOutputContainer">
         {/* gpt-3.5-turbo */}
         <div className='textGeneratorGUImodelOutputContainer' id="modelOutputContainer_gpt-3.5-turbo">
-          <div className="textGeneratorGUI_modelTitleContainer">
+          <div className="textGeneratorGUImodelTitleContainer">
             <div className='textGeneratorGUITitle' id='textTitle_gpt-3.5-turbo' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
               data-aos-delay={39 * delay_gap} data-aos="fade-right">
               GPT 3.5 Turbo:
             </div>
-            {/* <span className="textGeneratorGUI_copiedMessage" id="copiedMessage_gpt-3.5-turbo">Image URL Copied!</span> */}
+            {/* <span className="textGeneratorGUIcopiedMessage" id="copiedMessage_gpt-3.5-turbo">Image URL Copied!</span> */}
           </div>
           <div id="sizeContainer_gpt-3.5-turbo_0">
             <div className="textGeneratorGUIimageOutputSizeTitle" id ="sizeContainerTitle_gpt-3.5-turbo_0" data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
               data-aos-delay={40 * delay_gap} data-aos="fade-right">
               No Word Limit
             </div>
-            {/* <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_gpt-3.5-turbo_0">
-              <img src={image_URL} alt='' id='generatedImage_gpt-3.5-turbo_0' className='textGeneratorGUI_generatedImage'/>
-            </div> */}
-            <div className="textGeneratorGUI_textOutputContainer" id="textOutputContainer_gpt-3.5-turbo_0">
-              <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-3.5-turbo_0' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+            <div className="textGeneratorGUItextOutputContainer" id="textOutputContainer_gpt-3.5-turbo_0">
+              <div className='textGeneratorGUIgeneratedText' id='generatedText_gpt-3.5-turbo_0' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
               data-aos-delay={41 * delay_gap} data-aos="zoom-in">
-                {/* <div className="textGeneratorGUI_imageOutputContainer" id="imageOutputContainer_gpt-3.5-turbo_0"> */}
-                  <img className='textGeneratorGUI_generatedImage' id='generatedImage_gpt-3.5-turbo_0' alt='' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
+                  <img className='textGeneratorGUIgeneratedImage' id='generatedImage_gpt-3.5-turbo_0' alt='' data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement"
                     data-aos-delay={42 * delay_gap} data-aos="zoom-in"
                     src={image_URL}
                   />
@@ -941,7 +937,7 @@ const TextGeneratorGUI = () => {
         </div>
         {/* gpt-4 */}
         <div className='textGeneratorGUImodelOutputContainer' id="modelOutputContainer_gpt-4" style={{display: "none"}}>
-          <div className="textGeneratorGUI_modelTitleContainer">
+          <div className="textGeneratorGUImodelTitleContainer">
             <div id='textTitle_gpt-4' className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={22 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
               GPT 4:
             </div>
@@ -950,16 +946,16 @@ const TextGeneratorGUI = () => {
             <span className="textGeneratorGUIimageOutputSizeTitle" id ="sizeContainerTitle_gpt-4_0">
               No Word Limit
             </span>
-            <div className="textGeneratorGUI_textOutputContainer" id="textOutputContainer_gpt-4_0">
-              <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-4_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
-                <img src={image_URL} alt='' id='generatedImage_gpt-4_0' className='textGeneratorGUI_generatedImage'/>
+            <div className="textGeneratorGUItextOutputContainer" id="textOutputContainer_gpt-4_0">
+              <div className='textGeneratorGUIgeneratedText' id='generatedText_gpt-4_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+                <img src={image_URL} alt='' id='generatedImage_gpt-4_0' className='textGeneratorGUIgeneratedImage'/>
               </div>
             </div>
           </div>
         </div>
         {/* gpt-4-turbo */}
         <div className='textGeneratorGUImodelOutputContainer' id="modelOutputContainer_gpt-4-turbo" style={{display: "none"}}>
-          <div className="textGeneratorGUI_modelTitleContainer">
+          <div className="textGeneratorGUImodelTitleContainer">
             <div id='textTitle_gpt-4-turbo' className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={22 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
               GPT 4 Turbo:
             </div>
@@ -968,35 +964,35 @@ const TextGeneratorGUI = () => {
             <span className="textGeneratorGUIimageOutputSizeTitle" id ="sizeContainerTitle_gpt-4-turbo_0">
               No Word Limit
             </span>
-            <div className="textGeneratorGUI_textOutputContainer" id="textOutputContainer_gpt-4-turbo_0">
-              <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-4-turbo_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
-                <img src={image_URL} alt='' id='generatedImage_gpt-4-turbo_0' className='textGeneratorGUI_generatedImage'/>
+            <div className="textGeneratorGUItextOutputContainer" id="textOutputContainer_gpt-4-turbo_0">
+              <div className='textGeneratorGUIgeneratedText' id='generatedText_gpt-4-turbo_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+                <img src={image_URL} alt='' id='generatedImage_gpt-4-turbo_0' className='textGeneratorGUIgeneratedImage'/>
               </div>
             </div>
           </div>
         </div>
         {/* gpt-4o */}
         <div className='textGeneratorGUImodelOutputContainer' id="modelOutputContainer_gpt-4o" style={{display: "none"}}>
-          <div className="textGeneratorGUI_modelTitleContainer">
+          <div className="textGeneratorGUImodelTitleContainer">
             <div id='textTitle_gpt-4o' className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={22 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
               GPT 4o:
             </div>
-            <span className="textGeneratorGUI_copiedMessage" id="copiedMessage_gpt-4o">Image URL Copied!</span>
+            <span className="textGeneratorGUIcopiedMessage" id="copiedMessage_gpt-4o">Image URL Copied!</span>
           </div>
           <div id="sizeContainer_gpt-4o_0">
             <span className="textGeneratorGUIimageOutputSizeTitle" id ="sizeContainerTitle_gpt-4o_0">
               No Word Limit
             </span>
-            <div className="textGeneratorGUI_textOutputContainer" id="textOutputContainer_gpt-4o_0">
-              <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-4o_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
-                <img src={image_URL} alt='' id='generatedImage_gpt-4o_0' className='textGeneratorGUI_generatedImage'/>
+            <div className="textGeneratorGUItextOutputContainer" id="textOutputContainer_gpt-4o_0">
+              <div className='textGeneratorGUIgeneratedText' id='generatedText_gpt-4o_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+                <img src={image_URL} alt='' id='generatedImage_gpt-4o_0' className='textGeneratorGUIgeneratedImage'/>
               </div>
             </div>
           </div>
         </div>
         {/* gpt-4o-mini */}
         <div className='textGeneratorGUImodelOutputContainer' id="modelOutputContainer_gpt-4o-mini" style={{display: "none"}}>
-          <div className="textGeneratorGUI_modelTitleContainer">
+          <div className="textGeneratorGUImodelTitleContainer">
             <div id='textTitle_gpt-4o-mini' className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={22 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
               GPT 4o Mini:
             </div>
@@ -1005,85 +1001,85 @@ const TextGeneratorGUI = () => {
             <span className="textGeneratorGUIimageOutputSizeTitle" id ="sizeContainerTitle_gpt-4o-mini_0">
               No Word Limit
             </span>
-            <div className="textGeneratorGUI_textOutputContainer" id="textOutputContainer_gpt-4o-mini_0">
-              <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-4o-mini_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">    
-                <img src={image_URL} alt='' id='generatedImage_gpt-4o-mini_0' className='textGeneratorGUI_generatedImage'/>
+            <div className="textGeneratorGUItextOutputContainer" id="textOutputContainer_gpt-4o-mini_0">
+              <div className='textGeneratorGUIgeneratedText' id='generatedText_gpt-4o-mini_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">    
+                <img src={image_URL} alt='' id='generatedImage_gpt-4o-mini_0' className='textGeneratorGUIgeneratedImage'/>
               </div>
             </div>
           </div>
         </div>
         {/* gpt-4o-realtime-preview */}
         <div className='textGeneratorGUImodelOutputContainer' id="modelOutputContainer_gpt-4o-realtime-preview" style={{display: "none"}}>
-          <div className="textGeneratorGUI_modelTitleContainer">
+          <div className="textGeneratorGUImodelTitleContainer">
             <div id='textTitle_gpt-4o-realtime-preview' className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={22 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
               GPT 4o Realtime Preview:
             </div>
-            <span className="textGeneratorGUI_copiedMessage" id="copiedMessage_gpt-4o-realtime-preview">Image URL Copied!</span>
+            <span className="textGeneratorGUIcopiedMessage" id="copiedMessage_gpt-4o-realtime-preview">Image URL Copied!</span>
           </div>
           <div id="sizeContainer_gpt-4o-realtime-preview_0">
             <span className="textGeneratorGUIimageOutputSizeTitle" id ="sizeContainerTitle_gpt-4o-realtime-preview_0">
               No Word Limit
             </span>
-            <div className="textGeneratorGUI_textOutputContainer" id="textOutputContainer_gpt-4o-realtime-preview_0">
-              <div className='textGeneratorGUI_generatedText' id='generatedText_gpt-4o-realtime-preview_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
-                <img src={image_URL} alt='' id='generatedImage_gpt-4o-realtime-preview_0' className='textGeneratorGUI_generatedImage'/>
+            <div className="textGeneratorGUItextOutputContainer" id="textOutputContainer_gpt-4o-realtime-preview_0">
+              <div className='textGeneratorGUIgeneratedText' id='generatedText_gpt-4o-realtime-preview_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+                <img src={image_URL} alt='' id='generatedImage_gpt-4o-realtime-preview_0' className='textGeneratorGUIgeneratedImage'/>
               </div>
             </div>
           </div>
         </div>
         {/* o1 */}
         <div className='textGeneratorGUImodelOutputContainer' id="modelOutputContainer_o1" style={{display: "none"}}>
-          <div className="textGeneratorGUI_modelTitleContainer">
+          <div className="textGeneratorGUImodelTitleContainer">
             <div id='textTitle_o1' className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={22 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
               o1:
             </div>
-            <span className="textGeneratorGUI_copiedMessage" id="copiedMessage_o1">Image URL Copied!</span>
+            <span className="textGeneratorGUIcopiedMessage" id="copiedMessage_o1">Image URL Copied!</span>
           </div>
           <div id="sizeContainer_o1_0">
             <span className="textGeneratorGUIimageOutputSizeTitle" id ="sizeContainerTitle_o1_0">
               No Word Limit
             </span>
-            <div className="textGeneratorGUI_textOutputContainer" id="textOutputContainer_o1_0">
-              <div className='textGeneratorGUI_generatedText' id='generatedText_o1_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
-                <img src={image_URL} alt='' id='generatedImage_o1_0' className='textGeneratorGUI_generatedImage'/>
+            <div className="textGeneratorGUItextOutputContainer" id="textOutputContainer_o1_0">
+              <div className='textGeneratorGUIgeneratedText' id='generatedText_o1_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+                <img src={image_URL} alt='' id='generatedImage_o1_0' className='textGeneratorGUIgeneratedImage'/>
               </div>
             </div>
           </div>
         </div>
         {/* o1-preview */}
         <div className='textGeneratorGUImodelOutputContainer' id="modelOutputContainer_o1-preview" style={{display: "none"}}>
-          <div className="textGeneratorGUI_modelTitleContainer">
+          <div className="textGeneratorGUImodelTitleContainer">
             <div id='textTitle_o1-preview' className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={22 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
               o1 Preview:
             </div>
-            <span className="textGeneratorGUI_copiedMessage" id="copiedMessage_o1-preview">Image URL Copied!</span>
+            <span className="textGeneratorGUIcopiedMessage" id="copiedMessage_o1-preview">Image URL Copied!</span>
           </div>
           <div id="sizeContainer_o1-preview_0">
             <span className="textGeneratorGUIimageOutputSizeTitle" id ="sizeContainerTitle_o1-preview_0">
               No Word Limit
             </span>
-            <div className="textGeneratorGUI_textOutputContainer" id="textOutputContainer_o1-preview_0">  
-              <div className='textGeneratorGUI_generatedText' id='generatedText_o1-preview_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
-                <img src={image_URL} alt='' id='generatedImage_o1-preview_0' className='textGeneratorGUI_generatedImage'/>
+            <div className="textGeneratorGUItextOutputContainer" id="textOutputContainer_o1-preview_0">  
+              <div className='textGeneratorGUIgeneratedText' id='generatedText_o1-preview_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+                <img src={image_URL} alt='' id='generatedImage_o1-preview_0' className='textGeneratorGUIgeneratedImage'/>
               </div>
             </div>
           </div>
         </div>
         {/* o1-mini */}
         <div className='textGeneratorGUImodelOutputContainer' id="modelOutputContainer_o1-mini" style={{display: "none"}}>
-          <div className="textGeneratorGUI_modelTitleContainer">
+          <div className="textGeneratorGUImodelTitleContainer">
             <div id='textTitle_o1-mini' className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={22 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
               o1-mini:
             </div>
-            <span className="textGeneratorGUI_copiedMessage" id="copiedMessage_o1-mini">Image URL Copied!</span>
+            <span className="textGeneratorGUIcopiedMessage" id="copiedMessage_o1-mini">Image URL Copied!</span>
           </div>
           <div id="sizeContainer_o1-mini_0">
             <span className="textGeneratorGUIimageOutputSizeTitle" id ="sizeContainerTitle_o1-mini_0">
               No Word Limit
             </span>
-            <div className="textGeneratorGUI_textOutputContainer" id="textOutputContainer_o1-mini_0">  
-              <div className='textGeneratorGUI_generatedText' id='generatedText_o1-mini_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
-                <img src={image_URL} alt='' id='generatedImage_o1-mini_0' className='textGeneratorGUI_generatedImage'/>
+            <div className="textGeneratorGUItextOutputContainer" id="textOutputContainer_o1-mini_0">  
+              <div className='textGeneratorGUIgeneratedText' id='generatedText_o1-mini_0' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement">
+                <img src={image_URL} alt='' id='generatedImage_o1-mini_0' className='textGeneratorGUIgeneratedImage'/>
               </div>
             </div>
           </div>

@@ -1,8 +1,8 @@
 //--------------------------------------------------------------------------------------------------
 //# Imports
 
-import React, { useContext } from 'react';
-import SmartContractContext from '../../scripts/SmartContractContext';
+import React, { useEffect } from 'react'
+import Aos from "aos";
 
 import services_image from '../../image/services-image.png'
 import twitter_icon from '../../image/icons/twitter.png'
@@ -35,11 +35,15 @@ const delay_gap = 200;
 
 
 
+//--------------------------------------------------------------------------------------------------
+//# Functions
+
 //AppStart
 const Services = () => {
 
-//--------------------------------------------------------------------------------------------------
-//# Functions
+  useEffect(() => {
+    Aos.init({ duration: 2000 });
+  }, []);
 
   function mouseover(event) {
     console.log(event.target.id);
@@ -63,43 +67,43 @@ const Services = () => {
 //# HTML
 
   return (
-    <div className='services'>
+    <div className='services' id="anchorElement_Services">
       <div className='servicesLeftContainer'>
         <div className='servicesRightTop'>
           <div className='servicesImageContainer'>
-            <img data-aos="fade-right" data-aos-delay={delay_gap * 14} src={services_image} alt='' className='servicesImage' />
+            <img data-aos="fade-right" data-aos-delay={delay_gap * 14} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_Services" src={services_image} alt='' className='servicesImage' />
           </div>
         </div>
       </div>
       <div className='servicesRightContainer'>
         <div className='servicesTextContainer'>
-          <div data-aos="fade-left" data-aos-delay={delay_gap * 1} className='servicesText' style={{
+          <div data-aos="fade-left" data-aos-delay={delay_gap * 1} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_Services" className='servicesText' style={{
             textDecoration: 'underline',
             fontSize: '35px'}}>The Bull Market is Coming.</div>
-          <div data-aos="fade-left" data-aos-delay={delay_gap * 2} className='servicesText' style={{
+          <div data-aos="fade-left" data-aos-delay={delay_gap * 2} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_Services" className='servicesText' style={{
             textDecoration: 'none',
             fontSize: '25px'}}>Can you afford to wait?</div>
           <br></br>
-          <div data-aos="fade-left" data-aos-delay={delay_gap * 3} className='servicesText servicesDescription' style={{
+          <div data-aos="fade-left" data-aos-delay={delay_gap * 3} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_Services" className='servicesText servicesDescription' style={{
             textDecoration: 'none',
             fontSize: '18px'}}>Book a consultation for yourself or your team:</div>
-          <div data-aos="fade-left" data-aos-delay={delay_gap * 4} className='servicesText servicesDescription' style={{
+          <div data-aos="fade-left" data-aos-delay={delay_gap * 4} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_Services" className='servicesText servicesDescription' style={{
             textDecoration: 'none',
             fontSize: '14.5px'}}>• Master bitcoin and cryptocurrency asset management</div>
-          <div data-aos="fade-left" data-aos-delay={delay_gap * 5} className='servicesText servicesDescription' style={{
+          <div data-aos="fade-left" data-aos-delay={delay_gap * 5} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_Services" className='servicesText servicesDescription' style={{
             textDecoration: 'none',
             fontSize: '14.5px'}}>• Learn the answers to all your blockchain & AI questions</div>
-          <div data-aos="fade-left" data-aos-delay={delay_gap * 6} className='servicesText servicesDescription' style={{
+          <div data-aos="fade-left" data-aos-delay={delay_gap * 6} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_Services" className='servicesText servicesDescription' style={{
             textDecoration: 'none',
             fontSize: '14.5px'}}>• Get help with your cryptocurrency, NFT and AI project(s)</div>
-          <div data-aos="fade-left" data-aos-delay={delay_gap * 7} className='servicesText servicesDescription' style={{
+          <div data-aos="fade-left" data-aos-delay={delay_gap * 7} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_Services" className='servicesText servicesDescription' style={{
             textDecoration: 'none',
             fontSize: '14.5px'}}>• Fall in love with my flowing locks</div>
           <br></br>
-          <div data-aos="fade-left" data-aos-delay={delay_gap * 8} className='servicesText servicesBookNowText' style={{
+          <div data-aos="fade-left" data-aos-delay={delay_gap * 8} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_Services" className='servicesText servicesBookNowText' style={{
             textDecoration: 'none',
             fontSize: '18px', fontWeight: '30px'}}>- Book now for $99 -</div>
-          <div data-aos="fade-left" data-aos-delay={delay_gap * 9} className='paypalContainer'>
+          <div data-aos="fade-left" data-aos-delay={delay_gap * 9} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_Services" className='paypalContainer'>
             <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
               <input type="hidden" name="cmd" value="_s-xclick" />
               <input type="hidden" name="hosted_button_id" value="ALDLNQ6GM5HWY" />
@@ -122,23 +126,23 @@ const Services = () => {
           </div>
         </div>
         <div className='tokenMetricsCTA'>
-          <div data-aos="fade-left" data-aos-delay={delay_gap * 10}>Pro tip!</div>
-          <div data-aos="fade-left" data-aos-delay={delay_gap * 11}>
+          <div data-aos="fade-left" data-aos-delay={delay_gap * 10} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_Services">Pro tip!</div>
+          <div data-aos="fade-left" data-aos-delay={delay_gap * 11} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_Services">
             <span>You can easily </span>
-            <a href='https://tokenmetrics.sjv.io/g1LqQr' className='linkToTokenMetrics' target="_blank">reduce risk in your crypto portfolio with AI -></a>
+            <a href='https://tokenmetrics.sjv.io/g1LqQr' className='linkToTokenMetrics' target="_blank" rel="noreferrer">reduce risk in your crypto portfolio with AI -></a>
           </div>
         </div>
         <div className='servicesFooter'>
           <div className='servicesFooterIconContainer'>
             <div className='servicesFooterSocialsContainer'>
-              <a href='https://twitter.com/EvanOnEarth_eth' target="_blank">
-                <img data-aos="fade-right" src={twitter_icon} id='servicesTwitterIcon' onMouseOver={mouseover} onMouseLeave={mouseleave} className='servicesFooterIcon twitterServicesFooterIcon'/>
+              <a href='https://twitter.com/EvanOnEarth_eth' target="_blank"  rel="noreferrer">
+                <img data-aos="fade-right" data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_Services" src={twitter_icon} id='servicesTwitterIcon' onMouseOver={mouseover} onMouseLeave={mouseleave} className='servicesFooterIcon twitterServicesFooterIcon' alt="Evan on X"/>
               </a>
-              <a href='https://www.linkedin.com/in/evan-gottschalk/' target="_blank">
-                <img data-aos="fade-up" src={linkedin_icon} id='servicesLinkedinIcon' onMouseOver={mouseover} onMouseLeave={mouseleave} className='servicesFooterIcon linkedinServicesFooterIcon'/>
+              <a href='https://www.linkedin.com/in/evan-gottschalk/' target="_blank"  rel="noreferrer">
+                <img data-aos="fade-up" data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_Services" src={linkedin_icon} id='servicesLinkedinIcon' onMouseOver={mouseover} onMouseLeave={mouseleave} className='servicesFooterIcon linkedinServicesFooterIcon' alt="Evan on LinkedIn"/>
               </a>
-              <a href='https://www.instagram.com/evanonearth_eth/' target="_blank">
-                <img data-aos="fade-left" src={instagram_icon} id='servicesInstagramIcon' onMouseOver={mouseover} onMouseLeave={mouseleave} className='servicesFooterIcon instagramServicesFooterIcon'/>
+              <a href='https://www.instagram.com/evanonearth_eth/' target="_blank"  rel="noreferrer">
+                <img data-aos="fade-left" data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_Services" src={instagram_icon} id='servicesInstagramIcon' onMouseOver={mouseover} onMouseLeave={mouseleave} className='servicesFooterIcon instagramServicesFooterIcon' alt="Evan On Instagram"/>
               </a>
             </div>
           </div>
