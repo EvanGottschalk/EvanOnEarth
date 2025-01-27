@@ -95,6 +95,27 @@ body {
   text-align: center;
 }
 
+._justifyCenterContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.justifyLeftContainer {
+  display: flex;
+  justify-content: left;
+  align-items: left;
+  text-align: left;
+}
+
+.justifyRightContainer {
+  display: flex;
+  justify-content: right;
+  align-items: right;
+  text-align: right;
+}
+
 @media only screen and (max-width: 670px) {
   .componentSecond {
     margin: 0 20px;

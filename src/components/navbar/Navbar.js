@@ -39,12 +39,14 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
   mobile = true;
 };
 
-var tools_page
-if (window.location.href.includes("tools")) {
-  tools_page = true;
-} else {
-  tools_page = false;
-};
+const page_origin = window.location.origin; // Example: https://evanonearth.xyz
+const page_pathname = window.location.pathname; // Example: /tools
+const URL_conditions = {'/': {'background_color': '#ffffff',
+                              'text_color': '#000000',
+                              'twitter_icon': twitter_icon_black},
+                        '/tools': {'background_color': '#000000',
+                                   'text_color': '#ffffff',
+                                   'twitter_icon': twitter_icon_white}};
 
 
 
@@ -82,37 +84,13 @@ function mouseleave(event) {
 }
 
 
-
+console.log('/' + page_pathname.split('/')[1]);
 
 //--------------------------------------------------------------------------------------------------
 //# HTML
 
 return (
-  <div className='navbar' style={tools_page ? {backgroundColor: "#000000"} : {backgroundColor: "#ffffff"}}>
-    {/* <div className='navbarMobile'>
-      <div className='navbarCenterIcon'>
-        <div className='navbarMobileTopRight '>MobileLeftTitle</div>
-      </div>
-    </div>
-    <div className='navbarMobileButton'>
-      <MobileMenu className={Mobile ? 'Mobile' : 'Mobile'} onClick={HandleMobileMenu} />
-      <div className={Mobile ? 'navbarMobileContainerActive' : 'navbarMobileContainer'}>
-        <div className={Mobile ? 'navbarMenu active' : 'navbarMenu'}>
-          <div className='navbarMenuContainer'>
-            <div className='navbarMobileTop'>
-              <div className='navbarMobileTopRight menuOpen'>MobileMenuText</div>
-              <div className='navbarMobileTopLeft'>
-                <Close className='CloseIcon' onClick={HandleMobileMenu} />
-              </div>
-            </div>
-            <div className='navbarMobileMain'>
-              <div className='navbarCenterLink opacity7'>MobileMenuMiddleText</div>
-              <div className='navbarCenterLink navbarRightButton'>MobileMenuButton</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>*/}
+  <div className='navbar' style={{backgroundColor: URL_conditions['/' + page_pathname.split('/')[1]]['background_color']}}>
     <div className='navbarContainer'>
       <div className='navbarLeft'>
         <div id="navbarLogo" className='navbarLogo'>
@@ -126,24 +104,24 @@ return (
             <div/>
           ) : (
             <a className='navbarCenterButtonContainer' data-aos="fade-down-right" href={window.location['origin'] + '/tools/imagegenerator'} id="navbarCenterButton2" onMouseOver={mouseover} onMouseLeave={mouseleave}>
-              <span className='navbarCenterButton' data-aos="fade-down" style={tools_page ? {color: "#ffffff"} : {color: "#000000"}} id="navbarCenterButton2" onMouseOver={mouseover} onMouseLeave={mouseleave} >AI Image Generator</span>
+              <span className='navbarCenterButton' data-aos="fade-down" style={{color: URL_conditions['/' + page_pathname.split('/')[1]]['text_color']}} id="navbarCenterButton2" onMouseOver={mouseover} onMouseLeave={mouseleave} >AI Image Generator</span>
             </a>
           )}
           {mobile ? (
             // 1 Mobile Button
             <a className='navbarCenterButtonContainer' data-aos="fade-down" href={window.location['origin'] + '/tools'} id="navbarCenterButtonMobile" onMouseOver={mouseover} onMouseLeave={mouseleave}>
-              <span className='navbarCenterButton' data-aos="fade-down" style={tools_page ? {color: "#ffffff"} : {color: "#000000"}} id="navbarCenterButtonMobile" onMouseOver={mouseover} onMouseLeave={mouseleave} >AI Tools</span>
+              <span className='navbarCenterButton' data-aos="fade-down" style={{color: URL_conditions['/' + page_pathname.split('/')[1]]['text_color']}} id="navbarCenterButtonMobile" onMouseOver={mouseover} onMouseLeave={mouseleave} >AI Tools</span>
             </a>
           ) : (
             <a className='navbarCenterButtonContainer' data-aos="fade-down" href={window.location['origin'] + '/tools/textgenerator'} id="navbarCenterButton3" onMouseOver={mouseover} onMouseLeave={mouseleave}>
-              <span className='navbarCenterButton' data-aos="fade-down" style={tools_page ? {color: "#ffffff"} : {color: "#000000"}} id="navbarCenterButton3" onMouseOver={mouseover} onMouseLeave={mouseleave} >AI Text Generator</span>
+              <span className='navbarCenterButton' data-aos="fade-down" style={{color: URL_conditions['/' + page_pathname.split('/')[1]]['text_color']}} id="navbarCenterButton3" onMouseOver={mouseover} onMouseLeave={mouseleave} >AI Text Generator</span>
             </a>
           )}
           {mobile ? (
             <div/>
           ) : (
             <a className='navbarCenterButtonContainer' data-aos="fade-down-left" href={window.location['origin'] + "/consultation"} id="navbarCenterButton1" onMouseOver={mouseover} onMouseLeave={mouseleave}>
-              <span className='navbarCenterButton' data-aos="fade-down" style={tools_page ? {color: "#ffffff"} : {color: "#000000"}} id="navbarCenterButton1" onMouseOver={mouseover} onMouseLeave={mouseleave} >Consultation</span>
+              <span className='navbarCenterButton' data-aos="fade-down" style={{color: URL_conditions['/' + page_pathname.split('/')[1]]['text_color']}} id="navbarCenterButton1" onMouseOver={mouseover} onMouseLeave={mouseleave} >Consultation</span>
             </a>
           )}
         </div>
@@ -157,7 +135,7 @@ return (
               <img data-aos="fade-down" src={linkedin_icon} onMouseOver={mouseover} onMouseLeave={mouseleave} id='linkedinIcon' className='navbarIcon linkedinIcon' alt="LinkedIn"/>
             </a>
             <a href='https://twitter.com/EvanOnEarth_eth' target="_blank" rel="noreferrer">
-              <img data-aos="fade-down-right" src={tools_page ? twitter_icon_white : twitter_icon_black} onMouseOver={mouseover} onMouseLeave={mouseleave} id='twitterIcon' className='navbarIcon twitterIcon' alt="Twitter"/>
+              <img data-aos="fade-down-right" src={URL_conditions['/' + page_pathname.split('/')[1]]['twitter_icon']} onMouseOver={mouseover} onMouseLeave={mouseleave} id='twitterIcon' className='navbarIcon twitterIcon' alt="Twitter"/>
             </a>
           </div>
         </div>
