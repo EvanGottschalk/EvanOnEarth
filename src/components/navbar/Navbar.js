@@ -110,7 +110,7 @@ return (
           {mobile ? (
             // 1 Mobile Button
             <a className='navbarCenterButtonContainer' data-aos="fade-down" href={window.location['origin'] + '/tools'} id="navbarCenterButtonMobile" onMouseOver={mouseover} onMouseLeave={mouseleave}>
-              <span className='navbarCenterButton' data-aos="fade-down" style={{color: URL_conditions['/' + page_pathname.split('/')[1]]['text_color']}} id="navbarCenterButtonMobile" onMouseOver={mouseover} onMouseLeave={mouseleave} >AI Tools</span>
+              <span className='navbarCenterButton' data-aos="fade-down" style={{color: URL_conditions['/' + page_pathname.split('/')[1]]['text_color'], borderColor: URL_conditions['/' + page_pathname.split('/')[1]]['text_color']}} id="navbarCenterButtonMobile" onMouseOver={mouseover} onMouseLeave={mouseleave} >AI Tools</span>
             </a>
           ) : (
             <a className='navbarCenterButtonContainer' data-aos="fade-down" href={window.location['origin'] + '/tools/textgenerator'} id="navbarCenterButton3" onMouseOver={mouseover} onMouseLeave={mouseleave}>
