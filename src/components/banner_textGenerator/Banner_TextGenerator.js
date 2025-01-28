@@ -24,7 +24,7 @@ const page_origin = window.location.origin; // Example: https://evanonearth.xyz
 const page_pathname = window.location.pathname; // Example: /tools
 const URL_conditions = {'/': {'subtitle': 'Quickly generate the perfect copy',
                               'title_URL': page_origin + '/tools/textgenerator',
-                              'padding': "0% 0% 8% 0%",
+                              'padding': "0% 0% 20% 0%",
                               'target': '_self',
                               'rel': ''},
                         '/tools': {'subtitle': 'Quickly generate the perfect copy',
