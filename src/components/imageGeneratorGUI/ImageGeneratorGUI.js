@@ -343,8 +343,8 @@ const ImageGeneratorGUI = () => {
     };
   };
 
-  async function handleMouseUp(event) {
-    console.log('\nImageGeneratorGUI.js >>> RUNNING handleMouseUp()');
+  async function handleMouseDown(event) {
+    console.log('\nImageGeneratorGUI.js >>> RUNNING handleMouseDown()');
     const element = document.getElementById(event.target.id);
     element.style.backgroundColor = '#949494';
   }
@@ -555,7 +555,7 @@ const ImageGeneratorGUI = () => {
           data-aos-delay={10 * delay_gap} data-aos="fade-right">
           Enter Prompt:
         </div>
-        <div className="imageGeneratorGUIsubmitButton imageGeneratorGUIfloatRightButton imageGeneratorGUIcopyButton" id="copySimplifierPrefixButton" onMouseDown={handleMouseUp} onMouseUp={handleSubmitClick} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_ImageGeneratorGUI"
+        <div className="imageGeneratorGUIsubmitButton imageGeneratorGUIfloatRightButton imageGeneratorGUIcopyButton" id="copySimplifierPrefixButton" onMouseDown={handleMouseDown} onMouseUp={handleSubmitClick} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_ImageGeneratorGUI"
           data-aos-delay={10 * delay_gap} data-aos="fade-left">
           {mobile ? "Copy Simplifier" : "Copy Simplifier Prefix"}
         </div>
@@ -568,7 +568,7 @@ const ImageGeneratorGUI = () => {
           data-aos-delay={12 * delay_gap} data-aos="fade-right">
           Negative Prompt:
         </div>
-        <div className="imageGeneratorGUIsubmitButton imageGeneratorGUIfloatRightButton imageGeneratorGUIcopyButton" id="copyNegativePromptButton" onMouseDown={handleMouseUp} onMouseUp={handleSubmitClick} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_ImageGeneratorGUI"
+        <div className="imageGeneratorGUIsubmitButton imageGeneratorGUIfloatRightButton imageGeneratorGUIcopyButton" id="copyNegativePromptButton" onMouseDown={handleMouseDown} onMouseUp={handleSubmitClick} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_ImageGeneratorGUI"
           data-aos-delay={12 * delay_gap} data-aos="fade-left">
           {mobile ? "Copy Default" : "Copy Default Negative Prompt"}
         </div>
@@ -733,7 +733,7 @@ const ImageGeneratorGUI = () => {
             data-aos-delay={25 * delay_gap} data-aos="fade-left">
             (1 to 100)</div>
         </div>
-        {/* <input value="Generate Text" className="imageGeneratorGUIsubmitButton" id="generateTextButton" type="submit" data-aos="fade-right" data-aos-delay={17 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_ImageGeneratorGUI" onClick={handleSubmitClick} onMouseUp={handleMouseUp}/> */}
+        {/* <input value="Generate Text" className="imageGeneratorGUIsubmitButton" id="generateTextButton" type="submit" data-aos="fade-right" data-aos-delay={17 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_ImageGeneratorGUI" onClick={handleSubmitClick} onMouseUp={handleMouseDown}/> */}
       </div>
       {/* <div className='imageGeneratorGUItextContainer'>
         <div id='textTitle' className='imageGeneratorGUITitle' data-aos="fade-right" data-aos-delay={18 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_ImageGeneratorGUI">
@@ -742,7 +742,7 @@ const ImageGeneratorGUI = () => {
       </div>
       <div className='imageGeneratorGUImodelDescription' id='textOutput' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_ImageGeneratorGUI">...</div> */}
       <div className='imageGeneratorGUItextContainer imageGeneratorGUIsubmitButtonContainer'>
-        <div className="imageGeneratorGUIsubmitButton imageGeneratorGUIgenerateButton" id="generateImageButton" onMouseDown={handleMouseUp} onMouseUp={handleSubmitClick} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_ImageGeneratorGUI"
+        <div className="imageGeneratorGUIsubmitButton imageGeneratorGUIgenerateButton" id="generateImageButton" onMouseDown={handleMouseDown} onMouseUp={handleSubmitClick} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_ImageGeneratorGUI"
           data-aos-delay={26 * delay_gap} data-aos="fade-right">
           Generate
         </div>
@@ -765,7 +765,7 @@ const ImageGeneratorGUI = () => {
           <input id='generationTime' className='imageGeneratorGUIpromptEntry imageGeneratorGUInumberDisplay' value="0:00" readOnly/>
         </div>
         <div className='_justifyCenterContainer'>
-          <div className="imageGeneratorGUIsubmitButton imageGeneratorGUIpauseButton" id="pauseButton" onMouseDown={handleMouseUp} onMouseUp={handleSubmitClick}>
+          <div className="imageGeneratorGUIsubmitButton imageGeneratorGUIpauseButton" id="pauseButton" onMouseDown={handleMouseDown} onMouseUp={handleSubmitClick}>
             Pause
           </div>
         </div>

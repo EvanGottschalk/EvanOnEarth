@@ -367,10 +367,17 @@ const TextGeneratorGUI = () => {
     };
   };
 
+  async function handleMouseDown(event) {
+    console.log('\nTextGeneratorGUI.js >>> RUNNING handleMouseDown()');
+    const element = document.getElementById(event.target.id);
+    element.style.backgroundColor = '#949494';
+  };
+
   async function handleSubmitClick(event) {
     console.log('\nTextGeneratorGUI >>> RUNNING handleSubmitClick()');
 
     const element_ID = event.target.id;
+    document.getElementById(element_ID).style.backgroundColor = '#dbdbdb';
 
     if (element_ID === 'copyNegativePromptButton') {
       navigator.clipboard.writeText(default_negative_prompt);
@@ -875,10 +882,12 @@ const TextGeneratorGUI = () => {
           />
           {/* <div className='textGeneratorGUIhelperText'>(-2 to 2)</div> */}
         </div>
-        <input className="textGeneratorGUIsubmitButton" id="generateTextButton" type="submit" onClick={handleSubmitClick} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_TextGeneratorGUI"
-          data-aos-delay={36 * delay_gap} data-aos="fade-right"
-          value="Generate"
-        />
+        <div className='imageGeneratorGUItextContainer imageGeneratorGUIsubmitButtonContainer'>
+          <div className="textGeneratorGUIsubmitButton textGeneratorGUIgenerateButton" id="generateTextButton" onMouseDown={handleMouseDown} onMouseUp={handleSubmitClick} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_TextGeneratorGUI"
+            data-aos-delay={36 * delay_gap} data-aos="fade-right">
+            Generate
+          </div>
+        </div>
       </div>
       {/* <div className='textGeneratorGUITextContainer'>
         <div id='textTitle' className='textGeneratorGUITitle' data-aos="fade-right" data-aos-delay={18 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_TextGeneratorGUI">
@@ -906,7 +915,11 @@ const TextGeneratorGUI = () => {
           </div>
           <input className='textGeneratorGUIpromptEntry textGeneratorGUInumberDisplay' id='generationTime' value="0:00" readOnly/>
         </div>
-        <input className="textGeneratorGUIsubmitButton textGeneratorGUIpauseButton" value="Pause" id="pauseButton" type="button" onClick={handleSubmitClick}/>
+        <div className='_justifyCenterContainer'>
+          <div className="textGeneratorGUIsubmitButton textGeneratorGUIpauseButton" id="pauseButton" onMouseDown={handleMouseDown} onMouseUp={handleSubmitClick}>
+            Pause
+          </div>
+        </div>
       </div>
       <div className="textGeneratorGUIallOutputContainer" id="textGeneratorGUIallOutputContainer">
         {/* gpt-3.5-turbo */}
