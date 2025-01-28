@@ -47,6 +47,17 @@
   color: #848484;
 }
 
+.banner_textGeneratorImage {
+  width: 140%;
+  object-fit: cover;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  display: flex;
+  border-radius: 0px;
+  overflow: hidden;
+}
+
 
 @media only screen and (max-width: 600px) {
   .banner_textgenerator {
@@ -74,5 +85,9 @@
   
   .banner_textGeneratorSubTitle {
     font-size: 11px;
+  }
+
+  .banner_textGeneratorImage {
+    width: 200%;
   }
 }

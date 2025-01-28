@@ -137,7 +137,7 @@ const Banner_TextTenerator = () => {
           <span className='banner_textGeneratorTitle' id="textGeneratorTitle" data-aos-delay={2 * delay_gap} data-aos="zoom-in">AI Text Generator</span>
           <span className='banner_textGeneratorSubTitle' id="textGeneratorSubtitle" data-aos="zoom-in" data-aos-delay={3 * delay_gap} target="_blank">{URL_conditions[page_pathname]['subtitle']}</span>
         </a>
-        <img data-aos="zoom-out" src={bannerImage} alt='AI Text Generator' id='banner_textGeneratorImage' className='banner_textgenerator' onMouseOver={mouseover} onMouseLeave={mouseleave} onClick={handleClick}/>
+        <img data-aos="zoom-out" src={bannerImage} alt='AI Text Generator' id='banner_textGeneratorImage' className='banner_textGeneratorImage' onMouseOver={mouseover} onMouseLeave={mouseleave} onClick={handleClick}/>
       </div>
     </div>
   );
