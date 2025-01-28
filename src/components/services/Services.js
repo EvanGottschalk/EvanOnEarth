@@ -4,7 +4,8 @@
 import React, { useEffect } from 'react'
 import Aos from "aos";
 
-import services_image from '../../image/services-image.png'
+import services_image_full from '../../image/services-image.webp'
+import services_image_mobile from '../../image/services-image-mobile.webp'
 import twitter_icon from '../../image/icons/twitter.png'
 import linkedin_icon from '../../image/icons/linkedin.png'
 import instagram_icon from '../../image/icons/instagram.png'
@@ -20,12 +21,15 @@ import './services.css'
 
 
 
-
-
 //--------------------------------------------------------------------------------------------------
 //# Variables
 
 const delay_gap = 200;
+const mobile = window.innerWidth <= 600;
+
+let services_image = services_image_mobile;
+
+
 
 
 
@@ -43,7 +47,26 @@ const Services = () => {
 
   useEffect(() => {
     Aos.init({ duration: 2000 });
+
+    const services_image_element = document.getElementById('servicesImage');
+    const screen_width = window.screen.width;
+    // console.log("window.screen.width: ", window.screen.width);
+    // console.log("window.screen.height: ", window.screen.height);
+    // console.log("window.innerWidth: ", window.innerWidth);
+    // console.log("window.innerHeight: ", window.innerHeight);
+    // console.log("document.documentElement.clientWidth: ", document.documentElement.clientWidth);
+    if (mobile) {
+      services_image = services_image_mobile;
+    } else if (screen_width > 1080) {
+      services_image = services_image_full;
+    }
+    const img = new Image();
+    img.src = services_image;
+    img.onload = () => {
+      services_image_element.src = services_image;
+    };
   }, []);
+
 
   function mouseover(event) {
     console.log(event.target.id);
@@ -71,7 +94,7 @@ const Services = () => {
       <div className='servicesLeftContainer'>
         <div className='servicesRightTop'>
           <div className='servicesImageContainer'>
-            <img data-aos="fade-right" data-aos-delay={delay_gap * 14} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_Services" src={services_image} alt='' className='servicesImage' />
+            <img data-aos="fade-right" data-aos-delay={mobile ? (0) : (delay_gap * 14)} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_Services" src={services_image} alt='' className='servicesImage' id='servicesImage' />
           </div>
         </div>
       </div>

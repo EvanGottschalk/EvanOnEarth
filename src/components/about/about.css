@@ -62,6 +62,7 @@
   width: 45%;
   color: #7CE2F9;
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .aboutLinkContainer {
