@@ -111,7 +111,7 @@ a:active { text-decoration: none; }
     border: solid;
     border-color: #000000;
     border-radius: 20px;
-    padding: 2% 12% 4% 10%;
+    padding: 4px 8px 2px 8px;
     white-space: nowrap;
   }
 
@@ -126,7 +126,7 @@ a:active { text-decoration: none; }
   }
 
   .navbarLogoImage {
-    width: 100%;
+    width: 120%;
     padding: 0% 0% 0% 15%;
     margin: 0% 0% 0% 0%;
   }

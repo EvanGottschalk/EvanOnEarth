@@ -18,7 +18,7 @@ import './banner_textgenerator.css';
 //# Variables
 
 const delay_gap = 300;
-// let mobile = window.innerWidth <= 600;
+const mobile = window.innerWidth <= 600;
 
 const page_origin = window.location.origin; // Example: https://evanonearth.xyz
 const page_pathname = window.location.pathname; // Example: /tools
@@ -59,12 +59,19 @@ const Banner_TextTenerator = () => {
     AOS.init({ duration: 2000 });
 
     // Generate a random number between 1 and the total number of images
-    const randomNumber = Math.floor(Math.random() * totalImages) + 1;
-
+    const random_number = Math.floor(Math.random() * totalImages) + 1;
+    
     // Dynamically import the image based on the random number
-    import(`../../image/banners/textgenerator/${randomNumber}.png`)
-      .then((image) => setBannerImage(image.default))
-      .catch((err) => console.error("Error loading banner image:", err));
+    let banner_folder;
+    if (mobile) {
+      import(`../../image/banners/textgenerator/1280x160/${random_number}.png`)
+        .then((image) => setBannerImage(image.default))
+        .catch((err) => console.error("Error loading banner image:", err));
+    } else {
+      import(`../../image/banners/textgenerator/3072x384/${random_number}.png`)
+        .then((image) => setBannerImage(image.default))
+        .catch((err) => console.error("Error loading banner image:", err));
+    };    
   }, []);
 
   function mouseover(event) {
