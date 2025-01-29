@@ -133,16 +133,16 @@ a:active { text-decoration: none; }
 
   .twitterIcon {
     width: 13%;
-    margin: .5% 0% 0% 0%;
+    margin: -1% 0% 0% 0%;
     padding: 0% 0% 0% 0%;
   }
 
   .linkedinIcon {
-    padding-top: 2%;
+    padding-top: .5%;
   }
 
   .instagramIcon {
-    padding-top: 2%;
+    padding-top: .5%;
   }
 }
 

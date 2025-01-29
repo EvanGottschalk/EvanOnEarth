@@ -1,10 +1,7 @@
 //--------------------------------------------------------------------------------------------------
 //# Imports
 
-import React, { useEffect } from 'react'; 
-
-import home_banner_full from '../../image/banner-home.webp'
-import home_banner_mobile from '../../image/banner-home-mobile.webp'
+import React, { useEffect, useState } from 'react'; 
 
 import './banner.css'
 
@@ -20,7 +17,6 @@ import './banner.css'
 //# Variables
 
 const mobile = window.innerWidth <= 600;
-let home_banner_image = home_banner_mobile;
 
 
 
@@ -35,32 +31,27 @@ let home_banner_image = home_banner_mobile;
 
 //AppStart
 const Banner = () => {
+  const [bannerImage, setBannerImage] = useState(null);
 
   useEffect(() => {
-    const banner_image_element = document.getElementById('bannerImage');
-    const screen_width = window.screen.width;
-    // console.log("window.screen.width: ", window.screen.width);
-    // console.log("window.screen.height: ", window.screen.height);
-    // console.log("window.innerWidth: ", window.innerWidth);
-    // console.log("window.innerHeight: ", window.innerHeight);
-    // console.log("document.documentElement.clientWidth: ", document.documentElement.clientWidth);
     if (mobile) {
-      home_banner_image = home_banner_mobile;
-    } else if (screen_width > 1080) {
-      home_banner_image = home_banner_full;
-    }
-    const img = new Image();
-    img.src = home_banner_image;
-    img.onload = () => {
-      banner_image_element.src = home_banner_image;
-    };
+      import(`../../image/banner-home-mobile.webp`)
+        .then((image) => setBannerImage(image.default))
+        .catch((err) => console.error("Error loading banner image:", err));
+    } else {
+      import(`../../image/banner-home.webp`)
+        .then((image) => setBannerImage(image.default))
+        .catch((err) => console.error("Error loading banner image:", err));
+    };    
   }, []);
+
+
   
 
   return (
     <div className='banner'>
       <div className='bannerContainer'>
-        <img data-aos="fade-left" src={home_banner_image} alt='' className='bannerImage' />
+        <img data-aos="fade-left" src={bannerImage} alt='' className='bannerImage' />
       </div>
     </div>
   )

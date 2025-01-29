@@ -62,7 +62,6 @@ const Banner_ImageGenerator = () => {
     const random_number = Math.floor(Math.random() * totalImages) + 1;
     
     // Dynamically import the image based on the random number
-    let banner_folder;
     if (mobile) {
       import(`../../image/banners/textgenerator/1280x160/${random_number}.png`)
         .then((image) => setBannerImage(image.default))

@@ -24,7 +24,7 @@ import './alchmoverview.css'
 //--------------------------------------------------------------------------------------------------
 //# Variables
 
-const delay_gap = 300;
+const delay_gap = 200;
 let reverse_interval;
 let mobile = window.innerWidth <= 600;
 let contentLoaded = true;
