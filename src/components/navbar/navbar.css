@@ -99,7 +99,7 @@ a:active { text-decoration: none; }
   
   .navbarCenter {
     padding: 0% 0% 0% 0%;
-    margin: -2% 20% 0% 0%;
+    margin: -1% 20% 0% 0%;
     align-items: left;
     justify-content: left;
     text-align: left;
@@ -146,7 +146,7 @@ a:active { text-decoration: none; }
   }
 
   .navbarLeft {
-    margin-top: 6px;
+    margin-top: 5px;
   }
 }
 
