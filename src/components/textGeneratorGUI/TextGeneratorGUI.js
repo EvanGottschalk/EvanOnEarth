@@ -250,10 +250,10 @@ const TextGeneratorGUI = () => {
               new_image_element.id = 'generatedImage_' + model + '_' + selected_size + '_' + j.toString();
             };
             new_image_element.className = 'textGeneratorGUIgeneratedImage';
-            if (!mobile) {
-              // The first value, .40, comes from the CSS in textGeneratorGUIgeneratedImage 
-              new_image_element.style.width = (.40 * (100 / parameter_dict['quantity'])).toString() + "%";
-            };
+            // if (!mobile) {
+            //   // The first value, .40, comes from the CSS in textGeneratorGUIgeneratedImage 
+            //   new_image_element.style.width = (.40 * (100 / parameter_dict['quantity'])).toString() + "%";
+            // };
 
             // Combine the elements
             new_text_element.appendChild(new_image_element);
@@ -352,8 +352,8 @@ const TextGeneratorGUI = () => {
       const checkbox_element = document.getElementById('maxTokensCheckbox_' + custom_input_ID);
       if (new_value) {
         if (checkbox_element.checked) {
-          const checked_models = await getCheckedValues('model');
-          checked_models.forEach((model) => {
+          const all_models = await getAllChecklistOptions('model');
+          all_models.forEach((model) => {
             document.getElementById('sizeContainerTitle_' + model + '_' + custom_input_ID).textContent = 'Custom # of Words: ' + new_value;
           });          
         } else {
@@ -883,7 +883,7 @@ const TextGeneratorGUI = () => {
           {/* <div className='textGeneratorGUIhelperText'>(-2 to 2)</div> */}
         </div>
         <div className='imageGeneratorGUItextContainer imageGeneratorGUIsubmitButtonContainer'>
-          <div className="textGeneratorGUIsubmitButton textGeneratorGUIgenerateButton" id="generateTextButton" onMouseDown={handleMouseDown} onMouseUp={handleSubmitClick} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_TextGeneratorGUI"
+          <div className="textGeneratorGUIsubmitButton textGeneratorGUIgenerateButton" id="generateTextButton" onMouseDown={handleMouseDown} onMouseUp={handleSubmitClick} onTouchStart={handleMouseDown} onTouchEnd={handleSubmitClick} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_TextGeneratorGUI"
             data-aos-delay={36 * delay_gap} data-aos="fade-right">
             Generate
           </div>
@@ -916,7 +916,7 @@ const TextGeneratorGUI = () => {
           <input className='textGeneratorGUIpromptEntry textGeneratorGUInumberDisplay' id='generationTime' value="0:00" readOnly/>
         </div>
         <div className='_justifyCenterContainer'>
-          <div className="textGeneratorGUIsubmitButton textGeneratorGUIpauseButton" id="pauseButton" onMouseDown={handleMouseDown} onMouseUp={handleSubmitClick}>
+          <div className="textGeneratorGUIsubmitButton textGeneratorGUIpauseButton" id="pauseButton" onMouseDown={handleMouseDown} onMouseUp={handleSubmitClick} onTouchStart={handleMouseDown} onTouchEnd={handleSubmitClick}>
             Pause
           </div>
         </div>
