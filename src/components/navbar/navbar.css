@@ -144,6 +144,10 @@ a:active { text-decoration: none; }
   .instagramIcon {
     padding-top: .5%;
   }
+
+  .navbarLeft {
+    margin-top: 6px;
+  }
 }
 
 
