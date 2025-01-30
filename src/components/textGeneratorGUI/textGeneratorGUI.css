@@ -396,4 +396,9 @@
     width: 150px;
     margin-top: 15px;
   }
+
+  .textGeneratorGUItextOutputContainer {
+    flex-direction: column;
+    gap: 10px;
+  }
 }

@@ -555,7 +555,7 @@ const ImageGeneratorGUI = () => {
           data-aos-delay={10 * delay_gap} data-aos="fade-right">
           Enter Prompt:
         </div>
-        <div className="imageGeneratorGUIsubmitButton imageGeneratorGUIfloatRightButton imageGeneratorGUIcopyButton" id="copySimplifierPrefixButton" onMouseDown={handleMouseDown} onMouseUp={handleSubmitClick} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_ImageGeneratorGUI"
+        <div className="imageGeneratorGUIsubmitButton imageGeneratorGUIfloatRightButton imageGeneratorGUIcopyButton" id="copySimplifierPrefixButton" onMouseDown={handleMouseDown} onMouseUp={handleSubmitClick} onTouchStart={handleMouseDown} onTouchEnd={handleSubmitClick} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_ImageGeneratorGUI"
           data-aos-delay={10 * delay_gap} data-aos="fade-left">
           {mobile ? "Copy Simplifier" : "Copy Simplifier Prefix"}
         </div>
@@ -568,7 +568,7 @@ const ImageGeneratorGUI = () => {
           data-aos-delay={12 * delay_gap} data-aos="fade-right">
           Negative Prompt:
         </div>
-        <div className="imageGeneratorGUIsubmitButton imageGeneratorGUIfloatRightButton imageGeneratorGUIcopyButton" id="copyNegativePromptButton" onMouseDown={handleMouseDown} onMouseUp={handleSubmitClick} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_ImageGeneratorGUI"
+        <div className="imageGeneratorGUIsubmitButton imageGeneratorGUIfloatRightButton imageGeneratorGUIcopyButton" id="copyNegativePromptButton" onMouseDown={handleMouseDown} onMouseUp={handleSubmitClick} onTouchStart={handleMouseDown} onTouchEnd={handleSubmitClick} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_ImageGeneratorGUI"
           data-aos-delay={12 * delay_gap} data-aos="fade-left">
           {mobile ? "Copy Default" : "Copy Default Negative Prompt"}
         </div>
@@ -742,7 +742,7 @@ const ImageGeneratorGUI = () => {
       </div>
       <div className='imageGeneratorGUImodelDescription' id='textOutput' data-aos="fade-right" data-aos-delay={19 * delay_gap} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_ImageGeneratorGUI">...</div> */}
       <div className='imageGeneratorGUItextContainer imageGeneratorGUIsubmitButtonContainer'>
-        <div className="imageGeneratorGUIsubmitButton imageGeneratorGUIgenerateButton" id="generateImageButton" onMouseDown={handleMouseDown} onMouseUp={handleSubmitClick} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_ImageGeneratorGUI"
+        <div className="imageGeneratorGUIsubmitButton imageGeneratorGUIgenerateButton" id="generateImageButton" onMouseDown={handleMouseDown} onMouseUp={handleSubmitClick} onTouchStart={handleMouseDown} onTouchEnd={handleSubmitClick} data-aos-anchor-placement="top-center" data-aos-anchor="#anchorElement_ImageGeneratorGUI"
           data-aos-delay={26 * delay_gap} data-aos="fade-right">
           Generate
         </div>
@@ -765,7 +765,7 @@ const ImageGeneratorGUI = () => {
           <input id='generationTime' className='imageGeneratorGUIpromptEntry imageGeneratorGUInumberDisplay' value="0:00" readOnly/>
         </div>
         <div className='_justifyCenterContainer'>
-          <div className="imageGeneratorGUIsubmitButton imageGeneratorGUIpauseButton" id="pauseButton" onMouseDown={handleMouseDown} onMouseUp={handleSubmitClick}>
+          <div className="imageGeneratorGUIsubmitButton imageGeneratorGUIpauseButton" id="pauseButton" onMouseDown={handleMouseDown} onMouseUp={handleSubmitClick} onTouchStart={handleMouseDown} onTouchEnd={handleSubmitClick}>
             Pause
           </div>
         </div>
