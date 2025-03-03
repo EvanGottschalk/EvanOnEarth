@@ -44,6 +44,7 @@ const Banner_ImageGenerator = () => {
   const totalImages = 112; // Update this to the number of images you have
 
 
+  
 
 
 
