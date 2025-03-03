@@ -63,11 +63,11 @@ const Banner_ImageGenerator = () => {
     
     // Dynamically import the image based on the random number
     if (mobile) {
-      import(`../../image/banners/textgenerator/1280x160/${random_number}.png`)
+      import(`../../image/banners/imagegenerator/1280x160/${random_number}.png`)
         .then((image) => setBannerImage(image.default))
         .catch((err) => console.error("Error loading banner image:", err));
     } else {
-      import(`../../image/banners/textgenerator/3072x384/${random_number}.png`)
+      import(`../../image/banners/imagegenerator/3072x384/${random_number}.png`)
         .then((image) => setBannerImage(image.default))
         .catch((err) => console.error("Error loading banner image:", err));
     };    
