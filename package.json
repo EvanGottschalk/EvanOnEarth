@@ -3,7 +3,7 @@
   "homepage": "https://evanonearth.xyz",
   "version": "4.20.69",
   "engines": {
-    "node": "16.20.2"
+    "node": "23.0.0"
   },
   "dependencies": {
     "@livepeer/ai": "^0.4.1",
@@ -50,5 +50,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "main": "index.js",
+  "repository": "https://github.com/evangottschalk/evanonearth",
+  "author": "EvanGottschalk <magnus5557@gmail.com>",
+  "license": "MIT"
 }
