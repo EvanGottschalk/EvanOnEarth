@@ -1,2 +1,0 @@
-(this.webpackJsonpevanonearth=this.webpackJsonpevanonearth||[]).push([[35],{83:function(e,t,a){"use strict";a.r(t),t.default=a.p+"static/media/30.3e58979e.png"}}]);
-//# sourceMappingURL=35.12fff9c7.chunk.js.map
