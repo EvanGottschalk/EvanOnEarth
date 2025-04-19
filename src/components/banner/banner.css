@@ -9,11 +9,13 @@
   overflow: hidden;
 }
 
+.bannerContainer {
+  max-width: 80%;
+}
+
 .bannerImage {
   width: 100%;
   padding: 0% 0% 0% 0%;
-  max-width: 1080px;
-  min-height: 100vh;
   object-fit: cover;
   align-items: center;
   justify-content: center;
@@ -27,6 +29,10 @@
 @media only screen and (max-width: 560px) {
   .banner {
     width: 100%;
+  }
+
+  .bannerContainer {
+    max-width: 100%;
   }
 
   .bannerImage {

@@ -7,6 +7,7 @@ import Consultation from './pages/consultation/Consultation'
 import ImageGenerator from './pages/imagegenerator/ImageGenerator'
 import TextGenerator from './pages/textgenerator/TextGenerator'
 import Tools from './pages/tools/Tools'
+import Floater from './pages/floater/Floater'
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 //import FloaterPage from './pages/floater/FloaterPage';
@@ -35,6 +36,8 @@ const App = () => {
                          <Route exact path="/tools" element={<Tools />} />
                          <Route exact path="/tools/imagegenerator" element={<ImageGenerator />} />
                          <Route exact path="/tools/textgenerator" element={<TextGenerator />} />
+                         <Route exact path="/tools/floater" element={<Floater />} />
+                         <Route exact path="/games/floater" element={<Floater />} />
                     </Routes>
                     <Footer />
                </BrowserRouter>
