@@ -41,8 +41,12 @@ const URL_conditions = {'/': {'subtitle': 'Create dozens of images with 1 click'
 //AppStart
 const Banner_ImageGenerator = () => {
   const [bannerImage, setBannerImage] = useState(null);
-  const totalImages = 112; // Update this to the number of images you have
+  let totalImages = 112; // Update this to the number of images you have
 
+  if (!mobile) {
+    // To make storage space, half of the larger image files are deleted (for now)
+    totalImages = totalImages / 2;
+  }
 
   
 
