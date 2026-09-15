@@ -1,7 +1,7 @@
 //--------------------------------------------------------------------------------------------------
 //# Imports
 
-import React, {useEffect} from 'react'
+import React from 'react'
 // import throttle from 'lodash/throttle';
 // import debounce from 'lodash/debounce';
 

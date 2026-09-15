@@ -38,15 +38,16 @@ const URL_conditions = {'/': {'subtitle': 'Create dozens of images with 1 click'
                                                   'target': '_blank',
                                                   'rel': 'noreferrer'}};
 
+let totalImages = 112; // Update this to the number of images you have
+
+if (!mobile) {
+  // To make storage space, half of the larger image files are deleted (for now)
+  totalImages = totalImages / 2;
+}
+
 //AppStart
 const Banner_ImageGenerator = () => {
   const [bannerImage, setBannerImage] = useState(null);
-  let totalImages = 112; // Update this to the number of images you have
-
-  if (!mobile) {
-    // To make storage space, half of the larger image files are deleted (for now)
-    totalImages = totalImages / 2;
-  }
 
   
 
@@ -144,7 +145,7 @@ const Banner_ImageGenerator = () => {
           <span className='banner_imageGeneratorTitle' id="imageGeneratorTitle" data-aos-delay={2 * delay_gap} data-aos="zoom-in">AI Image Generator</span>
           <span className='banner_imageGeneratorSubTitle' id="imageGeneratorSubtitle" data-aos="zoom-in" data-aos-delay={3 * delay_gap} target="_blank">{URL_conditions[page_pathname]['subtitle']}</span>
         </a>
-        <img data-aos="zoom-out" src={bannerImage} alt='AI Image Generator' id='banner_imageGeneratorImage' className='banner_imagegenerator' onMouseOver={mouseover} onMouseLeave={mouseleave} onClick={handleClick}/>
+        <img data-aos="zoom-out" src={bannerImage} alt='' id='banner_imageGeneratorImage' className='banner_imagegenerator' onMouseOver={mouseover} onMouseLeave={mouseleave} onClick={handleClick}/>
       </div>
     </div>
   );

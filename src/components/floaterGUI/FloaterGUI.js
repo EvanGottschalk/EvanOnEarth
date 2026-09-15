@@ -16,7 +16,7 @@ import './floatergui.css'
 //--------------------------------------------------------------------------------------------------
 //# Variables
 
-const mobile = window.innerWidth <= 600;
+// const mobile = window.innerWidth <= 600;
 
 
 

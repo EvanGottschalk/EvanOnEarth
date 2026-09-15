@@ -1,7 +1,7 @@
 //--------------------------------------------------------------------------------------------------
 //# Imports
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Aos from "aos";
 import "aos/dist/aos.css";
 import text_generator from "../../scripts/GeneratorOperator";
@@ -112,15 +112,16 @@ const TextGeneratorGUI = () => {
     return new Promise(resolve => setTimeout(resolve, time));
   };
 
-  function mouseOver(event) {
-    let element = document.getElementById(event.target.id);
-    element.style.transform = 'scale(1.20)';
-  };
-  
-  function mouseLeave(event) {
-    let element = document.getElementById(event.target.id);
-    element.style.transform = 'scale(1.0)';
-  };
+  // Currently unused - nothing in the JSX below hooks these up
+  // function mouseOver(event) {
+  //   let element = document.getElementById(event.target.id);
+  //   element.style.transform = 'scale(1.20)';
+  // };
+  //
+  // function mouseLeave(event) {
+  //   let element = document.getElementById(event.target.id);
+  //   element.style.transform = 'scale(1.0)';
+  // };
 
   function handlePromptChange(event) {
     parameter_dict["prompt"] = event.target.value;
@@ -495,6 +496,22 @@ const TextGeneratorGUI = () => {
     var number_of_loops = 0;
     var loop_count = 1;
     var loop = true;
+
+    // Defined outside of the loop below so that the callback is not re-declared on every pass
+    const handleGenerationResult = (result) => {
+      console.log(result);
+      if (typeof result === 'string') {
+        if (result === 'error') {
+          // image_element.src = generation_failed_placeholder;
+          loop = false;
+          image_element.src = generation_failed_placeholder
+        } else {
+          image_element.src = loading_placeholder;
+          loop = false;
+          text_generator_result = result;
+        };
+      };
+    };
     console.log('len', text_generator_response.length);
     console.log(text_generator_response);
     while ( loop ) {
@@ -518,20 +535,7 @@ const TextGeneratorGUI = () => {
         console.log("Loop Count: ", loop_count);
         console.log('len', text_generator_response.length);
         console.log(text_generator_response);
-        text_generator_promise = text_generator_response.then((result) => {
-          console.log(result);
-          if (typeof result === 'string') {
-            if (result === 'error') {
-              // image_element.src = generation_failed_placeholder;
-              loop = false;
-              image_element.src = generation_failed_placeholder
-            } else {
-              image_element.src = loading_placeholder;
-              loop = false;
-              text_generator_result = result;
-            };
-          };
-        });
+        text_generator_promise = text_generator_response.then(handleGenerationResult);
         console.log('promise', text_generator_promise);
       };
     };
@@ -549,12 +553,13 @@ const TextGeneratorGUI = () => {
   };
 
 
-  async function displayImage(image_element, new_image) {
-    console.log('\nTextGeneratorGUI >>> RUNNING displayImage()');
-    image_element.src = new_image;
-    console.log('Image Displayed!', new_image);
-    console.log('New Image src:', image_element.src);
-  };
+  // Currently unused - nothing calls displayImage() in this component
+  // async function displayImage(image_element, new_image) {
+  //   console.log('\nTextGeneratorGUI >>> RUNNING displayImage()');
+  //   image_element.src = new_image;
+  //   console.log('Image Displayed!', new_image);
+  //   console.log('New Image src:', image_element.src);
+  // };
 
   async function setGenerationTime(seconds) {
     generation_time = seconds;

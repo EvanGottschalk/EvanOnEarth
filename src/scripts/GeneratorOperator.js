@@ -3,7 +3,8 @@
 
 // import { Livepeer } from "@livepeer/ai";
 
-export default { generateImage, generateText };
+const GeneratorOperator = { generateImage, generateText };
+export default GeneratorOperator;
 
 
 

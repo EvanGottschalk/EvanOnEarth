@@ -39,15 +39,16 @@ const URL_conditions = {'/': {'subtitle': 'Quickly generate the perfect copy',
                                                   'target': '_blank',
                                                   'rel': 'noreferrer'}};
 
+let totalImages = 106; // Update this to the number of images you have
+
+if (!mobile) {
+  // To make storage space, half of the larger image files are deleted (for now)
+  totalImages = totalImages / 2;
+}
+
 //AppStart
 const Banner_TextTenerator = () => {
   const [bannerImage, setBannerImage] = useState(null);
-  var totalImages = 106; // Update this to the number of images you have
-  
-  if (!mobile) {
-    // To make storage space, half of the larger image files are deleted (for now)
-    totalImages = totalImages / 2;
-  }
 
 
 

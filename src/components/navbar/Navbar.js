@@ -1,8 +1,8 @@
 //--------------------------------------------------------------------------------------------------
 //# Imports
 
-import React, { useEffect, useContext } from 'react';
-import SmartContractContext from '../../scripts/SmartContractContext';
+import React, { useEffect } from 'react';
+// import SmartContractContext from '../../scripts/SmartContractContext';
 import Aos from "aos";
 import "aos/dist/aos.css";
 
@@ -31,7 +31,7 @@ import './navbar.css'
 //--------------------------------------------------------------------------------------------------
 //# Variables
 
-const connect_on_load = false;
+// const connect_on_load = false;
 
 var mobile = false;
 if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
@@ -39,7 +39,7 @@ if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(naviga
   mobile = true;
 };
 
-const page_origin = window.location.origin; // Example: https://evanonearth.xyz
+// const page_origin = window.location.origin; // Example: https://evanonearth.xyz
 const page_pathname = window.location.pathname; // Example: /tools
 const URL_conditions = {'/': {'background_color': '#ffffff',
                               'text_color': '#000000',
@@ -53,11 +53,12 @@ const URL_conditions = {'/': {'background_color': '#ffffff',
 //AppStart
 const Navbar = () => {
 
-let { user_address, setAddress_Context } = useContext(SmartContractContext);
-let { user_token_ID, setTokenID_Context } = useContext(SmartContractContext);
-let { user_balance, setBalance_Context } = useContext(SmartContractContext);
-let { user_metadata, setMetadata_Context } = useContext(SmartContractContext);
-let { user_avatar_URI, setAvatarURI_Context } = useContext(SmartContractContext);
+// Wallet context is not read anywhere in this component yet
+// let { user_address, setAddress_Context } = useContext(SmartContractContext);
+// let { user_token_ID, setTokenID_Context } = useContext(SmartContractContext);
+// let { user_balance, setBalance_Context } = useContext(SmartContractContext);
+// let { user_metadata, setMetadata_Context } = useContext(SmartContractContext);
+// let { user_avatar_URI, setAvatarURI_Context } = useContext(SmartContractContext);
 
 useEffect(() => {
   Aos.init({ duration: 2000 });

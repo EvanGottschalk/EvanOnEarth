@@ -1,7 +1,7 @@
 //--------------------------------------------------------------------------------------------------
 //# Imports
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import './banner_tools.css';
@@ -92,22 +92,23 @@ const Banner_Tools = () => {
     // event.target.style.transform = 'scale(1.25)';
   };
 
-  async function updateBannerTitle(state) {
-    const title_container = document.getElementById("banner_toolsTitleContainer");
-    if (state === 'default') {
-      title_container.style.borderColor = '#ffffff';
-      title_container.style.backgroundColor = '#000000';
-      title_container.style.borderWidth = '3px';
-      document.getElementById('toolsSubtitle').style.color = '#848484';
-      document.getElementById('toolsTitle').style.color = '#ffffff';
-    } else if (state === 'inverted') {
-      title_container.style.borderColor = '#000000';
-      title_container.style.backgroundColor = '#ffffff';
-      title_container.style.borderWidth = '4px';
-      document.getElementById('toolsSubtitle').style.color = '#9925ff';
-      document.getElementById('toolsTitle').style.color = '#000000';
-    };
-  };
+  // Currently unused - nothing calls updateBannerTitle()
+  // async function updateBannerTitle(state) {
+  //   const title_container = document.getElementById("banner_toolsTitleContainer");
+  //   if (state === 'default') {
+  //     title_container.style.borderColor = '#ffffff';
+  //     title_container.style.backgroundColor = '#000000';
+  //     title_container.style.borderWidth = '3px';
+  //     document.getElementById('toolsSubtitle').style.color = '#848484';
+  //     document.getElementById('toolsTitle').style.color = '#ffffff';
+  //   } else if (state === 'inverted') {
+  //     title_container.style.borderColor = '#000000';
+  //     title_container.style.backgroundColor = '#ffffff';
+  //     title_container.style.borderWidth = '4px';
+  //     document.getElementById('toolsSubtitle').style.color = '#9925ff';
+  //     document.getElementById('toolsTitle').style.color = '#000000';
+  //   };
+  // };
 
   // if (!bannerImage) return null; // Return null until the image is loaded
 

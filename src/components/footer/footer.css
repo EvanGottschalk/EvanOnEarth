@@ -30,6 +30,31 @@
   color: #656565;
 }
 
+/* Replaces the deprecated <marquee> element */
+.footerMarquee {
+  overflow: hidden;
+}
+
+.footerMarqueeContent {
+  display: inline-block;
+  white-space: nowrap;
+  padding-left: 100%;
+  animation: footerMarqueeScroll 60s linear infinite;
+}
+
+@keyframes footerMarqueeScroll {
+  from { transform: translateX(0%); }
+  to { transform: translateX(-100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footerMarqueeContent {
+    animation: none;
+    padding-left: 0%;
+    white-space: normal;
+  }
+}
+
 .creatorAttributionLink {
   text-align: right;
   align-items: right;

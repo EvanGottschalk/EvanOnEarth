@@ -16,7 +16,7 @@ import './footer.css'
 
 let screen_filled = false;
 
-const page_origin = window.location.origin; // Example: https://evanonearth.xyz
+// const page_origin = window.location.origin; // Example: https://evanonearth.xyz
 const page_pathname = window.location.pathname; // Example: /tools
 const URL_conditions = {'/tools': {'padding': "0% 0% 0% 0%"}};
 
@@ -75,7 +75,9 @@ const Footer = () => {
       </div>
       <div className='footerContainer'>
         <div className='footerTextContainer'>
-          <marquee>Pop quiz, hot shot! What's the first blockchain ever created? (hint: it's not Bitcoin) . . . . . . . . . . . . . . . . . . . . Did you know? Most NFT data is not stored on blockchain! . . . . . . . . . . . . . . . . . . . . Get airdrops, whitelist and early access to my next web3 project: <a style={{color: "var(--color-main)"}} href="https://evanon.earth/alchmsignup" target="_blank" rel="noreferrer">Alchm Whitelist Signup</a> . . . . . . . . . . . . . . . . . . . .  Did you know? Using Ordinals, operating systems like Windows and iOS can run on Bitcoin . . . . . . . . . . . . . . . . . . . . </marquee>
+          <div className='footerMarquee'>
+            <div className='footerMarqueeContent'>Pop quiz, hot shot! What's the first blockchain ever created? (hint: it's not Bitcoin) . . . . . . . . . . . . . . . . . . . . Did you know? Most NFT data is not stored on blockchain! . . . . . . . . . . . . . . . . . . . . Get airdrops, whitelist and early access to my next web3 project: <a style={{color: "var(--color-main)"}} href="https://evanon.earth/alchmsignup" target="_blank" rel="noreferrer">Alchm Whitelist Signup</a> . . . . . . . . . . . . . . . . . . . .  Did you know? Using Ordinals, operating systems like Windows and iOS can run on Bitcoin . . . . . . . . . . . . . . . . . . . . </div>
+          </div>
         </div>
       </div>
       

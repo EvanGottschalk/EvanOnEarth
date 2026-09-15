@@ -1,7 +1,7 @@
 //--------------------------------------------------------------------------------------------------
 //# Imports
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Aos from "aos";
 import "aos/dist/aos.css";
 import image_generator from "../../scripts/GeneratorOperator";
@@ -114,17 +114,18 @@ const ImageGeneratorGUI = () => {
     return new Promise(resolve => setTimeout(resolve, time));
   }
 
-  function mouseOver(event) {
-    // console.log('\nImageGeneratorGUI >>> RUNNING mouseOver()');
-    let element = document.getElementById(event.target.id);
-    element.style.transform = 'scale(1.20)';
-  }
-  
-  function mouseLeave(event) {
-    // console.log('\nImageGeneratorGUI >>> RUNNING mouseLeave()');
-    let element = document.getElementById(event.target.id);
-    element.style.transform = 'scale(1.0)';
-  }
+  // Currently unused - nothing in the JSX below hooks these up
+  // function mouseOver(event) {
+  //   // console.log('\nImageGeneratorGUI >>> RUNNING mouseOver()');
+  //   let element = document.getElementById(event.target.id);
+  //   element.style.transform = 'scale(1.20)';
+  // }
+  //
+  // function mouseLeave(event) {
+  //   // console.log('\nImageGeneratorGUI >>> RUNNING mouseLeave()');
+  //   let element = document.getElementById(event.target.id);
+  //   element.style.transform = 'scale(1.0)';
+  // }
 
   function handlePromptChange(event) {
     parameter_dict["prompt"] = event.target.value;
@@ -404,13 +405,28 @@ const ImageGeneratorGUI = () => {
     image_element.src = generating_placeholder_0;
     
     // Image generation
-    let image_generator_response, image_generator_promise, image_generator_result;
+    let image_generator_response, image_generator_result;
     image_generator_response = image_generator.generateImage(parameter_dict);
 
     // Loop
     var number_of_loops = 0;
     var loop_count = 1;
     var loop = true;
+
+    // Defined outside of the loop below so that the callback is not re-declared on every pass
+    const handleGenerationResult = (result) => {
+      console.log("result:", result);
+      if (typeof result === 'string') {
+        if (result === 'error') {
+          loop = false;
+          image_generator_result = generation_failed_placeholder
+        } else {
+          image_element.src = loading_placeholder;
+          loop = false;
+          image_generator_result = result;
+        };
+      };
+    };
     console.log('len', image_generator_response.length);
     console.log(image_generator_response);
     while ( loop ) {
@@ -431,19 +447,7 @@ const ImageGeneratorGUI = () => {
           image_element.src = generating_placeholder_list[loop_count];
         };
         loop_count+=1;
-        image_generator_promise = image_generator_response.then((result) => {
-          console.log("result:", result);
-          if (typeof result === 'string') {
-            if (result === 'error') {
-              loop = false;
-              image_generator_result = generation_failed_placeholder
-            } else {
-              image_element.src = loading_placeholder;
-              loop = false;
-              image_generator_result = result;
-            };
-          };
-        });
+        image_generator_response.then(handleGenerationResult);
       };
     };
 
